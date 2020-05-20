@@ -3,6 +3,9 @@ import sbt._
 object Dependencies {
 
   object Versions {
+    val log4cats = "1.0.1"
+    val logback = "1.2.3"
+
     val catsCore       = "2.1.1"
     val catsEffect     = "2.1.3"
     val catsEffectTest = "0.4.0"
@@ -19,6 +22,9 @@ object Dependencies {
       lazy val effectTest = "com.codecommit" %% "cats-effect-testing-scalatest" % Versions.catsEffectTest
     }
 
+    val logback  = "ch.qos.logback"    % "logback-classic" % Versions.logback
+    val log4cats = "io.chrisdavenport" %% "log4cats-slf4j" % Versions.log4cats
+
     lazy val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
 
     object mockito {
@@ -29,7 +35,9 @@ object Dependencies {
 
   lazy val core = Seq(
     Libraries.cats.core,
-    Libraries.cats.effect
+    Libraries.cats.effect,
+    Libraries.logback,
+    Libraries.log4cats
   )
 
   lazy val test = Seq(
