@@ -18,7 +18,7 @@ object CoinlibApi {
     Logger[F].info(s"coinlib -> GET /global") *>
       basicRequest
         .contentType(MediaType.ApplicationJson)
-        .get(uri"${ac.coinlib.baseUri}/global")
+        .get(uri"${ac.coinlib.baseUri}/global?key=${ac.coinlib.apiKey}&pref=GBP")
         .response(asJson[GlobalResponse])
         .send()
         .flatMap(mapResponse[F, GlobalResponse])
@@ -27,10 +27,9 @@ object CoinlibApi {
     res.body match {
       case Right(response) => response.pure[F]
       case Left(error) =>
-        for {
-          errorMessage <- Sync[F].fromEither(decode[ErrorResponse](error.body).map(_.error).left.flatMap(_ => Right(error.body)))
-          _ <- Logger[F].error(s"error sending request to coinlib: ${res.code} - $errorMessage")
-          _ <- ApiClientError(res.code.code, errorMessage).raiseError[F, R]
-        } yield ()
+        Sync[F].fromEither(decode[ErrorResponse](error.body).map(_.error).left.flatMap(_ => Right(error.body))).flatMap { e =>
+          Logger[F].error(s"error sending request to coinlib: ${res.code} - $e") *>
+            ApiClientError(res.code.code, e).raiseError[F, R]
+        }
     }
 }
