@@ -2,6 +2,7 @@ package io.kirill.cryptotracker.clients.coinlib
 
 import cats.effect.IO
 import io.kirill.cryptotracker.clients.ApiClientSpec
+import io.kirill.cryptotracker.coins.Bitcoin
 import io.kirill.cryptotracker.config.AppConfig
 import io.kirill.cryptotracker.errors.ApiClientError
 import sttp.client
@@ -40,6 +41,36 @@ class CoinlibApiSpec extends ApiClientSpec {
           }
 
         val response = CoinlibApi.global[IO]
+
+        response.assertThrows[ApiClientError]
+      }
+    }
+
+    "GET /coin" - {
+      "return coin stats on success" in {
+        implicit val testingBackend: SttpBackendStub[IO, Nothing] = AsyncHttpClientCatsBackend
+          .stub[IO]
+          .whenRequestMatchesPartial {
+            case r if isCoinlibReq(r, "coin", Map("key" -> "api-key", "pref" -> "GBP", "symbol" -> "BTC")) =>
+              Response.ok(json("coinlib/coin-success.json"))
+            case _ => throw new RuntimeException()
+          }
+
+        val response = CoinlibApi.coin[IO](Bitcoin)
+
+        response.asserting(_.name must be("Bitcoin"))
+      }
+
+      "return error on failure" in {
+        implicit val testingBackend: SttpBackendStub[IO, Nothing] = AsyncHttpClientCatsBackend
+          .stub[IO]
+          .whenRequestMatchesPartial {
+            case r if isCoinlibReq(r, "coin", Map("key" -> "api-key", "pref" -> "GBP", "symbol" -> "BTC")) =>
+              Response.ok(json("coinlib/bad-request-error.json"))
+            case _ => throw new RuntimeException()
+          }
+
+        val response = CoinlibApi.coin[IO](Bitcoin)
 
         response.assertThrows[ApiClientError]
       }
