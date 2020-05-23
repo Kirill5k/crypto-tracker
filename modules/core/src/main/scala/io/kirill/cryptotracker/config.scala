@@ -10,8 +10,15 @@ object config {
       apiKey: String
   )
 
+  final case class TelegramConfig(
+      baseUri: String,
+      botKey: String,
+      channelId: String
+  )
+
   final case class AppConfig(
-      coinlib: CoinlibConfig
+      coinlib: CoinlibConfig,
+      telegram: TelegramConfig
   )
 
   object AppConfig {
