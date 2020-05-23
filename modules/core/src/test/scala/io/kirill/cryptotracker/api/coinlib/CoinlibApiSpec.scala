@@ -13,8 +13,6 @@ import sttp.model.StatusCode
 
 class CoinlibApiSpec extends ApiClientSpec {
 
-  import AppConfig._
-
   "A CoinlibApi" - {
     "GET /global" - {
       "return global stats on success" in {

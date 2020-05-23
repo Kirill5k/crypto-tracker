@@ -22,6 +22,6 @@ object config {
   )
 
   object AppConfig {
-    implicit val appConfig = ConfigSource.default.loadOrThrow[AppConfig]
+    def load: AppConfig = ConfigSource.default.loadOrThrow[AppConfig]
   }
 }
