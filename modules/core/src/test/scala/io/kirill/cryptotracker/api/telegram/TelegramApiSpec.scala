@@ -1,7 +1,7 @@
-package io.kirill.cryptotracker.clients.telegram
+package io.kirill.cryptotracker.api.telegram
 
 import cats.effect.IO
-import io.kirill.cryptotracker.clients.ApiClientSpec
+import io.kirill.cryptotracker.api.ApiClientSpec
 import io.kirill.cryptotracker.errors.ApiClientError
 import sttp.client
 import sttp.client.Response
@@ -24,7 +24,7 @@ class TelegramApiSpec extends ApiClientSpec {
 
         val result = TelegramApi.sendMessage[IO]("text message")
 
-        result.asserting(_ must be (()))
+        result.asserting(_ must be(()))
       }
 
       "return error on failure" in {

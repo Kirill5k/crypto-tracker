@@ -1,7 +1,7 @@
-package io.kirill.cryptotracker.clients.coinlib
+package io.kirill.cryptotracker.api.coinlib
 
 import cats.effect.IO
-import io.kirill.cryptotracker.clients.ApiClientSpec
+import io.kirill.cryptotracker.api.ApiClientSpec
 import io.kirill.cryptotracker.coins.Bitcoin
 import io.kirill.cryptotracker.config.AppConfig
 import io.kirill.cryptotracker.errors.ApiClientError

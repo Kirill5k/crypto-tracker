@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker.clients
+package io.kirill.cryptotracker.api
 
 import cats.effect.testing.scalatest.AsyncIOSpec
 import cats.effect.{ContextShift, IO}
@@ -12,7 +12,7 @@ import scala.io.Source
 
 trait ApiClientSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.Implicits.global)
-  implicit val logger: Logger[IO] = Slf4jLogger.getLogger[IO]
+  implicit val logger: Logger[IO]   = Slf4jLogger.getLogger[IO]
 
   def json(path: String): String = Source.fromResource(path).getLines.toList.mkString
 }

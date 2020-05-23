@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker.clients.coinlib
+package io.kirill.cryptotracker.api.coinlib
 
 import cats.effect.Sync
 import cats.implicits._

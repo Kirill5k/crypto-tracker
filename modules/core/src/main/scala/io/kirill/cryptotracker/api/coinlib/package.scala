@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker.clients
+package io.kirill.cryptotracker.api
 
 package object coinlib {
 
