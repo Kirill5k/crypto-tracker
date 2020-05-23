@@ -14,4 +14,9 @@ object coins {
     val symbol = CryptoCurrencySymbol("BTC")
     val name = CryptoCurrencyName("Bitcoin")
   }
+
+  final case object Ethereum extends Cryptocurrency {
+    val symbol = CryptoCurrencySymbol("ETH")
+    val name = CryptoCurrencyName("Ethereum")
+  }
 }
