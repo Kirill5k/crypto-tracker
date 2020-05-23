@@ -2,8 +2,6 @@ package io.kirill.cryptotracker.api.coinlib
 
 import cats.effect.IO
 import io.kirill.cryptotracker.api.ApiClientSpec
-import io.kirill.cryptotracker.coins.Bitcoin
-import io.kirill.cryptotracker.config.AppConfig
 import io.kirill.cryptotracker.errors.ApiClientError
 import sttp.client
 import sttp.client.Response
@@ -54,7 +52,7 @@ class CoinlibApiSpec extends ApiClientSpec {
             case _ => throw new RuntimeException()
           }
 
-        val response = CoinlibApi.coin[IO](Bitcoin)
+        val response = CoinlibApi.coin[IO]("btc")
 
         response.asserting(_.name must be("Bitcoin"))
       }
@@ -68,7 +66,7 @@ class CoinlibApiSpec extends ApiClientSpec {
             case _ => throw new RuntimeException()
           }
 
-        val response = CoinlibApi.coin[IO](Bitcoin)
+        val response = CoinlibApi.coin[IO]("btc")
 
         response.assertThrows[ApiClientError]
       }

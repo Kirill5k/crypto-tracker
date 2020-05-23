@@ -12,7 +12,7 @@ import scala.concurrent.ExecutionContext
 import scala.io.Source
 
 trait ApiClientSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
-  implicit val ac: AppConfig = AppConfig.load
+  implicit val ac: AppConfig        = AppConfig.load
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.Implicits.global)
   implicit val logger: Logger[IO]   = Slf4jLogger.getLogger[IO]
 

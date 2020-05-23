@@ -6,7 +6,6 @@ import io.chrisdavenport.log4cats.Logger
 import io.circe
 import io.circe.generic.auto._
 import io.circe.parser._
-import io.kirill.cryptotracker.coins.Cryptocurrency
 import io.kirill.cryptotracker.config.AppConfig
 import io.kirill.cryptotracker.errors.ApiClientError
 import sttp.client._
@@ -15,12 +14,12 @@ import sttp.model.MediaType
 
 object CoinlibApi {
   def coin[F[_]: Sync: Logger](
-      crypto: Cryptocurrency
+      coinSymbol: String
   )(implicit ac: AppConfig, b: SttpBackend[F, Nothing, NothingT]): F[CoinResponse] =
-    Logger[F].info(s"coinlib -> GET /coin?symbol=${crypto.symbol.value}") *>
+    Logger[F].info(s"coinlib -> GET /coin?symbol=$coinSymbol") *>
       basicRequest
         .contentType(MediaType.ApplicationJson)
-        .get(uri"${ac.coinlib.baseUri}/coin?key=${ac.coinlib.apiKey}&pref=GBP&symbol=${crypto.symbol.value}")
+        .get(uri"${ac.coinlib.baseUri}/coin?key=${ac.coinlib.apiKey}&pref=GBP&symbol=${coinSymbol.toUpperCase}")
         .response(asJson[CoinResponse])
         .send()
         .flatMap(mapResponse[F, CoinResponse])

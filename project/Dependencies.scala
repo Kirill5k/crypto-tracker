@@ -10,6 +10,7 @@ object Dependencies {
     val sttp           = "2.1.4"
     val circe          = "0.13.0"
     val pureconfig     = "0.12.3"
+    val squants        = "1.6.0"
 
     val log4cats = "1.0.1"
     val logback  = "1.2.3"
@@ -43,6 +44,8 @@ object Dependencies {
       lazy val extras  = "io.circe" %% "circe-generic-extras" % Versions.circe
     }
 
+    lazy val squants = "org.typelevel" %% "squants" % Versions.squants
+
     lazy val scalaTest = "org.scalatest" %% "scalatest" % Versions.scalaTest
 
     object mockito {
@@ -64,7 +67,8 @@ object Dependencies {
     Libraries.circe.parser,
     Libraries.sttp.core,
     Libraries.sttp.circe,
-    Libraries.sttp.cats
+    Libraries.sttp.cats,
+    Libraries.squants
   )
 
   lazy val test = Seq(
