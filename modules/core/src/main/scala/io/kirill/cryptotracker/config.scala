@@ -6,6 +6,7 @@ import pureconfig.generic.auto._
 object config {
 
   final case class CoinlibConfig(
+      baseUri: String,
       apiKey: String
   )
 
