@@ -9,6 +9,7 @@ object Dependencies {
     val fs2            = "2.3.0"
     val sttp           = "2.1.4"
     val circe          = "0.13.0"
+    val pureconfig     = "0.12.3"
 
     val log4cats = "1.0.1"
     val logback  = "1.2.3"
@@ -19,15 +20,15 @@ object Dependencies {
 
   object Libraries {
     object cats {
-      lazy val core   = "org.typelevel" %% "cats-core"   % Versions.catsCore
-      lazy val effect = "org.typelevel" %% "cats-effect" % Versions.catsEffect
+      lazy val core       = "org.typelevel"  %% "cats-core"                     % Versions.catsCore
+      lazy val effect     = "org.typelevel"  %% "cats-effect"                   % Versions.catsEffect
       lazy val effectTest = "com.codecommit" %% "cats-effect-testing-scalatest" % Versions.catsEffectTest
     }
 
-    val logback  = "ch.qos.logback"    % "logback-classic" % Versions.logback
-    val log4cats = "io.chrisdavenport" %% "log4cats-slf4j" % Versions.log4cats
-
-    lazy val fs2Core = "co.fs2" %% "fs2-core" % Versions.fs2
+    lazy val fs2Core        = "co.fs2"                %% "fs2-core"       % Versions.fs2
+    lazy val logback        = "ch.qos.logback"        % "logback-classic" % Versions.logback
+    lazy val log4cats       = "io.chrisdavenport"     %% "log4cats-slf4j" % Versions.log4cats
+    lazy val pureconfigCore = "com.github.pureconfig" %% "pureconfig"     % Versions.pureconfig
 
     object sttp {
       lazy val core  = "com.softwaremill.sttp.client" %% "core"                           % Versions.sttp
@@ -56,6 +57,7 @@ object Dependencies {
     Libraries.logback,
     Libraries.log4cats,
     Libraries.fs2Core,
+    Libraries.pureconfigCore,
     Libraries.circe.core,
     Libraries.circe.extras,
     Libraries.circe.generic,
