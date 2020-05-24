@@ -11,6 +11,7 @@ import scala.concurrent.duration._
 import scala.language.postfixOps
 
 class CoinStatsCacheSpec extends CatsIOSpec {
+  import Builder._
 
   "A RefCoinStatsCache" - {
     "should store stats in cache" in {
@@ -49,11 +50,4 @@ class CoinStatsCacheSpec extends CatsIOSpec {
       result.asserting(_ must be (Nil))
     }
   }
-
-  def coinStats(coin: Cryptocoin = Bitcoin, timestamp: Instant = Instant.now, price: Money = GBP(7500)) =
-    CoinStats(
-      coin,
-      CoinPrice(price, BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(0)),
-      timestamp
-    )
 }

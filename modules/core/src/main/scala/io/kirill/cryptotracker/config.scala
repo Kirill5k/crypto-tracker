@@ -3,6 +3,8 @@ package io.kirill.cryptotracker
 import pureconfig._
 import pureconfig.generic.auto._
 
+import scala.concurrent.duration.FiniteDuration
+
 object config {
 
   final case class CoinlibConfig(
@@ -19,6 +21,10 @@ object config {
   final case class AppConfig(
       coinlib: CoinlibConfig,
       telegram: TelegramConfig
+  )
+
+  final case class CacheConfig(
+      expiresIn: FiniteDuration
   )
 
   object AppConfig {
