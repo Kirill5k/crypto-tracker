@@ -11,7 +11,7 @@ class AppConfigSpec extends AnyFreeSpec with Matchers {
     "should load itself without errors" in {
       val config = AppConfig.load
 
-      config mustBe a [AppConfig]
+      config mustBe a[AppConfig]
     }
   }
 }

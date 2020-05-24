@@ -24,6 +24,8 @@ package object coins {
     val name   = CoinName("Ethereum")
   }
 
+  final case class MarketVolume(value: BigDecimal) extends AnyVal
+
   final case class CoinPrice(
       current: Money,
       delta1h: BigDecimal,
@@ -32,9 +34,10 @@ package object coins {
       delta30d: BigDecimal
   )
 
-  final case class CoinStats(
+  final case class MarketStats(
       coin: Cryptocoin,
       price: CoinPrice,
+      volume: MarketVolume,
       timestamp: Instant
   )
 }

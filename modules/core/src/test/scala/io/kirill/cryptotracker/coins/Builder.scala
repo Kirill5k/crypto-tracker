@@ -13,10 +13,11 @@ object Builder {
   ): CoinPrice =
     CoinPrice(price, d1h, d24h, BigDecimal(0), BigDecimal(0))
 
-  def coinStats(coin: Cryptocoin = Bitcoin, timestamp: Instant = Instant.now, price: Money = GBP(7500)) =
-    CoinStats(
+  def marketStats(coin: Cryptocoin = Bitcoin, timestamp: Instant = Instant.now, price: Money = GBP(7500)) =
+    MarketStats(
       coin,
       coinPrice(price),
+      MarketVolume(BigDecimal(1000000)),
       timestamp
     )
 }

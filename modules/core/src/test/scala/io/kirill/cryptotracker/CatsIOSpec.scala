@@ -13,7 +13,7 @@ import org.scalatest.matchers.must.Matchers
 import scala.concurrent.ExecutionContext
 import scala.io.Source
 
-trait CatsIOSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers with AsyncMockitoSugar with ArgumentMatchersSugar {
+trait CatsIOSpec extends AsyncFreeSpec with AsyncIOSpec with Matchers {
   implicit val ac: AppConfig        = AppConfig.load
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.Implicits.global)
   implicit val logger: Logger[IO]   = Slf4jLogger.getLogger[IO]
