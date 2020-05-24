@@ -6,7 +6,9 @@ import cats.effect.{Concurrent, Sync, Timer}
 import cats.effect.concurrent.Ref
 import cats.implicits._
 
-import scala.concurrent.duration.FiniteDuration
+
+import scala.concurrent.duration._
+import scala.language.postfixOps
 
 sealed trait MarketStatsCache[F[_]] {
   def add(stats: MarketStats): F[Unit]
@@ -27,7 +29,7 @@ object MarketStatsCache {
 
   def refMarketStatsCache[F[_]: Concurrent: Timer](
       expiresIn: FiniteDuration,
-      checkOnExpirationsEvery: FiniteDuration
+      checkOnExpirationsEvery: FiniteDuration = 15 minutes
   ): F[MarketStatsCache[F]] = {
     def runExpiration(cache: Ref[F, Map[Cryptocoin, List[MarketStats]]]): F[Unit] = {
       val process = cache.get
