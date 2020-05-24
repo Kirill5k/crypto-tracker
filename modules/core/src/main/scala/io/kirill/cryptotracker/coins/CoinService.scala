@@ -1,7 +1,7 @@
 package io.kirill.cryptotracker.coins
 
 trait CoinService[F[_]] {
-  def currentPrice(coin: Cryptocoin): F[CoinPrice]
+  def currentStats(coin: Cryptocoin): F[CoinStats]
 }
 
 object CoinService {}

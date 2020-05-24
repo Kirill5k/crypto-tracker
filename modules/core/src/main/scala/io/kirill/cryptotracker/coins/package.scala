@@ -1,5 +1,7 @@
 package io.kirill.cryptotracker
 
+import java.time.Instant
+
 import squants.Money
 
 package object coins {
@@ -23,11 +25,16 @@ package object coins {
   }
 
   final case class CoinPrice(
-      coin: Cryptocoin,
-      currentPrice: Money,
+      current: Money,
       delta1h: BigDecimal,
       delta24h: BigDecimal,
       delta7d: BigDecimal,
       delta30d: BigDecimal
+  )
+
+  final case class CoinStats(
+      coin: Cryptocoin,
+      price: CoinPrice,
+      timestamp: Instant
   )
 }
