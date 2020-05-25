@@ -1,0 +1,172 @@
+{
+  "id": "btc-bitcoin",
+  "name": "Bitcoin",
+  "symbol": "BTC",
+  "rank": 1,
+  "is_new": false,
+  "is_active": true,
+  "type": "coin",
+  "tags": [
+    {
+      "id": "segwit",
+      "name": "Segwit",
+      "coin_counter": 10,
+      "ico_counter": 0
+    },
+    {
+      "id": "cryptocurrency",
+      "name": "Cryptocurrency",
+      "coin_counter": 788,
+      "ico_counter": 37
+    },
+    {
+      "id": "proof-of-work",
+      "name": "Proof Of Work",
+      "coin_counter": 430,
+      "ico_counter": 14
+    },
+    {
+      "id": "payments",
+      "name": "Payments",
+      "coin_counter": 210,
+      "ico_counter": 38
+    },
+    {
+      "id": "sha256",
+      "name": "Sha256",
+      "coin_counter": 43,
+      "ico_counter": 1
+    },
+    {
+      "id": "mining",
+      "name": "Mining",
+      "coin_counter": 332,
+      "ico_counter": 17
+    },
+    {
+      "id": "lightning-network",
+      "name": "Lightning Network",
+      "coin_counter": 7,
+      "ico_counter": 0
+    }
+  ],
+  "team": [
+    {
+      "id": "satoshi-nakamoto",
+      "name": "Satoshi Nakamoto",
+      "position": "Founder"
+    },
+    {
+      "id": "wladimir-j-van-der-laan",
+      "name": "Wladimir J. van der Laan",
+      "position": "Blockchain Developer"
+    },
+    {
+      "id": "jonas-schnelli",
+      "name": "Jonas Schnelli",
+      "position": "Blockchain Developer"
+    },
+    {
+      "id": "marco-falke",
+      "name": "Marco Falke",
+      "position": "Blockchain Developer"
+    }
+  ],
+  "description": "Bitcoin is a cryptocurrency and worldwide payment system. It is the first decentralized digital currency, as the system works without a central bank or single administrator.",
+  "message": "",
+  "open_source": true,
+  "started_at": "2009-01-03T00:00:00Z",
+  "development_status": "Working product",
+  "hardware_wallet": true,
+  "proof_type": "Proof of Work",
+  "org_structure": "Decentralized",
+  "hash_algorithm": "SHA256",
+  "links": {
+    "explorer": [
+      "https://blockchair.com/bitcoin",
+      "http://blockchain.com/explorer",
+      "https://blockstream.info/"
+    ],
+    "facebook": [
+      "https://www.facebook.com/bitcoins/"
+    ],
+    "reddit": [
+      "https://www.reddit.com/r/bitcoin"
+    ],
+    "source_code": [
+      "https://github.com/bitcoin/bitcoin"
+    ],
+    "website": [
+      "https://bitcoin.org/"
+    ],
+    "youtube": [
+      "https://www.youtube.com/watch?v=Gc2en3nHxA4&"
+    ]
+  },
+  "links_extended": [
+    {
+      "url": "https://bitcoin.org/en/blog",
+      "type": "blog"
+    },
+    {
+      "url": "https://blockchair.com/bitcoin",
+      "type": "explorer"
+    },
+    {
+      "url": "http://blockchain.com/explorer",
+      "type": "explorer"
+    },
+    {
+      "url": "https://blockstream.info/",
+      "type": "explorer"
+    },
+    {
+      "url": "https://www.facebook.com/bitcoins/",
+      "type": "facebook"
+    },
+    {
+      "url": "https://bitcointalk.org",
+      "type": "message_board"
+    },
+    {
+      "url": "https://www.reddit.com/r/bitcoin",
+      "type": "reddit",
+      "stats": {
+        "subscribers": 1437172
+      }
+    },
+    {
+      "url": "https://github.com/bitcoin/bitcoin",
+      "type": "source_code",
+      "stats": {
+        "contributors": 864,
+        "stars": 43517
+      }
+    },
+    {
+      "url": "https://twitter.com/bitcoincoreorg",
+      "type": "twitter",
+      "stats": {
+        "followers": 101044
+      }
+    },
+    {
+      "url": "https://electrum.org/#download",
+      "type": "wallet"
+    },
+    {
+      "url": "https://bitcoin.org/",
+      "type": "website"
+    },
+    {
+      "url": "https://www.youtube.com/watch?v=Gc2en3nHxA4&",
+      "type": "youtube"
+    }
+  ],
+  "whitepaper": {
+    "link": "https://static.coinpaprika.com/storage/cdn/whitepapers/215.pdf",
+    "thumbnail": "https://static.coinpaprika.com/storage/cdn/whitepapers/217.jpg"
+  },
+  "first_data_at": "2010-08-17T00:00:00Z",
+  "last_data_at": "2020-05-25T09:25:00Z"
+}
