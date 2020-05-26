@@ -37,6 +37,6 @@ package object coins {
       start: Instant,
       end: Instant,
       period: FiniteDuration,
-      candleSticks: List[OHLC]
+      priceBreakdown: List[OHLC]
   )
 }

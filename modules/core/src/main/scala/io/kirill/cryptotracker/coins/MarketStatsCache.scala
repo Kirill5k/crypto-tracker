@@ -33,7 +33,7 @@ object MarketStatsCache {
     def runExpiration(cache: Ref[F, Map[Cryptocoin, List[MarketStats]]]): F[Unit] = {
       val process = cache.get
         .map(_.map {
-          case (c, stats) => (c, stats.filter(s => s.timestamp.isAfter(Instant.now().minusSeconds(expiresIn.toSeconds))))
+          case (c, stats) => (c, stats.filter(s => s.end.isAfter(Instant.now().minusSeconds(expiresIn.toSeconds))))
         })
         .flatTap(cache.set)
       Timer[F].sleep(checkOnExpirationsEvery) >> process >> runExpiration(cache)

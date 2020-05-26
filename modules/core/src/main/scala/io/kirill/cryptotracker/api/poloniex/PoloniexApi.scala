@@ -26,7 +26,7 @@ object PoloniexApi {
       implicit ac: AppConfig,
       b: SttpBackend[F, Nothing, NothingT]
   ): F[List[PoloniexChartData]] =
-    Logger[F].info(s"coinlib -> GET /global") *>
+    Logger[F].info(s"poloniex -> GET /public?command=returnChartData&currencyPair=$currencyPair") *>
       basicRequest
         .contentType(MediaType.ApplicationJson)
         .get(uri"${ac.poloniex.baseUri}?command=returnChartData&currencyPair=${currencyPair}&start=${start.getEpochSecond}&end=${end.getEpochSecond}&period=${period.toSeconds}")
