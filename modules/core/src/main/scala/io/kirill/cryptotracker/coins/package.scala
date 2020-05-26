@@ -2,7 +2,7 @@ package io.kirill.cryptotracker
 
 import java.time.Instant
 
-import squants.Money
+import scala.concurrent.duration.FiniteDuration
 
 package object coins {
 
@@ -24,23 +24,6 @@ package object coins {
     val name   = CoinName("Ethereum")
   }
 
-  final case class MarketVolume(value: BigDecimal) extends AnyVal
-
-  final case class CoinPrice(
-      current: Money,
-      delta1h: BigDecimal,
-      delta24h: BigDecimal,
-      delta7d: BigDecimal,
-      delta30d: BigDecimal
-  )
-
-  final case class MarketStats(
-      coin: Cryptocoin,
-      price: CoinPrice,
-      volume: MarketVolume,
-      timestamp: Instant
-  )
-
   final case class OHLC(
       open: BigDecimal,
       high: BigDecimal,
@@ -49,4 +32,11 @@ package object coins {
       volume: BigDecimal
   )
 
+  final case class MarketStats(
+      coin: Cryptocoin,
+      start: Instant,
+      end: Instant,
+      period: FiniteDuration,
+      candleSticks: List[OHLC]
+  )
 }
