@@ -58,27 +58,6 @@ class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
   "ema" - {
     val marketStats = Builder.marketStats()
 
-    "calculate exponential moving average for a given period" in {
-      val stats = marketStats.copy(
-        priceBreakdown = List(
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(60.4), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(59.4), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(59.8), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(58.2), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(58.9), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(57.8), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(56.2), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(56.8), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(55.1), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(54.9), BigDecimal(0))
-        )
-      )
-
-      val ema = stats.ema(3)
-
-      ema must be(55.425)
-    }
-
     "calculate exponential moving average for a given period for another set" in {
       val stats = marketStats.copy(
         priceBreakdown = List(
@@ -91,13 +70,23 @@ class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
           OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.91), BigDecimal(0)),
           OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.85), BigDecimal(0)),
           OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(62.95), BigDecimal(0)),
-          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.37), BigDecimal(0))
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.37), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(61.33), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(61.51), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(61.87), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(60.25), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(59.35), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(59.95), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(58.93), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(57.68), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(58.82), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(58.87), BigDecimal(0))
         )
       )
 
       val ema = stats.ema(10)
 
-      ema must be(BigDecimal("63.69482674835552339779367562433989"))
+      ema must be(BigDecimal("59.90473053344797710690800684012607"))
     }
   }
 }
