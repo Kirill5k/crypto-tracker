@@ -23,4 +23,12 @@ package object market {
       period: FiniteDuration,
       priceBreakdown: List[OHLC]
   )
+
+  implicit final class MarketStatsOps(private val stats: MarketStats) extends AnyVal {
+
+    def sma(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
+      val pbs = stats.priceBreakdown.slice(stats.priceBreakdown.size - nPeriods, stats.priceBreakdown.size)
+      pbs.map(_.close).sum / nPeriods
+    }
+  }
 }
