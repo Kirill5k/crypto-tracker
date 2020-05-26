@@ -6,7 +6,6 @@ import cats.effect.{Concurrent, Sync, Timer}
 import cats.effect.concurrent.Ref
 import cats.implicits._
 
-
 import scala.concurrent.duration._
 import scala.language.postfixOps
 
