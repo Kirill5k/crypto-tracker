@@ -7,6 +7,7 @@ import io.kirill.cryptotracker.api.ApiClientSpec
 import sttp.client.Response
 import sttp.client.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client.testing.SttpBackendStub
+import sttp.model.Uri.QuerySegment
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -17,7 +18,7 @@ class CoinMarketClientSpec extends ApiClientSpec {
     "should return live market stats for a coin" in {
       implicit val testingBackend: SttpBackendStub[IO, Nothing] = AsyncHttpClientCatsBackend
         .stub[IO]
-        .whenRequestMatches(r => true)
+        .whenRequestMatches(r => r.uri.querySegments.contains(QuerySegment.KeyValue("currencyPair", "USDT_BTC")))
         .thenRespond(Response.ok(json("poloniex/usdt-btc-chart-data-success.json")))
 
       val result = for {
