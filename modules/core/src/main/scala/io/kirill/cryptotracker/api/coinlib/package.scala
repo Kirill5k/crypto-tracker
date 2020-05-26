@@ -2,12 +2,12 @@ package io.kirill.cryptotracker.api
 
 package object coinlib {
 
-  final case class ErrorResponse(
+  final case class CoinlibErrorResponse(
       error: String,
       remaining: Option[Int]
   )
 
-  final case class GlobalResponse(
+  final case class CoinlibGlobalResponse(
       coins: Int,
       markets: Int,
       total_market_cap: BigDecimal,
@@ -29,7 +29,7 @@ package object coinlib {
       exchanges: List[CoinMarketExchange]
   )
 
-  final case class CoinResponse(
+  final case class CoinlibCoinResponse(
       symbol: String,
       show_symbol: String,
       name: String,

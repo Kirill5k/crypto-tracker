@@ -40,4 +40,13 @@ package object coins {
       volume: MarketVolume,
       timestamp: Instant
   )
+
+  final case class OHLC(
+      open: BigDecimal,
+      high: BigDecimal,
+      low: BigDecimal,
+      close: BigDecimal,
+      volume: BigDecimal
+  )
+
 }
