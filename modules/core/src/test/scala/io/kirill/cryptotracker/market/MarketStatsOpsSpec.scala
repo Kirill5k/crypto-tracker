@@ -78,5 +78,26 @@ class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
 
       ema must be(55.425)
     }
+
+    "calculate exponential moving average for a given period for another set" in {
+      val stats = marketStats.copy(
+        priceBreakdown = List(
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(64.75), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.79), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.73), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.73), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.55), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.19), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.91), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.85), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(62.95), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(63.37), BigDecimal(0))
+        )
+      )
+
+      val ema = stats.ema(10)
+
+      ema must be(BigDecimal("63.69482674835552339779367562433989"))
+    }
   }
 }
