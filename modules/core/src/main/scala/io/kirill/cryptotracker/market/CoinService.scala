@@ -1,7 +1,8 @@
-package io.kirill.cryptotracker.coins
+package io.kirill.cryptotracker.market
 
 import cats.effect.Sync
 import cats.implicits._
+import io.kirill.cryptotracker.market.coin.Cryptocoin
 
 import scala.concurrent.duration._
 import scala.language.postfixOps

@@ -1,9 +1,10 @@
-package io.kirill.cryptotracker.coins
+package io.kirill.cryptotracker.market
 
 import java.time.Instant
 
 import cats.effect.IO
 import io.kirill.cryptotracker.CatsIOSpec
+import io.kirill.cryptotracker.market.coin.{Bitcoin, Cryptocoin}
 import org.mockito.ArgumentMatchersSugar
 import org.mockito.scalatest.AsyncMockitoSugar
 

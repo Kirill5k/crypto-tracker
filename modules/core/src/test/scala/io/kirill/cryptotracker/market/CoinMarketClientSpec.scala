@@ -1,9 +1,10 @@
-package io.kirill.cryptotracker.coins
+package io.kirill.cryptotracker.market
 
 import java.time.Instant
 
 import cats.effect.IO
 import io.kirill.cryptotracker.api.ApiClientSpec
+import io.kirill.cryptotracker.market.coin.Bitcoin
 import sttp.client.Response
 import sttp.client.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client.testing.SttpBackendStub

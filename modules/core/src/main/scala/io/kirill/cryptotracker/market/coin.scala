@@ -1,10 +1,6 @@
-package io.kirill.cryptotracker
+package io.kirill.cryptotracker.market
 
-import java.time.Instant
-
-import scala.concurrent.duration.FiniteDuration
-
-package object coins {
+object coin {
 
   final case class CoinSymbol(value: String) extends AnyVal
   final case class CoinName(value: String)   extends AnyVal
@@ -24,19 +20,4 @@ package object coins {
     val name   = CoinName("Ethereum")
   }
 
-  final case class OHLC(
-      open: BigDecimal,
-      high: BigDecimal,
-      low: BigDecimal,
-      close: BigDecimal,
-      volume: BigDecimal
-  )
-
-  final case class MarketStats(
-      coin: Cryptocoin,
-      start: Instant,
-      end: Instant,
-      period: FiniteDuration,
-      priceBreakdown: List[OHLC]
-  )
 }
