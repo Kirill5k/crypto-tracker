@@ -4,7 +4,7 @@ import java.time.Instant
 
 import cats.effect.IO
 import io.kirill.cryptotracker.CatsIOSpec
-import io.kirill.cryptotracker.market.coin.{Bitcoin, Cryptocoin}
+import io.kirill.cryptotracker.market.coins.{Bitcoin, Cryptocoin}
 import org.mockito.ArgumentMatchersSugar
 import org.mockito.scalatest.AsyncMockitoSugar
 

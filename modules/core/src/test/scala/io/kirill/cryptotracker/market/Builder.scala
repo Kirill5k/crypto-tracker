@@ -2,7 +2,7 @@ package io.kirill.cryptotracker.market
 
 import java.time.Instant
 
-import io.kirill.cryptotracker.market.coin._
+import io.kirill.cryptotracker.market.coins._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps

@@ -5,7 +5,7 @@ import java.time.Instant
 import cats.effect.{Concurrent, Sync, Timer}
 import cats.effect.concurrent.Ref
 import cats.implicits._
-import io.kirill.cryptotracker.market.coin.Cryptocoin
+import io.kirill.cryptotracker.market.coins.Cryptocoin
 
 import scala.concurrent.duration._
 import scala.language.postfixOps

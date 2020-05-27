@@ -1,6 +1,6 @@
 package io.kirill.cryptotracker.market
 
-object coin {
+object coins {
 
   final case class CoinSymbol(value: String) extends AnyVal
   final case class CoinName(value: String)   extends AnyVal

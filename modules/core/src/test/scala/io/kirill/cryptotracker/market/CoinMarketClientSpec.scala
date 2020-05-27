@@ -4,7 +4,7 @@ import java.time.Instant
 
 import cats.effect.IO
 import io.kirill.cryptotracker.api.ApiClientSpec
-import io.kirill.cryptotracker.market.coin.Bitcoin
+import io.kirill.cryptotracker.market.coins.Bitcoin
 import sttp.client.Response
 import sttp.client.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client.testing.SttpBackendStub

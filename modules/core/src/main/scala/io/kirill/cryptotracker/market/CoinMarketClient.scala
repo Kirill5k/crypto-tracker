@@ -7,7 +7,7 @@ import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
 import io.kirill.cryptotracker.api.poloniex.PoloniexApi
 import io.kirill.cryptotracker.config.AppConfig
-import io.kirill.cryptotracker.market.coin.Cryptocoin
+import io.kirill.cryptotracker.market.coins.Cryptocoin
 import sttp.client.{NothingT, SttpBackend}
 
 import scala.concurrent.duration.FiniteDuration
