@@ -89,4 +89,52 @@ class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
       ema must be(BigDecimal("59.90473053344797710690800684012607"))
     }
   }
+
+  "rsi" - {
+    val marketStats = Builder.marketStats()
+
+    "calculate relative strength index" in {
+      val stats = marketStats.copy(
+        priceBreakdown = List(
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.34), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.09), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.15), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(43.61), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.33), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.83), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.10), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.42), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.84), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.08), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.89), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.03), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.61), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.28), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.28), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.00), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.03), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.41), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.22), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.64), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.21), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.25), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.71), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(46.45), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.78), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(45.35), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.03), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.18), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.22), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(44.57), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(43.42), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(42.66), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(0), BigDecimal(0), BigDecimal(43.13), BigDecimal(0)),
+        )
+      )
+
+      val rsi = stats.rsi()
+
+      rsi must be(BigDecimal("35.39125407085985769098708982169985"))
+    }
+  }
 }

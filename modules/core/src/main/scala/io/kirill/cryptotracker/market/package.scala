@@ -27,6 +27,7 @@ package object market {
   implicit final class MarketStatsOps(private val stats: MarketStats) extends AnyVal {
 
     private def EmaSmoothing: Double = 2.0
+    private def RsiPeriod: Int = 14
 
     def ema(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
       val prices = stats.priceBreakdown.map(_.close).reverse
@@ -37,12 +38,30 @@ package object market {
       calc(prices)
     }
 
-    def sma(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
+    def sma(nPeriods: Int = stats.priceBreakdown.size): BigDecimal =
       mean(priceBreakdownSlice(nPeriods).map(_.close))
-    }
 
-    def av(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
+    def av(nPeriods: Int = stats.priceBreakdown.size): BigDecimal =
       mean(priceBreakdownSlice(nPeriods).map(_.volume))
+
+    def rsi(): BigDecimal = {
+      val gains = stats.priceBreakdown.map(_.close).sliding(2).map(pair => pair.tail.head - pair.head).toList.reverse
+
+      def calc(remainingGains: List[BigDecimal]): (BigDecimal, BigDecimal) =
+        if (remainingGains.size <= RsiPeriod) {
+          val (ups, downs) = gains.tail.partition(_ > 0)
+          (ups.sum / RsiPeriod, downs.sum.abs / RsiPeriod)
+        } else {
+          val (avgGain, avgLoss) = calc(remainingGains.tail)
+          val currGain = if (remainingGains.head >= 0) remainingGains.head else BigDecimal(0)
+          val currLoss = if (remainingGains.head < 0) remainingGains.head.abs else BigDecimal(0)
+          ((avgGain * (RsiPeriod-1) + currGain) / RsiPeriod, (avgLoss * (RsiPeriod-1) + currLoss) / RsiPeriod)
+        }
+
+      val (avgGain, avgLoss) = calc(gains)
+
+      val rs = avgGain / avgLoss
+      (100.0 - (100.0 / (1 + rs)))
     }
 
     private def mean(ns: List[BigDecimal]): BigDecimal =
