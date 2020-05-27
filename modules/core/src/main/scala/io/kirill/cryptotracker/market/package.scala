@@ -28,6 +28,18 @@ package object market {
 
     private def EmaSmoothing: Double = 2.0
     private def RsiPeriod: Int = 14
+    private def AtrPeriod: Int = 14
+
+    def atr(): BigDecimal = {
+      val prices = priceBreakdownSlice(AtrPeriod+1).reverse.sliding(2)
+      prices.map {
+        case today :: yesterday :: _ =>
+          val p1 = today.high-today.low
+          val p2 = (today.high - yesterday.close).abs
+          val p3 = (today.low - yesterday.close).abs
+          p1.max(p2).max(p3)
+      }.sum / AtrPeriod
+    }
 
     def ema(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
       val prices = stats.priceBreakdown.map(_.close).reverse

@@ -5,6 +5,38 @@ import org.scalatest.matchers.must.Matchers
 
 class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
 
+  "atr" - {
+    val marketStats = Builder.marketStats()
+
+    "calculate average true range" in {
+      val stats = marketStats.copy(
+        priceBreakdown = List(
+          OHLC(BigDecimal(0), BigDecimal(48.70), BigDecimal(47.79), BigDecimal(48.16), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(48.72), BigDecimal(48.14), BigDecimal(48.61), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(48.90), BigDecimal(48.39), BigDecimal(48.75), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(48.87), BigDecimal(48.37), BigDecimal(48.63), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(48.82), BigDecimal(48.24), BigDecimal(48.74), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.05), BigDecimal(48.64), BigDecimal(49.03), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.20), BigDecimal(48.94), BigDecimal(49.07), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.35), BigDecimal(48.86), BigDecimal(49.32), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.92), BigDecimal(49.50), BigDecimal(49.91), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.19), BigDecimal(49.87), BigDecimal(50.13), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.12), BigDecimal(49.20), BigDecimal(49.53), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.66), BigDecimal(48.90), BigDecimal(49.50), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(49.88), BigDecimal(49.43), BigDecimal(49.75), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.19), BigDecimal(49.73), BigDecimal(50.03), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.36), BigDecimal(49.26), BigDecimal(50.31), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.57), BigDecimal(50.09), BigDecimal(50.52), BigDecimal(0)),
+          OHLC(BigDecimal(0), BigDecimal(50.65), BigDecimal(50.30), BigDecimal(50.41), BigDecimal(0)),
+        )
+      )
+
+      val atr = stats.atr()
+
+      atr must be("0.5492857142857142857142857142857143")
+    }
+  }
+
   "sma" - {
     val marketStats = Builder.marketStats()
 
