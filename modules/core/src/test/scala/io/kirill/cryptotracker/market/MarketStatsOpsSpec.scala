@@ -33,7 +33,7 @@ class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
 
       val atr = stats.atr()
 
-      atr must be("0.5492857142857142857142857142857143")
+      atr must be("0.5464686588921282798833819241982508")
     }
   }
 

@@ -31,14 +31,17 @@ package object market {
     private def AtrPeriod: Int = 14
 
     def atr(): BigDecimal = {
-      val prices = priceBreakdownSlice(AtrPeriod+1).reverse.sliding(2)
-      prices.map {
-        case today :: yesterday :: _ =>
-          val p1 = today.high-today.low
-          val p2 = (today.high - yesterday.close).abs
-          val p3 = (today.low - yesterday.close).abs
-          p1.max(p2).max(p3)
-      }.sum / AtrPeriod
+      val trs = stats.priceBreakdown.reverse.sliding(2).map {
+        case curr :: prev :: _ => curr.high.max(prev.close) - curr.low.min(prev.close)
+      }.toList
+
+      def calc(remainingTrs: List[BigDecimal]): BigDecimal = {
+        if (remainingTrs.size <= AtrPeriod) remainingTrs.sum / AtrPeriod
+        else {
+          (calc(remainingTrs.tail) * (AtrPeriod - 1) + remainingTrs.head) / AtrPeriod
+        }
+      }
+      calc(trs)
     }
 
     def ema(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
