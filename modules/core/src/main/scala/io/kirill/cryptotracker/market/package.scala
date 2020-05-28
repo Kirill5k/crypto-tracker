@@ -24,32 +24,69 @@ package object market {
       priceBreakdown: List[OHLC]
   )
 
+  final case class MarketIndicatorsVolume(
+      mean: BigDecimal,
+      current: BigDecimal
+  )
+
+  final case class MarketIndicatorsSma(
+      sma20: BigDecimal,
+      sma50: BigDecimal,
+      sma200: BigDecimal
+  )
+
+  final case class MarketIndicatorsEma(
+      ema8: BigDecimal,
+      ema13: BigDecimal,
+      ema21: BigDecimal,
+      ema55: BigDecimal
+  )
+
+  final case class MarketIndicators(
+      timestamp: Instant,
+      volume: MarketIndicatorsVolume,
+      sma: MarketIndicatorsSma,
+      ema: MarketIndicatorsEma,
+      rsi: BigDecimal,
+      atr: BigDecimal
+  )
+
   implicit final class MarketStatsOps(private val stats: MarketStats) extends AnyVal {
 
     private def EmaSmoothing: Double = 2.0
-    private def RsiPeriod: Int = 14
-    private def AtrPeriod: Int = 14
+    private def RsiPeriod: Int       = 14
+    private def AtrPeriod: Int       = 14
+
+    def indicators: MarketIndicators =
+      MarketIndicators(
+        stats.end,
+        MarketIndicatorsVolume(av(), stats.priceBreakdown.last.volume),
+        MarketIndicatorsSma(sma(20), sma(50), sma(200)),
+        MarketIndicatorsEma(ema(8), ema(13), ema(21), ema(55)),
+        rsi(),
+        atr()
+      )
 
     def atr(): BigDecimal = {
-      val trs = stats.priceBreakdown.reverse.sliding(2).map {
-        case curr :: prev :: _ => curr.high.max(prev.close) - curr.low.min(prev.close)
-      }.toList
-
-      def calc(remainingTrs: List[BigDecimal]): BigDecimal = {
-        if (remainingTrs.size <= AtrPeriod) remainingTrs.sum / AtrPeriod
-        else {
-          (calc(remainingTrs.tail) * (AtrPeriod - 1) + remainingTrs.head) / AtrPeriod
+      val trs = stats.priceBreakdown.reverse
+        .sliding(2)
+        .map {
+          case curr :: prev :: _ => curr.high.max(prev.close) - curr.low.min(prev.close)
         }
-      }
+        .toList
+
+      def calc(remainingTrs: List[BigDecimal]): BigDecimal =
+        if (remainingTrs.size <= AtrPeriod) remainingTrs.sum / AtrPeriod
+        else (calc(remainingTrs.tail) * (AtrPeriod - 1) + remainingTrs.head) / AtrPeriod
       calc(trs)
     }
 
     def ema(nPeriods: Int = stats.priceBreakdown.size): BigDecimal = {
       val prices = stats.priceBreakdown.map(_.close).reverse
-      val k = EmaSmoothing / (1 + nPeriods)
+      val k      = EmaSmoothing / (1 + nPeriods)
       def calc(prices: List[BigDecimal], current: Int = nPeriods): BigDecimal =
         if (current == 1) mean(prices)
-        else prices.head * k + calc(prices.tail, current - 1) * (1-k)
+        else prices.head * k + calc(prices.tail, current - 1) * (1 - k)
       calc(prices)
     }
 
@@ -68,9 +105,9 @@ package object market {
           (ups.sum / RsiPeriod, downs.sum.abs / RsiPeriod)
         } else {
           val (avgGain, avgLoss) = calc(remainingGains.tail)
-          val currGain = if (remainingGains.head >= 0) remainingGains.head else BigDecimal(0)
-          val currLoss = if (remainingGains.head < 0) remainingGains.head.abs else BigDecimal(0)
-          ((avgGain * (RsiPeriod-1) + currGain) / RsiPeriod, (avgLoss * (RsiPeriod-1) + currLoss) / RsiPeriod)
+          val currGain           = if (remainingGains.head >= 0) remainingGains.head else BigDecimal(0)
+          val currLoss           = if (remainingGains.head < 0) remainingGains.head.abs else BigDecimal(0)
+          ((avgGain * (RsiPeriod - 1) + currGain) / RsiPeriod, (avgLoss * (RsiPeriod - 1) + currLoss) / RsiPeriod)
         }
 
       val (avgGain, avgLoss) = calc(gains)
