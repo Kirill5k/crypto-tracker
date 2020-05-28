@@ -5,6 +5,8 @@ import org.scalatest.matchers.must.Matchers
 
 class MarketStatsOpsSpec extends AnyFreeSpec with Matchers {
 
+  import indicators._
+
   "atr" - {
     val marketStats = Builder.marketStats()
 
