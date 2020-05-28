@@ -69,7 +69,7 @@ object indicators {
       val prices = stats.priceBreakdown.map(_.close).reverse
       val k      = EmaSmoothing / (1 + nPeriods)
       def calc(prices: List[BigDecimal], current: Int = nPeriods): BigDecimal =
-        if (current == 1) mean(prices)
+        if (current == 1 || prices.size <= 1) mean(prices)
         else prices.head * k + calc(prices.tail, current - 1) * (1 - k)
       calc(prices)
     }

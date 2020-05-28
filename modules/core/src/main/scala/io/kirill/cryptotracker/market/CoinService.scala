@@ -3,6 +3,7 @@ package io.kirill.cryptotracker.market
 import cats.effect.Sync
 import cats.implicits._
 import io.kirill.cryptotracker.market.coins.Cryptocoin
+import io.kirill.cryptotracker.market.indicators._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -19,7 +20,7 @@ final private class LiveCoinService[F[_]: Sync](
   override def currentStats(coin: Cryptocoin): F[MarketStats] =
     for {
       s <- marketClient.liveStats(coin, 4 hours, 200 days)
-      _ <- marketStatsCache.add(s)
+      _ <- marketStatsCache.add(s.indicators)
     } yield s
 }
 

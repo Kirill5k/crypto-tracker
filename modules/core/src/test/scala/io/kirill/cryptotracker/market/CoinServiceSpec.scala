@@ -5,6 +5,8 @@ import java.time.Instant
 import cats.effect.IO
 import io.kirill.cryptotracker.CatsIOSpec
 import io.kirill.cryptotracker.market.coins.{Bitcoin, Cryptocoin}
+import io.kirill.cryptotracker.market.indicators._
+import io.kirill.cryptotracker.market.indicators.MarketIndicators
 import org.mockito.ArgumentMatchersSugar
 import org.mockito.scalatest.AsyncMockitoSugar
 
@@ -22,12 +24,12 @@ class CoinServiceSpec extends CatsIOSpec with AsyncMockitoSugar with ArgumentMat
       val result = for {
         service <- CoinService.make[IO](client, cache)
         _ = when(client.liveStats(any[Cryptocoin], eqTo(4 hours), eqTo(200 days), any[Instant])).thenReturn(IO.pure(stats))
-        _ = when(cache.add(any[MarketStats])).thenReturn(IO.unit)
+        _ = when(cache.add(any[MarketIndicators])).thenReturn(IO.unit)
         res <- service.currentStats(Bitcoin)
       } yield res
 
       result.asserting { s =>
-        verify(cache).add(s)
+        verify(cache).add(s.indicators)
         s must be(stats)
       }
     }

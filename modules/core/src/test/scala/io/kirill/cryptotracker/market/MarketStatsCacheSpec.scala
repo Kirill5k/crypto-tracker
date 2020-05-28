@@ -6,6 +6,7 @@ import cats.effect.IO
 import cats.implicits._
 import io.kirill.cryptotracker.CatsIOSpec
 import io.kirill.cryptotracker.market.coins.Bitcoin
+import io.kirill.cryptotracker.market.indicators._
 
 import scala.concurrent.duration._
 import scala.language.postfixOps
@@ -16,9 +17,9 @@ class MarketStatsCacheSpec extends CatsIOSpec {
   "A RefMarketStatsCache" - {
     "should store stats in cache" in {
       val stats = List(
-        marketStats(timestamp = Instant.now().minusSeconds(1000)),
-        marketStats(timestamp = Instant.now().minusSeconds(100)),
-        marketStats(timestamp = Instant.now().minusSeconds(10))
+        marketStats(timestamp = Instant.now().minusSeconds(1000)).indicators,
+        marketStats(timestamp = Instant.now().minusSeconds(100)).indicators,
+        marketStats(timestamp = Instant.now().minusSeconds(10)).indicators
       )
 
       val result = for {
@@ -42,7 +43,7 @@ class MarketStatsCacheSpec extends CatsIOSpec {
     "should clear expired stats" in {
       val result = for {
         cache <- MarketStatsCache.refMarketStatsCache[IO](2 seconds, 100 millis)
-        _     <- cache.add(marketStats(timestamp = Instant.now()))
+        _     <- cache.add(marketStats(timestamp = Instant.now()).indicators)
         <     <- IO.sleep(3 seconds)
         res   <- cache.get(Bitcoin)
       } yield res
