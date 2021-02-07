@@ -9,6 +9,10 @@ import scala.concurrent.duration.FiniteDuration
 
 object config {
 
+  final case class PoloniexConfig(
+      baseUri: String
+  )
+
   final case class CoinlibConfig(
       baseUri: String,
       apiKey: String
@@ -21,6 +25,7 @@ object config {
   )
 
   final case class AppConfig(
+      poloniex: PoloniexConfig,
       coinlib: CoinlibConfig,
       telegram: TelegramConfig
   )
