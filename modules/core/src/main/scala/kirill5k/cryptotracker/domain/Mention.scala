@@ -2,7 +2,7 @@ package kirill5k.cryptotracker.domain
 
 import java.time.Instant
 
-final case class StockSymbol(value: String) extends AnyVal
+final case class Ticker(value: String) extends AnyVal
 final case class Subreddit(value: String) extends AnyVal
 
 sealed trait MentionSource
@@ -15,7 +15,7 @@ object MentionSource {
   - context?
  */
 final case class Mention(
-    stock: StockSymbol,
+    ticker: Ticker,
     time: Instant,
     message: String,
     source: MentionSource,
