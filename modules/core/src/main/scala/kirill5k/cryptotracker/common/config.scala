@@ -1,6 +1,7 @@
 package kirill5k.cryptotracker.common
 
 import cats.effect.{Blocker, ContextShift, Sync}
+import kirill5k.cryptotracker.domain.Subreddit
 import pureconfig._
 import pureconfig.generic.auto._
 import pureconfig.module.catseffect.syntax._
@@ -14,8 +15,6 @@ object config {
       botKey: String,
       channelId: String
   )
-
-  final case class Subreddit(value: String) extends AnyVal
 
   final case class RedditConfig(
       baseUri: String,
