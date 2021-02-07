@@ -9,24 +9,21 @@ import scala.concurrent.duration.FiniteDuration
 
 object config {
 
-  final case class PoloniexConfig(
-      baseUri: String
-  )
-
-  final case class CoinlibConfig(
-      baseUri: String,
-      apiKey: String
-  )
-
   final case class TelegramConfig(
       baseUri: String,
       botKey: String,
       channelId: String
   )
 
+  final case class Subreddit(value: String) extends AnyVal
+
+  final case class RedditConfig(
+      baseUri: String,
+      subreddits: List[Subreddit]
+  )
+
   final case class AppConfig(
-      poloniex: PoloniexConfig,
-      coinlib: CoinlibConfig,
+      reddit: RedditConfig,
       telegram: TelegramConfig
   )
 
