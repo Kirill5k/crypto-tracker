@@ -1,9 +1,9 @@
-package io.kirill.cryptotracker
+package kirill5k.cryptotracker
 
 import cats.effect.{ExitCode, IO, IOApp}
 import io.chrisdavenport.log4cats.Logger
 import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
-import io.kirill.cryptotracker.config.AppConfig
+import config.AppConfig
 
 object Main extends IOApp {
   implicit val ac: AppConfig      = AppConfig.load

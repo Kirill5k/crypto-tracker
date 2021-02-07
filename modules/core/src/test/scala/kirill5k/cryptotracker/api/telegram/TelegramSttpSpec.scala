@@ -1,15 +1,16 @@
-package io.kirill.cryptotracker.api.telegram
+package kirill5k.cryptotracker.api.telegram
 
 import cats.effect.IO
 import io.kirill.cryptotracker.api.ApiClientSpec
 import io.kirill.cryptotracker.errors.ApiClientError
+import kirill5k.cryptotracker.api.SttpClientSpec
 import sttp.client
 import sttp.client.Response
 import sttp.client.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client.testing.SttpBackendStub
 import sttp.model.StatusCode
 
-class TelegramApiSpec extends ApiClientSpec {
+class TelegramSttpSpec extends SttpClientSpec {
 
   "A TelegramApi" - {
     "GET /sendMessage" - {

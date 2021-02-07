@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker.api.telegram
+package kirill5k.cryptotracker.api.telegram
 
 import cats.effect.Sync
 import cats.implicits._

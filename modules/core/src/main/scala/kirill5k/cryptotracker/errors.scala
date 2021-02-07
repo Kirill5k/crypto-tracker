@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker
+package kirill5k.cryptotracker
 
 object errors {
   sealed trait AppError extends Throwable {

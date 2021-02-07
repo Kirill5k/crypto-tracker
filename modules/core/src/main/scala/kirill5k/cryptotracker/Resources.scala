@@ -1,7 +1,7 @@
-package io.kirill.cryptotracker
+package kirill5k.cryptotracker
 
 import cats.effect.{ConcurrentEffect, ContextShift, Resource}
-import io.kirill.cryptotracker.config.AppConfig
+import config.AppConfig
 import sttp.client.asynchttpclient.cats.AsyncHttpClientCatsBackend
 import sttp.client.{NothingT, SttpBackend}
 

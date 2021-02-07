@@ -1,7 +1,7 @@
 ### SBT template
 # Simple Build Tool
 # http://www.scala-sbt.org/release/docs/Getting-Started/Directories.html#configuring-version-control
-
+.bsp/
 dist/*
 target/
 lib_managed/
@@ -48,6 +48,7 @@ cmake-build-*/
 
 # IntelliJ
 out/
+null/
 
 # mpeltonen/sbt-idea plugin
 .idea_modules/

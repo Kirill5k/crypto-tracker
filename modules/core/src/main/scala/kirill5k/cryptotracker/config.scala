@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker
+package kirill5k.cryptotracker
 
 import pureconfig._
 import pureconfig.generic.auto._

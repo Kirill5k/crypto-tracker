@@ -1,7 +1,6 @@
-package io.kirill.cryptotracker.api
+package kirill5k.cryptotracker.api.coinlib
 
-package object coinlib {
-
+object models {
   final case class ErrorResponse(
       error: String,
       remaining: Option[Int]

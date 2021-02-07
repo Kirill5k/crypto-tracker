@@ -1,4 +1,4 @@
-package io.kirill.cryptotracker.api.coinlib
+package kirill5k.cryptotracker.api.coinlib
 
 import cats.effect.Sync
 import cats.implicits._
@@ -6,8 +6,8 @@ import io.chrisdavenport.log4cats.Logger
 import io.circe
 import io.circe.generic.auto._
 import io.circe.parser._
-import io.kirill.cryptotracker.config.AppConfig
-import io.kirill.cryptotracker.errors.ApiClientError
+import kirill5k.cryptotracker.config.AppConfig
+import kirill5k.cryptotracker.errors.ApiClientError
 import sttp.client._
 import sttp.client.circe._
 import sttp.model.MediaType
