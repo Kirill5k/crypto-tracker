@@ -8,5 +8,6 @@ object errors {
 
   object AppError {
     final case class Http(statusCode: Int, message: String) extends AppError
+    final case class Json(message: String)                  extends AppError
   }
 }
