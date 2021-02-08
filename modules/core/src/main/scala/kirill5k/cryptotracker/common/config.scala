@@ -18,6 +18,7 @@ object config {
 
   final case class RedditConfig(
       baseUri: String,
+      searchPeriod: FiniteDuration,
       subreddits: List[Subreddit]
   )
 
