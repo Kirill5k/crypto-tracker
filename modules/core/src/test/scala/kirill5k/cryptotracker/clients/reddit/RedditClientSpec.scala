@@ -18,7 +18,7 @@ class RedditClientSpec extends SttpClientSpec {
 
     "return list of stock/crypto mentions from a given subreddit" in {
       val submissionsEndpoint = "reddit/search/submission"
-      val params = Map("after" -> "5m", "subbeddit" -> "WallStreetBets", "over_18" -> "true")
+      val params = Map("after" -> "5m", "subreddit" -> "WallStreetBets", "over_18" -> "true")
       val testingBackend: SttpBackend[IO, Any] = backendStub
         .whenRequestMatchesPartial {
           case r if r.isGet && r.isGoingTo(s"reddit.com/$submissionsEndpoint") && r.hasParams(params) =>
@@ -30,7 +30,7 @@ class RedditClientSpec extends SttpClientSpec {
       val result = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
 
       result.unsafeToFuture().map { mentions =>
-        mentions must have size 10
+        mentions must have size 4
       }
     }
   }
