@@ -1,5 +1,7 @@
 package kirill5k.cryptotracker.clients.reddit
 
+import kirill5k.cryptotracker.domain.Subreddit
+
 private[reddit] object responses {
 
   final case class Submission(
@@ -8,7 +10,7 @@ private[reddit] object responses {
       retrieved_on: Long,
       full_link: String,
       permalink: String,
-      subreddit: String,
+      subreddit: Subreddit,
       title: String
   )
 

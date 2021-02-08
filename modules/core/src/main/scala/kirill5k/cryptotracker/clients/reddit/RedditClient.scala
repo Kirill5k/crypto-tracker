@@ -45,4 +45,7 @@ final private class LiveRedditClient[F[_]: Sync](
       }
 }
 
-object RedditClient {}
+object RedditClient {
+  def make[F[_]: Sync: Logger: Timer](config: RedditConfig, backend: SttpBackend[F, Any]): F[RedditClient[F]] =
+    Sync[F].delay(new LiveRedditClient[F](config, backend))
+}
