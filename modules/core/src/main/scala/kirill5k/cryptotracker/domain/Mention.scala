@@ -2,7 +2,6 @@ package kirill5k.cryptotracker.domain
 
 import java.time.Instant
 
-final case class Ticker(value: String) extends AnyVal
 final case class Subreddit(value: String) extends AnyVal
 
 sealed trait MentionSource

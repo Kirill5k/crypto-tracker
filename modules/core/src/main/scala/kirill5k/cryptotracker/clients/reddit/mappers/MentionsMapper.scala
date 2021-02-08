@@ -18,7 +18,7 @@ private[reddit] object MentionsMapper {
       .filter(tickerRegex.matches)
       .map { t =>
         Mention(
-          Ticker(t.tail),
+          Ticker(t.tail.toUpperCase),
           Instant.ofEpochSecond(submission.created_utc),
           submission.title,
           MentionSource.Reddit(submission.subreddit),
