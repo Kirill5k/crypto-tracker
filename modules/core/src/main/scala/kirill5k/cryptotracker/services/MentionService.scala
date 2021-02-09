@@ -1,6 +1,6 @@
 package kirill5k.cryptotracker.services
 
-import cats.effect.Timer
+import cats.effect.{Sync, Timer}
 import fs2.Stream
 import kirill5k.cryptotracker.common.stream._
 import kirill5k.cryptotracker.clients.reddit.RedditClient
@@ -12,7 +12,7 @@ trait MentionService[F[_]] {
   def liveFromReddit(subreddit: Subreddit, searchFrequency: FiniteDuration): Stream[F, Mention]
 }
 
-final private class LiveMentionService[F[_]: Timer](
+final private class LiveMentionService[F[_]: Sync: Timer](
     private val redditClient: RedditClient[F]
 ) extends MentionService[F] {
 
@@ -24,5 +24,6 @@ final private class LiveMentionService[F[_]: Timer](
 }
 
 object MentionService {
-  def make[F[_]: Timer]: F[MentionService[F]] = ???
+  def make[F[_]: Timer: Sync](redditClient: RedditClient[F]): F[MentionService[F]] =
+    Sync[F].delay(new LiveMentionService[F](redditClient))
 }
