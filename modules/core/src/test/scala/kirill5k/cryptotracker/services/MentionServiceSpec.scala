@@ -17,14 +17,14 @@ class MentionServiceSpec extends CatsIOSpec {
       val (client)  = mocks
 
       when(client.findMentions(any[Subreddit], any[FiniteDuration]))
-        .thenReturn(IO.pure(mentions))
-        .andThen(IO.pure(mentions))
+        .thenReturn(IO(println("111111111111")) *> IO.pure(mentions))
+        .andThen(IO(println("222222222222")) *> IO.pure(mentions))
 
       val res = for {
         service <- MentionService.make[IO](client)
         mentions <- service
           .liveFromReddit(Subreddit("wallstreetbets"), 1.seconds)
-          .interruptAfter(1500.millis)
+          .interruptAfter(1200.millis)
           .compile
           .toList
       } yield mentions
