@@ -12,6 +12,7 @@ object MentionSource {
 
 /*
   - context?
+  - sentiment
  */
 final case class Mention(
     ticker: Ticker,
