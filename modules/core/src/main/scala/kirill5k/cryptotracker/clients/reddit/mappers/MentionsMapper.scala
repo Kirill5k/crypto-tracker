@@ -16,7 +16,7 @@ private[reddit] object MentionsMapper {
       .split(" ")
       .map(_.trim)
       .filter(tickerRegex.matches)
-      .toSet
+      .distinct
       .map { t =>
         Mention(
           Ticker(t.tail.toUpperCase),
