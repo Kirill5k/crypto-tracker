@@ -15,7 +15,7 @@ private[reddit] object MentionsMapper {
         .trim
 
   private val tickerRegex = List(
-    "^\\$[a-zA-Z]{2,5}"
+    "^\\$[a-zA-Z]{2,4}"
   ).mkString("(?i)(", "|", ")").r
 
   def map(submission: Submission): List[Mention] =
