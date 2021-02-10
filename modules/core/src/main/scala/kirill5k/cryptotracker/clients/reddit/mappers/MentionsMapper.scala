@@ -7,14 +7,21 @@ import java.time.Instant
 
 private[reddit] object MentionsMapper {
 
+  private def withoutSpecialChars(text: String): String =
+      text
+        .replaceAll("[@~+%\"{}?_;`—–“”!•£&#’'*|.\\[\\]]", "")
+        .replaceAll("[\\\\()/,:-]", " ")
+        .replaceAll(" +", " ")
+        .trim
+
   private val tickerRegex = List(
-    "^\\$[a-zA-Z]*"
+    "^\\$[a-zA-Z]{2,5}"
   ).mkString("(?i)(", "|", ")").r
 
   def map(submission: Submission): List[Mention] =
     submission.title
       .split(" ")
-      .map(_.trim)
+      .map(withoutSpecialChars)
       .filter(tickerRegex.matches)
       .distinct
       .map { t =>
