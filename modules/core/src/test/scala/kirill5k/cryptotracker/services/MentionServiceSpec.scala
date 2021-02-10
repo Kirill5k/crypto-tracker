@@ -4,7 +4,7 @@ import cats.effect.IO
 import kirill5k.cryptotracker.CatsIOSpec
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.domain.MentionBuilder.mention
-import kirill5k.cryptotracker.domain.{Subreddit, Ticker}
+import kirill5k.cryptotracker.domain.Subreddit
 
 import scala.concurrent.duration._
 
@@ -13,12 +13,10 @@ class MentionServiceSpec extends CatsIOSpec {
   "A MentionService" should {
 
     "stream live ticker mentions from reddit" in {
-      val mentions = List(mention(Ticker("BB")), mention(Ticker("AMD")))
       val (client)  = mocks
 
       when(client.findMentions(any[Subreddit], any[FiniteDuration]))
-        .thenReturn(IO(println("111111111111")) *> IO.pure(mentions))
-        .andThen(IO(println("222222222222")) *> IO.pure(mentions))
+        .thenReturn(IO.pure(List(mention())))
 
       val res = for {
         service <- MentionService.make[IO](client)
@@ -29,8 +27,9 @@ class MentionServiceSpec extends CatsIOSpec {
           .toList
       } yield mentions
 
-      res.unsafeToFuture().map { returnedMentions =>
-        returnedMentions mustBe mentions ::: mentions
+      res.unsafeToFuture().map { mentions =>
+        verify(client).findMentions(Subreddit("wallstreetbets"), 1.seconds)
+        mentions must have size 2
       }
     }
   }

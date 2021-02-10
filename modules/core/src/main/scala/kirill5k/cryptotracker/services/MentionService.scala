@@ -3,6 +3,7 @@ package kirill5k.cryptotracker.services
 import cats.effect.{Sync, Timer}
 import fs2.Stream
 import kirill5k.cryptotracker.clients.reddit.RedditClient
+import kirill5k.cryptotracker.common.Streams
 import kirill5k.cryptotracker.domain.{Mention, Subreddit}
 
 import scala.concurrent.duration.FiniteDuration
@@ -18,7 +19,7 @@ final private class LiveMentionService[F[_]: Sync: Timer](
   override def liveFromReddit(subreddit: Subreddit, searchFrequency: FiniteDuration): Stream[F, Mention] =
     Stream
       .repeatEval(redditClient.findMentions(subreddit, searchFrequency))
-      .zipLeft(Stream.fixedRate[F](searchFrequency))
+      .zipLeft(Streams.fixedRateImmediate[F](searchFrequency))
       .flatMap(Stream.emits)
 }
 
