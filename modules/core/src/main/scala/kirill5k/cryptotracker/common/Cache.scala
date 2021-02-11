@@ -15,8 +15,8 @@ trait Cache[F[_], K, V] {
 }
 
 final private class RefbasedCache[F[_]: Sync, K, V](
-                                                     state: Ref[F, Map[K, (V, Instant)]]
-                                                   ) extends Cache[F, K, V] {
+    state: Ref[F, Map[K, (V, Instant)]]
+) extends Cache[F, K, V] {
 
   override def get(key: K): F[Option[V]] =
     state.get.map(_.get(key).map(_._1))
@@ -31,19 +31,20 @@ final private class RefbasedCache[F[_]: Sync, K, V](
 object Cache {
 
   def make[F[_]: Concurrent: Timer, K, V](
-                                           expiresIn: FiniteDuration,
-                                           checkOnEvery: FiniteDuration
-                                         ): F[Cache[F, K, V]] = {
+      expiresIn: FiniteDuration,
+      checkOnEvery: FiniteDuration
+  ): F[Cache[F, K, V]] = {
 
     def checkExpirations(state: Ref[F, Map[K, (V, Instant)]]): F[Unit] = {
-      val process = state.update(_.filter {
-        case (_, (_, exp)) => exp.plusNanos(expiresIn.toNanos).isAfter(Instant.now)
+      val process = state.update(_.filter { case (_, (_, exp)) =>
+        exp.plusNanos(expiresIn.toNanos).isAfter(Instant.now)
       })
 
       Timer[F].sleep(checkOnEvery) >> process >> checkExpirations(state)
     }
 
-    Ref.of[F, Map[K, (V, Instant)]](Map())
+    Ref
+      .of[F, Map[K, (V, Instant)]](Map())
       .flatTap(s => checkExpirations(s).start.void)
       .map(s => new RefbasedCache[F, K, V](s))
   }
