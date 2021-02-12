@@ -7,6 +7,14 @@ import java.time.Instant
 
 private[reddit] object MentionsMapper {
 
+  private val wordsFilter = List(
+    "USD", "WSB"
+  ).mkString("(?i).*(", "|", ").*").r
+
+  private val tickerRegex = List(
+    "^\\$[a-zA-Z]{2,4}"
+  ).mkString("(?i)(", "|", ")").r
+
   private def withoutSpecialChars(text: String): String =
       text
         .replaceAll("[@~+%\"{}?_;`—–“”!•£&#’'*|.\\[\\]]", "")
@@ -14,14 +22,11 @@ private[reddit] object MentionsMapper {
         .replaceAll(" +", " ")
         .trim
 
-  private val tickerRegex = List(
-    "^\\$[a-zA-Z]{2,4}"
-  ).mkString("(?i)(", "|", ")").r
-
   def map(submission: Submission): List[Mention] =
     submission.title
       .split(" ")
       .map(withoutSpecialChars)
+      .filterNot(wordsFilter.matches)
       .filter(tickerRegex.matches)
       .distinct
       .map { t =>
