@@ -10,10 +10,6 @@ object MentionSource {
   final case class Reddit(subreddit: Subreddit) extends MentionSource
 }
 
-/*
-  - context?
-  - sentiment
- */
 final case class Mention(
     ticker: Ticker,
     time: Instant,
