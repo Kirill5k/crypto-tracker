@@ -3,6 +3,7 @@ package kirill5k.cryptotracker.clients.reddit.mappers
 import kirill5k.cryptotracker.clients.reddit.responses.Submission
 import kirill5k.cryptotracker.domain.{Mention, MentionSource, Ticker}
 
+import java.net.URI
 import java.time.Instant
 
 private[reddit] object MentionsMapper {
@@ -35,7 +36,7 @@ private[reddit] object MentionsMapper {
           Instant.ofEpochSecond(submission.created_utc),
           submission.title,
           MentionSource.Reddit(submission.subreddit),
-          submission.full_link
+          URI.create(submission.full_link)
         )
       }
       .toList

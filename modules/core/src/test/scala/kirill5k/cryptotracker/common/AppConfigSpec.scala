@@ -10,7 +10,7 @@ class AppConfigSpec extends CatsIOSpec {
     "should load itself without errors" in {
       Blocker[IO].use(AppConfig.load[IO]).unsafeToFuture().map { config =>
         config.reddit.baseUri mustBe "https://api.pushshift.io"
-        config.telegram.baseUri mustBe "bar"
+        config.telegram.baseUri mustBe "https://api.telegram.org"
       }
     }
   }

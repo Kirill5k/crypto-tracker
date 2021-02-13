@@ -1,5 +1,6 @@
 package kirill5k.cryptotracker.domain
 
+import java.net.URI
 import java.time.Instant
 
 final case class Subreddit(value: String) extends AnyVal
@@ -15,5 +16,5 @@ final case class Mention(
     time: Instant,
     message: String,
     source: MentionSource,
-    url: String
+    url: URI
 )

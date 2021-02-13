@@ -4,7 +4,7 @@ import cats.effect.IO
 import kirill5k.cryptotracker.RequestOps._
 import kirill5k.cryptotracker.SttpClientSpec
 import kirill5k.cryptotracker.common.config.RedditConfig
-import kirill5k.cryptotracker.domain.Subreddit
+import kirill5k.cryptotracker.domain.{Subreddit, Ticker}
 import sttp.client3.{Response, SttpBackend}
 
 import scala.concurrent.duration._
@@ -30,7 +30,7 @@ class RedditClientSpec extends SttpClientSpec {
       val result = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
 
       result.unsafeToFuture().map { mentions =>
-        mentions must have size 4
+        mentions.map(_.ticker) mustBe List(Ticker("NOK"), Ticker("GME"), Ticker("CRSR"), Ticker("ZOM"))
       }
     }
   }
