@@ -7,6 +7,7 @@ import kirill5k.cryptotracker.clients.Clients
 import kirill5k.cryptotracker.common.Resources
 import kirill5k.cryptotracker.common.config.AppConfig
 import kirill5k.cryptotracker.services.Services
+import kirill5k.cryptotracker.tasks.Tasks
 
 object Main extends IOApp {
 
@@ -20,6 +21,8 @@ object Main extends IOApp {
         for {
           clients  <- Clients.make[IO](config, resources.sttpBackend)
           services <- Services.make[IO](clients)
+          tasks    <- Tasks.make[IO](config, services)
+          _        <- tasks.runAll().compile.drain
         } yield ()
       }
     } yield ExitCode.Success
