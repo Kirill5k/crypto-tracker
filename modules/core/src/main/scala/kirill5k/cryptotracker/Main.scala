@@ -22,7 +22,7 @@ object Main extends IOApp {
           clients  <- Clients.make[IO](config, resources.sttpBackend)
           services <- Services.make[IO](clients)
           tasks    <- Tasks.make[IO](config, services)
-          _        <- tasks.runAll().compile.drain
+          _        <- tasks.runAll().compile.drain <* logger.info("started all tasks")
         } yield ()
       }
     } yield ExitCode.Success
