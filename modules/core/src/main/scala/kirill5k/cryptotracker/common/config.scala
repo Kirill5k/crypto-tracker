@@ -10,6 +10,11 @@ import scala.concurrent.duration.FiniteDuration
 
 object config {
 
+  final case class ServerConfig(
+      host: String,
+      port: Int
+  )
+
   final case class TelegramConfig(
       baseUri: String,
       botKey: String,
@@ -23,13 +28,11 @@ object config {
   )
 
   final case class AppConfig(
+      server: ServerConfig,
       reddit: RedditConfig,
       telegram: TelegramConfig
   )
 
-  final case class CacheConfig(
-      expiresIn: FiniteDuration
-  )
   object AppConfig {
 
     def load[F[_]: Sync: ContextShift](blocker: Blocker): F[AppConfig] =
