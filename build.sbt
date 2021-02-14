@@ -18,6 +18,8 @@ lazy val docker = Seq(
   maintainer := "immotional@aol.com",
   dockerBaseImage := "adoptopenjdk/openjdk15-openj9:alpine-jre",
   dockerUpdateLatest := true,
+  maintainer in Docker := "kirill5k",
+  dockerRepository := Some("us.gcr.io"),
   makeBatScripts := List(),
   dockerCommands := {
     val commands         = dockerCommands.value
@@ -41,5 +43,8 @@ lazy val core = (project in file("modules/core"))
   .settings(
     name := "crypto-tracker-core",
     moduleName := "crypto-tracker-core",
+    packageSummary := "Crypto tracker",
+    packageDescription := "Package description",
+    Docker / packageName := "crypto-tracker-2020/core",
     libraryDependencies ++= Dependencies.core ++ Dependencies.test
   )
