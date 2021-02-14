@@ -17,4 +17,7 @@ class HealthController[F[_]] extends Controller[F] {
 object HealthController {
 
   final case class AppStatus(status: Boolean)
+
+  def make[F[_]: Sync]: F[Controller[F]] =
+    Sync[F].delay(new HealthController[F])
 }
