@@ -35,7 +35,7 @@ object Main extends IOApp {
             .serve
             .compile
             .drain
-          _ <- tasksProcesses.cancel
+          _ <- logger.info("shutting down crypto tracker") *> tasksProcesses.cancel
         } yield ()
       }
     } yield ExitCode.Success
