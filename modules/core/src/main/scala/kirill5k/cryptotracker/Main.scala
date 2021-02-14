@@ -6,8 +6,13 @@ import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
 import kirill5k.cryptotracker.clients.Clients
 import kirill5k.cryptotracker.common.Resources
 import kirill5k.cryptotracker.common.config.AppConfig
+import kirill5k.cryptotracker.controllers.Controllers
 import kirill5k.cryptotracker.services.Services
 import kirill5k.cryptotracker.tasks.Tasks
+import org.http4s.server.blaze.BlazeServerBuilder
+import org.http4s.implicits._
+
+import scala.concurrent.ExecutionContext
 
 object Main extends IOApp {
 
@@ -19,10 +24,18 @@ object Main extends IOApp {
       config <- Blocker[IO].use(AppConfig.load[IO]) <* logger.info("loaded config")
       _ <- Resources.make[IO].use { resources =>
         for {
-          clients  <- Clients.make[IO](config, resources.sttpBackend)
-          services <- Services.make[IO](clients)
-          tasks    <- Tasks.make[IO](config, services)
-          _        <- tasks.runAll().compile.drain <* logger.info("started all tasks")
+          clients        <- Clients.make[IO](config, resources.sttpBackend)
+          services       <- Services.make[IO](clients)
+          tasks          <- Tasks.make[IO](config, services)
+          tasksProcesses <- tasks.runAll().compile.drain.start <* logger.info("started all tasks")
+          controllers    <- Controllers.make[IO]
+          _ <- BlazeServerBuilder[IO](ExecutionContext.global)
+            .bindHttp(config.server.port, config.server.host)
+            .withHttpApp(controllers.routes.orNotFound)
+            .serve
+            .compile
+            .drain
+          _ <- tasksProcesses.cancel
         } yield ()
       }
     } yield ExitCode.Success
