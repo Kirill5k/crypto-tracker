@@ -15,6 +15,10 @@ object config {
       port: Int
   )
 
+  final case class MongoConfig(
+      connectionUri: String
+  )
+
   final case class TelegramConfig(
       baseUri: String,
       botKey: String,
@@ -29,6 +33,7 @@ object config {
 
   final case class AppConfig(
       server: ServerConfig,
+      mongo: MongoConfig,
       reddit: RedditConfig,
       telegram: TelegramConfig
   )

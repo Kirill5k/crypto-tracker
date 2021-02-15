@@ -22,7 +22,7 @@ object Main extends IOApp {
     for {
       _      <- logger.info("starting crypto tracker")
       config <- Blocker[IO].use(AppConfig.load[IO]) <* logger.info("loaded config")
-      _ <- Resources.make[IO].use { resources =>
+      _ <- Resources.make[IO](config).use { resources =>
         for {
           clients        <- Clients.make[IO](config, resources.sttpBackend)
           services       <- Services.make[IO](clients)
