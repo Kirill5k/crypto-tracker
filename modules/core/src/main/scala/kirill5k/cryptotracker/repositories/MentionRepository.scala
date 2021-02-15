@@ -26,26 +26,25 @@ final private class LiveMentionRepository[F[_]: Concurrent](
     collection.insertOne(MentionEntity.from(mention)).void
 
   override def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]] =
+    find(Some(ticker), from, to)
+
+  override def findAll(from: Instant, to: Instant): F[List[Mention]] =
+    find(None, Some(from), Some(to))
+
+  private def find(ticker: Option[Ticker], from: Option[Instant], to: Option[Instant]): F[List[Mention]] =
     collection.find
-      .filter(Filters.and(Filters.equal("ticker", ticker), dateRangeSelector(from, to)))
+      .filter(tickerDateRangeSelector(ticker, from, to))
       .sort(Sorts.descending("time"))
       .all[F]
       .map(_.map(_.toDomain).toList)
 
-  override def findAll(from: Instant, to: Instant): F[List[Mention]] = {
-    collection.find
-      .filter(dateRangeSelector(Some(from), Some(to)))
-      .sort(Sorts.descending("time"))
-      .all[F]
-      .map(_.map(_.toDomain).toList)
-  }
-
-  private def dateRangeSelector(from: Option[Instant], to: Option[Instant]): Bson = {
+  private def tickerDateRangeSelector(ticker: Option[Ticker], from: Option[Instant], to: Option[Instant]): Bson = {
     val fromFilter = from.map(d => Filters.gte("time", d))
     val toFilter   = to.map(d => Filters.lt("time", d))
     val filters    = List(fromFilter, toFilter).flatten
-    if (filters.nonEmpty) Filters.and(filters: _*)
-    else Document()
+    val dateFilter = if (filters.nonEmpty) Filters.and(filters: _*) else Document()
+    val tickerFilter = ticker.fold[Bson](Document())(t => Filters.equal("ticker", t))
+    Filters.and(dateFilter, tickerFilter)
   }
 }
 
