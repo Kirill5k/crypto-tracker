@@ -11,7 +11,7 @@ object MentionSource {
   final case class Reddit(subreddit: Subreddit) extends MentionSource
 }
 
-final case class Mention(
+final case class  Mention(
     ticker: Ticker,
     time: Instant,
     message: String,

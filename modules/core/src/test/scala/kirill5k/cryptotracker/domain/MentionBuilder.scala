@@ -15,6 +15,6 @@ object MentionBuilder {
       time,
       s"Why ${ticker.value} is gonna blow its load SOON 15k YOLO",
       MentionSource.Reddit(Subreddit("WallStreetBets")),
-      URI.create("http://reddit.com")
+      URI.create("http://reddit.com/foo/bar")
     )
 }
