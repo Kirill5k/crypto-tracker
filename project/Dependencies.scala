@@ -15,7 +15,7 @@ object Dependencies {
 
     val scalaTest     = "3.2.3"
     val mockito       = "1.14.0"
-    val embeddedMongo = "2.2.0"
+    val embeddedMongo = "3.0.0"
   }
 
   object Libraries {
