@@ -4,7 +4,8 @@ import cats.effect.IO
 import kirill5k.cryptotracker.CatsIOSpec
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.domain.MentionBuilder.mention
-import kirill5k.cryptotracker.domain.Subreddit
+import kirill5k.cryptotracker.domain.{Mention, Subreddit}
+import kirill5k.cryptotracker.repositories.MentionRepository
 
 import scala.concurrent.duration._
 
@@ -13,13 +14,13 @@ class MentionServiceSpec extends CatsIOSpec {
   "A MentionService" should {
 
     "stream live ticker mentions from reddit" in {
-      val (client)  = mocks
+      val (client, repository)  = mocks
 
       when(client.findMentions(any[Subreddit], any[FiniteDuration]))
         .thenReturn(IO.pure(List(mention())))
 
       val res = for {
-        service <- MentionService.make[IO](client)
+        service <- MentionService.make[IO](client, repository)
         mentions <- service
           .liveFromReddit(Subreddit("wallstreetbets"), 1.seconds)
           .interruptAfter(1200.millis)
@@ -32,8 +33,25 @@ class MentionServiceSpec extends CatsIOSpec {
         mentions must have size 2
       }
     }
+
+    "stream live ticker mentions from reddit" in {
+      val ment = mention()
+      val (client, repository)  = mocks
+
+      when(repository.save(any[Mention])).thenReturn(IO.unit)
+
+      val res = for {
+        service <- MentionService.make[IO](client, repository)
+        result <- service.save(ment)
+      } yield result
+
+      res.unsafeToFuture().map { r =>
+        verify(repository).save(ment)
+        r mustBe ()
+      }
+    }
   }
 
-  def mocks: (RedditClient[IO]) =
-    mock[RedditClient[IO]]
+  def mocks: (RedditClient[IO], MentionRepository[IO]) =
+    (mock[RedditClient[IO]], mock[MentionRepository[IO]])
 }
