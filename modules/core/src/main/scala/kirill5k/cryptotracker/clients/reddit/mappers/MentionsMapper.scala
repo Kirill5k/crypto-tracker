@@ -9,12 +9,12 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val wordsFilter = List(
-    "USD", "WSB"
+    "USD", "WSB", "DD"
   ).mkString("(?i).*(", "|", ").*").r
 
   private val tickerRegex = List(
-    "^\\$[a-zA-Z]{2,4}"
-  ).mkString("(?i)(", "|", ")").r
+    "^\\$[a-zA-Z]{2,4}", "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC"
+  ).mkString("(", "|", ")").r
 
   private def withoutSpecialChars(text: String): String =
       text

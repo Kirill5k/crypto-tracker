@@ -15,6 +15,7 @@ final private class RedditMentionsFinder[F[_]: Concurrent](
       .emits(redditConfig.subreddits)
       .map(sub => mentionService.liveFromReddit(sub, redditConfig.searchPeriod))
       .parJoinUnbounded
+      .evalMap(mentionService.save)
       .drain
 }
 
