@@ -13,7 +13,7 @@ private[reddit] object MentionsMapper {
   ).mkString("(?i).*(", "|", ").*").r
 
   private val tickerRegex = List(
-    "^\\$[a-zA-Z]{2,4}", "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC"
+    "^\\$[a-zA-Z]{2,4}", "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC", "QCOM"
   ).mkString("(", "|", ")").r
 
   private def withoutSpecialChars(text: String): String =
@@ -26,13 +26,14 @@ private[reddit] object MentionsMapper {
   def map(submission: Submission): List[Mention] =
     submission.title
       .split(" ")
+      .filter(_.length > 1)
       .map(withoutSpecialChars)
       .filterNot(wordsFilter.matches)
       .filter(tickerRegex.matches)
       .distinct
       .map { t =>
         Mention(
-          Ticker(t.tail.toUpperCase),
+          Ticker(t.replaceAll("\\$", "")),
           Instant.ofEpochSecond(submission.created_utc),
           submission.title,
           MentionSource.Reddit(submission.subreddit),

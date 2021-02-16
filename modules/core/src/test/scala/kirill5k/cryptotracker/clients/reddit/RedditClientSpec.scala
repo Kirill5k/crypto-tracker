@@ -12,13 +12,13 @@ import scala.concurrent.duration._
 class RedditClientSpec extends SttpClientSpec {
 
   val subreddit = Subreddit("WallStreetBets")
-  val config = RedditConfig("http://reddit.com", 5.minutes, List(subreddit))
+  val config    = RedditConfig("http://reddit.com", 5.minutes, List(subreddit))
 
   "A RedditClient" should {
 
     "return list of stock/crypto mentions from a given subreddit" in {
       val submissionsEndpoint = "reddit/search/submission"
-      val params = Map("after" -> "5m", "subreddit" -> "WallStreetBets", "over_18" -> "true")
+      val params              = Map("after" -> "5m", "subreddit" -> "WallStreetBets", "over_18" -> "true")
       val testingBackend: SttpBackend[IO, Any] = backendStub
         .whenRequestMatchesPartial {
           case r if r.isGet && r.isGoingTo(s"reddit.com/$submissionsEndpoint") && r.hasParams(params) =>
@@ -27,10 +27,21 @@ class RedditClientSpec extends SttpClientSpec {
         }
 
       val telegramClient = RedditClient.make[IO](config, testingBackend)
-      val result = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
+      val result         = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
 
       result.unsafeToFuture().map { mentions =>
-        mentions.map(_.ticker) mustBe List(Ticker("NOK"), Ticker("GME"), Ticker("CRSR"), Ticker("ZOM"))
+        mentions.map(_.ticker) mustBe List(
+          Ticker("NOK"),
+          Ticker("GME"),
+          Ticker("CRSR"),
+          Ticker("QCOM"),
+          Ticker("ZOM"),
+          Ticker("AMC"),
+          Ticker("GME"),
+          Ticker("GME"),
+          Ticker("PLTR"),
+          Ticker("AMC")
+        )
       }
     }
   }
