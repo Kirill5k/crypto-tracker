@@ -9,7 +9,7 @@ final case class Repositories[F[_]](
 )
 
 object Repositories {
-  def make[F[_]: Concurrent](client: MongoClientF[F]): F[MentionRepository[F]] =
+  def make[F[_]: Concurrent](client: MongoClientF[F]): F[Repositories[F]] =
     MentionRepository
       .make[F](client)
       .map(Repositories[F])

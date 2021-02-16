@@ -34,7 +34,7 @@ class MentionServiceSpec extends CatsIOSpec {
       }
     }
 
-    "stream live ticker mentions from reddit" in {
+    "save mention in repository" in {
       val ment = mention()
       val (client, repository)  = mocks
 
