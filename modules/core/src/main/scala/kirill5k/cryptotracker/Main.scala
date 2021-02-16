@@ -7,6 +7,7 @@ import kirill5k.cryptotracker.clients.Clients
 import kirill5k.cryptotracker.common.Resources
 import kirill5k.cryptotracker.common.config.AppConfig
 import kirill5k.cryptotracker.controllers.Controllers
+import kirill5k.cryptotracker.repositories.Repositories
 import kirill5k.cryptotracker.services.Services
 import kirill5k.cryptotracker.tasks.Tasks
 import org.http4s.server.blaze.BlazeServerBuilder
@@ -25,7 +26,8 @@ object Main extends IOApp {
       _ <- Resources.make[IO](config).use { resources =>
         for {
           clients        <- Clients.make[IO](config, resources.sttpBackend)
-          services       <- Services.make[IO](clients)
+          repositories   <- Repositories.make[IO](resources.mongoClient)
+          services       <- Services.make[IO](clients, repositories)
           tasks          <- Tasks.make[IO](config, services)
           tasksProcesses <- tasks.runAll().compile.drain.start <* logger.info("started all tasks")
           controllers    <- Controllers.make[IO]
