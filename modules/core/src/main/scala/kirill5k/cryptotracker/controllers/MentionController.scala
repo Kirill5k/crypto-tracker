@@ -22,7 +22,7 @@ final private class MentionController[F[_]](
         }
       case GET -> Root / "mentions" / TickerVar(ticker) :? OptionalDateFromQueryParam(from) +& OptionalDateToQueryParam(to) =>
         withErrorHandling {
-          Ok(s"${ticker} ${from} and ${to}")
+          Ok(s"$ticker $from $to")
         }
     }
 }

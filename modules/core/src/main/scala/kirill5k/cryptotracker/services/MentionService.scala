@@ -5,20 +5,24 @@ import fs2.Stream
 import io.chrisdavenport.log4cats.Logger
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.common.Streams
-import kirill5k.cryptotracker.domain.{Mention, Subreddit}
+import kirill5k.cryptotracker.domain.{Mention, Subreddit, Ticker}
 import kirill5k.cryptotracker.repositories.MentionRepository
 
+import java.time.Instant
 import scala.concurrent.duration.FiniteDuration
 
 trait MentionService[F[_]] {
   def liveFromReddit(subreddit: Subreddit, searchFrequency: FiniteDuration): Stream[F, Mention]
   def save(mention: Mention): F[Unit]
+  def findAll(from: Instant, to: Instant): F[List[Mention]]
+  def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]]
 }
 
 final private class LiveMentionService[F[_]: Sync: Timer](
     private val redditClient: RedditClient[F],
     private val mentionRepository: MentionRepository[F]
-)(implicit val logger: Logger[F]) extends MentionService[F] {
+)(implicit val logger: Logger[F])
+    extends MentionService[F] {
 
   override def liveFromReddit(subreddit: Subreddit, searchFrequency: FiniteDuration): Stream[F, Mention] =
     Stream
@@ -29,6 +33,12 @@ final private class LiveMentionService[F[_]: Sync: Timer](
 
   override def save(mention: Mention): F[Unit] =
     mentionRepository.save(mention)
+
+  override def findAll(from: Instant, to: Instant): F[List[Mention]] =
+    mentionRepository.findAll(from, to)
+
+  override def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]] =
+    mentionRepository.findBy(ticker, from, to)
 }
 
 object MentionService {

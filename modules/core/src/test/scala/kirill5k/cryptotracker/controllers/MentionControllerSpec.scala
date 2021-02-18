@@ -22,5 +22,18 @@ class MentionControllerSpec extends ControllerSpec {
         verifyJsonResponse(response, Status.BadRequest, Some("""{"message": "query parameter 'from' is required"}"""))
       }
     }
+
+    "GET /mentions/:ticker" should {
+
+      "return 400 when date params are missing" in {
+        val service = mock[MentionService[IO]]
+        val controller = new MentionController[IO](service)
+
+        val request  = Request[IO](uri = uri"/mentions/BB", method = Method.GET)
+        val response = controller.routes.orNotFound.run(request)
+
+        verifyJsonResponse(response, Status.BadRequest, Some("""{"message": "query parameter 'from' is required"}"""))
+      }
+    }
   }
 }
