@@ -34,7 +34,7 @@ trait Controller[F[_]] extends Http4sDsl[F] with JsonCodecs {
   object TickerVar {
     def unapply(str: String): Option[Ticker] =
       if (str.length > 1 && str.length < 5)
-        Some(Ticker(str))
+        Some(Ticker(str.toUpperCase))
       else
         None
   }
