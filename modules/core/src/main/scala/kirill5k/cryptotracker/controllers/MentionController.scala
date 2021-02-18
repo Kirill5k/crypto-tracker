@@ -25,12 +25,13 @@ final private class MentionController[F[_]](
         }
       case GET -> Root / "mentions" / TickerVar(ticker) :? OptionalDateFromQueryParam(from) +& OptionalDateToQueryParam(to) =>
         withErrorHandling {
-          service.findBy(ticker, from, to).flatMap(res => Ok(res))
+          service.findBy(ticker, from, to).flatMap(Ok(_))
         }
     }
 }
 
 object MentionController {
+
   def make[F[_]: Sync](service: MentionService[F]): F[Controller[F]] =
     Sync[F].delay(new MentionController[F](service))
 }
