@@ -3,20 +3,26 @@ package kirill5k.cryptotracker.controllers
 import cats.effect.{ContextShift, Sync}
 import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
+import kirill5k.cryptotracker.services.Services
 import org.http4s.HttpRoutes
 import org.http4s.server.Router
 
 final case class Controllers[F[_]: Sync: Logger: ContextShift](
-    health: Controller[F]
+    health: Controller[F],
+    mention: Controller[F]
 ) {
   def routes: HttpRoutes[F] =
     Router(
-      "" -> health.routes
+      "" -> health.routes,
+      "/api" -> mention.routes
     )
 }
 
 object Controllers {
 
-  def make[F[_]: Sync: Logger: ContextShift]: F[Controllers[F]] =
-    HealthController.make[F].map(hc => new Controllers[F](hc))
+  def make[F[_]: Sync: Logger: ContextShift](services: Services[F]): F[Controllers[F]] =
+    (
+      HealthController.make[F],
+      MentionController.make[F](services.mention)
+    ).mapN(Controllers[F])
 }

@@ -30,7 +30,7 @@ object Main extends IOApp {
           services       <- Services.make[IO](clients, repositories)
           tasks          <- Tasks.make[IO](config, services)
           tasksProcesses <- tasks.runAll().compile.drain.start <* logger.info("started all tasks")
-          controllers    <- Controllers.make[IO]
+          controllers    <- Controllers.make[IO](services)
           _ <- BlazeServerBuilder[IO](ExecutionContext.global)
             .bindHttp(config.server.port, config.server.host)
             .withHttpApp(controllers.routes.orNotFound)
