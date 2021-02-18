@@ -7,15 +7,17 @@ import org.http4s.implicits._
 
 class HealthControllerSpec extends ControllerSpec {
 
-  "A HealthController" should {
+  "A HealthController" when {
 
-    "return 200 response" in {
-      val controller = new HealthController[IO]
+    "GET /health/status" should {
+      "return 200 response" in {
+        val controller = new HealthController[IO]
 
-      val request  = Request[IO](uri = uri"/health/status", method = Method.GET)
-      val response = controller.routes.orNotFound.run(request)
+        val request  = Request[IO](uri = uri"/health/status", method = Method.GET)
+        val response = controller.routes.orNotFound.run(request)
 
-      verifyJsonResponse(response, Status.Ok, Some("""{"status": true}"""))
+        verifyJsonResponse(response, Status.Ok, Some("""{"status": true}"""))
+      }
     }
   }
 }
