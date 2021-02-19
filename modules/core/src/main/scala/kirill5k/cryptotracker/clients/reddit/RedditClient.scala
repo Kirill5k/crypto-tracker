@@ -28,7 +28,7 @@ final private class LiveRedditClient[F[_]: Sync](
 ) extends RedditClient[F] {
 
   override def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] = {
-    val dur = duration.toString().replaceFirst("(?<=\\w)\\w+", "").replaceFirst(" ", "")
+    val dur = duration.toString().replaceFirst(" ", "").replaceFirst("(?<=[a-z])\\w+", "")
     basicRequest
       .get(uri"${config.baseUri}/reddit/search/submission?subreddit=${subreddit.value}&over_18=true&after=$dur")
       .response(asJson[RedditSubmissionsResponse])
