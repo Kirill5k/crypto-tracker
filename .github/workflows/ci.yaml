@@ -34,7 +34,7 @@ jobs:
         run: gcloud auth configure-docker
 
       - name: Build and Push Docker image
-        uses: olafurpg/setup-scala@v10
+      - uses: olafurpg/setup-scala@v10
         with:
           java-version: adopt@1.15
         run: |-
