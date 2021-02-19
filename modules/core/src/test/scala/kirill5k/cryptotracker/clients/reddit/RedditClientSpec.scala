@@ -19,7 +19,7 @@ class RedditClientSpec extends SttpClientSpec {
   "A RedditClient" should {
 
     "return list of stock/crypto mentions from a given subreddit" in {
-//      implicit val timer = mockTimer(timestamp.getEpochSecond)
+      implicit val timer = mockTimer(timestamp.getEpochSecond)
 
       val submissionsEndpoint = "reddit/submission/search"
       val params              = Map("subreddit" -> "WallStreetBets", "over_18" -> "true", "after" -> "1577838000")
