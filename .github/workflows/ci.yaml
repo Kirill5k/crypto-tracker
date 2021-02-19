@@ -37,15 +37,14 @@ jobs:
         with:
           java-version: adopt@1.15
       - name: Build and Push Docker image
-        run: |-
-          sbt docker:publish
+        run: sbt docker:publish
 
       - name: Deploy to Cloud Run
         id: deploy
-        uses: google-github-actions/deploy-cloudrun@v0.2.0
+        uses: google-github-actions/deploy-cloudrun@main
         with:
           service: crypto-tracker-core
-          image: us.gcr.io/crypto-tracker-2020/core
+          image: us.gcr.io/crypto-tracker-2020/core:latest
           region: us-central1
           env_vars: MONGO_USER=${{secrets.MONGO_USER}},MONGO_PASSWORD=${{secrets.MONGO_PASSWORD}},MONGO_HOST=${{secrets.MONGO_HOST}}
 
