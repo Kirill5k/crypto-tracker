@@ -42,7 +42,6 @@ jobs:
           docker push us.gcr.io/crypto-tracker-2020/core:latest
 
       - name: Deploy to Cloud Run
-        id: deploy
         uses: google-github-actions/deploy-cloudrun@main
         with:
           service: crypto-tracker-core
@@ -50,5 +49,3 @@ jobs:
           region: us-central1
           env_vars: MONGO_USER=${{secrets.MONGO_USER}},MONGO_PASSWORD=${{secrets.MONGO_PASSWORD}},MONGO_HOST=${{secrets.MONGO_HOST}}
 
-      - name: Show Output
-        run: echo ${{ steps.deploy.outputs.url }}
