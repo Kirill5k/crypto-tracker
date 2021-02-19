@@ -17,6 +17,8 @@ jobs:
         run: sbt clean test
 
   deploy:
+    runs-on: ubuntu-latest
+    needs: [test]
     steps:
       - id: deploy
       - name: Build Docker image
@@ -30,4 +32,4 @@ jobs:
         with:
           image: us.gcr.io/crypto-tracker-2020/core
           service: crypto-tracker-core
-          credentials: ${{ secrets.gcp_credentials }}
+          credentials: ${{ secrets.GCP_CREDENTIALS }}
