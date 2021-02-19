@@ -31,7 +31,7 @@ final private class LiveRedditClient[F[_]: Sync](
     timer.clock.realTime(SECONDS).flatMap { epocSeconds =>
       val dur = epocSeconds - duration.toSeconds
       basicRequest
-        .get(uri"${config.baseUri}/reddit/submission/search?subreddit=${subreddit.value}&over_18=true&after=$dur")
+        .get(uri"${config.baseUri}/reddit/submission/search?subreddit=${subreddit.value}&after=$dur")
         .response(asJson[RedditSubmissionsResponse])
         .send(backend)
         .flatMap { r =>
