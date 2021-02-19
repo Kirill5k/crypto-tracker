@@ -28,7 +28,6 @@ jobs:
       - name: Build Docker image
         run: sbt docker:publishLocal
       - uses: google-github-actions/deploy-cloudrun@main
-      - name: Deploy to GCP
         with:
           image: us.gcr.io/crypto-tracker-2020/core
           service: crypto-tracker-core
