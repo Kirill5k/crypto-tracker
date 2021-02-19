@@ -19,6 +19,7 @@ lazy val docker = Seq(
   dockerBaseImage := "adoptopenjdk/openjdk15-openj9:alpine-jre",
   dockerUpdateLatest := true,
   Docker / maintainer := "kirill5k",
+  Docker / version := scala.sys.process.Process("git rev-parse HEAD").!!.trim.slice(0, 7),
   dockerRepository := Some("us.gcr.io"),
   makeBatScripts := List(),
   dockerCommands := {

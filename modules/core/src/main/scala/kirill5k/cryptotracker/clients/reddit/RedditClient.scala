@@ -42,7 +42,7 @@ final private class LiveRedditClient[F[_]: Sync](
               logger.error(s"error parsing json: ${error.getMessage}\n$body") *>
                 AppError.Json(s"error parsing json: ${error.getMessage}").raiseError[F, List[Mention]]
             case Left(error) =>
-              logger.error(s"error get submissions from reddit: ${r.code}\n$error") *>
+              logger.error(s"error getting submissions from reddit: ${r.code}\n$error") *>
                 timer.sleep(5.second) *> findMentions(subreddit, duration + 5.second)
           }
         }
