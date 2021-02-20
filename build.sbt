@@ -1,7 +1,6 @@
 import com.typesafe.sbt.packager.docker._
 
 ThisBuild / scalaVersion := "2.13.3"
-ThisBuild / version := "0.1.2"
 ThisBuild / organization := "io.github.kirill5k"
 ThisBuild / organizationName := "kirill5k"
 
