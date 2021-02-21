@@ -41,11 +41,11 @@ spec:
             name: "crypto-tracker-secret"
         resources:
           requests:
-            memory: "512Mi"
+            memory: "384Mi"
             cpu: "0.25"
           limits:
-            memory: "512Mi"
-            cpu: "0.5"
+            memory: "384Mi"
+            cpu: "0.25"
         readinessProbe:
           httpGet:
             path: /health/status
