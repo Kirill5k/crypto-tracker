@@ -17,7 +17,10 @@ spec:
     spec:
       containers:
       - name: "core-sha256-1"
-        image: "us.gcr.io/crypto-tracker-2020/core@sha256:581e80d6935f855efda02fea0db0b6d6bb4b1efa80368519a94153353f71df41"
+        image: "us.gcr.io/crypto-tracker-2020/core:latest"
+        env:
+        - name: PORT
+          value: "8080"
         envFrom:
         - secretRef:
             name: "crypto-tracker-secret"
@@ -28,3 +31,11 @@ spec:
           limits:
             memory: "512Mi"
             cpu: "1"
+        readinessProbe:
+          httpGet:
+            path: /health/status
+            port: 8080
+        livenessProbe:
+          httpGet:
+            path: /health/status
+            port: 8080
