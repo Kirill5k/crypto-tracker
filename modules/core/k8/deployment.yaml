@@ -29,7 +29,7 @@ spec:
         app: "crypto-tracker-core"
     spec:
       containers:
-      - name: "core-sha256-1"
+      - name: "core"
         image: "us.gcr.io/crypto-tracker-2020/core:latest"
         ports:
         - containerPort: 8080
