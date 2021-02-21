@@ -4,9 +4,10 @@ import cats.effect.IO
 import kirill5k.cryptotracker.CatsIOSpec
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.domain.MentionBuilder.mention
-import kirill5k.cryptotracker.domain.{Mention, Subreddit, Ticker}
+import kirill5k.cryptotracker.domain.{Mention, MentionBuilder, Subreddit, Ticker}
 import kirill5k.cryptotracker.repositories.MentionRepository
 
+import java.net.URI
 import java.time.Instant
 import scala.concurrent.duration._
 
@@ -85,6 +86,23 @@ class MentionServiceSpec extends CatsIOSpec {
       res.unsafeToFuture().map { r =>
         verify(repository).findBy(Ticker("BB"), Some(time.minusSeconds(2)), Some(time))
         r must have size 3
+      }
+    }
+
+    "check if mention is new" in {
+      val (client, repository)  = mocks
+
+      when(repository.existsBy(any[Ticker], any[URI])).thenReturn(IO.pure(true))
+
+      val mention = MentionBuilder.mention()
+      val res = for {
+        service <- MentionService.make[IO](client, repository)
+        result <- service.isNew(mention)
+      } yield result
+
+      res.unsafeToFuture().map { r =>
+        verify(repository).existsBy(mention.ticker, mention.url)
+        r mustBe false
       }
     }
   }

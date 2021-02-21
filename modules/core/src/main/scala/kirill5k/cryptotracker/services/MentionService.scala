@@ -1,6 +1,7 @@
 package kirill5k.cryptotracker.services
 
 import cats.effect.{Sync, Timer}
+import cats.implicits._
 import fs2.Stream
 import io.chrisdavenport.log4cats.Logger
 import kirill5k.cryptotracker.clients.reddit.RedditClient
@@ -13,6 +14,7 @@ import scala.concurrent.duration.FiniteDuration
 
 trait MentionService[F[_]] {
   def liveFromReddit(subreddit: Subreddit, searchFrequency: FiniteDuration): Stream[F, Mention]
+  def isNew(mention: Mention): F[Boolean]
   def save(mention: Mention): F[Unit]
   def findAll(from: Instant, to: Instant): F[List[Mention]]
   def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]]
@@ -39,6 +41,11 @@ final private class LiveMentionService[F[_]: Sync: Timer](
 
   override def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]] =
     mentionRepository.findBy(ticker, from, to)
+
+  override def isNew(mention: Mention): F[Boolean] =
+    mentionRepository
+      .existsBy(mention.ticker, mention.url)
+      .map(!_)
 }
 
 object MentionService {
