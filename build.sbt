@@ -3,6 +3,7 @@ import com.typesafe.sbt.packager.docker._
 ThisBuild / scalaVersion := "2.13.3"
 ThisBuild / organization := "io.github.kirill5k"
 ThisBuild / organizationName := "kirill5k"
+ThisBuild / version := scala.sys.process.Process("git rev-parse HEAD").!!.trim.slice(0, 7)
 
 lazy val noPublish = Seq(
   publish := {},
@@ -18,7 +19,6 @@ lazy val docker = Seq(
   dockerBaseImage := "adoptopenjdk/openjdk15-openj9:alpine-jre",
   dockerUpdateLatest := true,
   Docker / maintainer := "kirill5k",
-  Docker / version := scala.sys.process.Process("git rev-parse HEAD").!!.trim.slice(0, 7),
   dockerRepository := Some("us.gcr.io"),
   makeBatScripts := List(),
   dockerCommands := {
