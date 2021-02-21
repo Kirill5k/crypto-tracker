@@ -8,13 +8,17 @@ import java.time.Instant
 
 private[reddit] object MentionsMapper {
 
+  private val mostCommonTickers = List(
+    "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC", "QCOM", "RIOT", "RKT", "NIO", "SPY",
+    "AAPL", "CCIV", "SQ", "BA", "APHA", "CCL", "GE", "UAL", "SI", "MARA", "MVIS", "TDA", "BABA", "TD", "PLUG",
+    "EBON", "TLRY", "FSLY", "FUBO", "FUTU", "AMZN", "GSAT", "BIDU"
+  )
+
   private val wordsFilter = List(
     "USD", "WSB", "DD"
   ).mkString("(?i).*(", "|", ").*").r
 
-  private val tickerRegex = List(
-    "^\\$[a-zA-Z]{2,4}", "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC", "QCOM"
-  ).mkString("(", "|", ")").r
+  private val tickerRegex = ("^\\$[a-zA-Z]{2,4}" :: mostCommonTickers).mkString("(", "|", ")").r
 
   private def withoutSpecialChars(text: String): String =
       text

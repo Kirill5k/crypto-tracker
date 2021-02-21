@@ -20,6 +20,8 @@ metadata:
     app: "crypto-tracker-core"
 spec:
   replicas: 1
+  strategy:
+    type: Recreate
   selector:
     matchLabels:
       app: "crypto-tracker-core"
