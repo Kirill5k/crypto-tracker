@@ -1,24 +1,10 @@
-name: Build pipeline
-
-on:
-  push:
-    branches:
-      - master
+name: Deploy to GCP Cloud Run
+on: [workflow_dispatch]
 
 jobs:
-  test:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: olafurpg/setup-scala@v10
-        with:
-          java-version: adopt@1.15
-      - name: Run unit tests
-        run: sbt clean test
 
   deploy:
     runs-on: ubuntu-latest
-    needs: [test]
     steps:
       - name: Checkout
         uses: actions/checkout@v2
