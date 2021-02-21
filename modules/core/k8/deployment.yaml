@@ -9,8 +9,7 @@ spec:
       port: 8080
       nodePort: 30008
   selector:
-    type: frontend
-    app: nginx-app
+    app: "crypto-tracker-core"
 ---
 apiVersion: "apps/v1"
 kind: "Deployment"
@@ -43,15 +42,17 @@ spec:
         resources:
           requests:
             memory: "512Mi"
-            cpu: "1"
+            cpu: "0.25"
           limits:
             memory: "512Mi"
-            cpu: "1"
+            cpu: "0.5"
         readinessProbe:
           httpGet:
             path: /health/status
             port: 8080
+          periodSeconds: 60
         livenessProbe:
           httpGet:
             path: /health/status
             port: 8080
+          periodSeconds: 60
