@@ -12,8 +12,8 @@
 
     <logger name="application" level="INFO" />
 
+    <logger name="org.http4s.blaze.channel" level="WARN" />
     <logger name="org.http4s.client.middleware" level="INFO"/>
-
     <logger name="org.http4s.server.middleware" level="INFO"/>
 
     <root level="INFO">
