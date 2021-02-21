@@ -10,10 +10,12 @@ import org.mongodb.scala.Document
 import org.mongodb.scala.bson.conversions.Bson
 import org.mongodb.scala.model.{Filters, Sorts}
 
+import java.net.URI
 import java.time.Instant
 
 trait MentionRepository[F[_]] {
   def save(mention: Mention): F[Unit]
+  def existsBy(ticker: Ticker, url: URI): F[Boolean]
   def findBy(ticker: Ticker, from: Option[Instant], to: Option[Instant]): F[List[Mention]]
   def findAll(from: Instant, to: Instant): F[List[Mention]]
 }
@@ -46,6 +48,11 @@ final private class LiveMentionRepository[F[_]: Concurrent](
     val tickerFilter = ticker.fold[Bson](Document())(t => Filters.equal("ticker", t))
     Filters.and(dateFilter, tickerFilter)
   }
+
+  override def existsBy(ticker: Ticker, url: URI): F[Boolean] =
+    collection
+      .count[F](Filters.and(Filters.equal("ticker", ticker), Filters.equal("url", url.toString)))
+      .map(_ > 0)
 }
 
 object MentionRepository {

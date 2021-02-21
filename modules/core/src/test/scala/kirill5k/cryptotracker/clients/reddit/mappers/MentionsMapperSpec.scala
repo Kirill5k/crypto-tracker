@@ -12,7 +12,7 @@ class MentionsMapperSpec extends AnyWordSpec with Matchers {
   "A MentionsMapper" should {
 
     "extract ticker mentions from submission title" in {
-      val submission = makeSubmission("I think $NOK and $BB are trying to tell me something 😳 $$$ $1M $USD WSB")
+      val submission = makeSubmission("I think $NOK and $BB are trying to tell me something 😳 $$$ $1M $USD WSB $GAME")
 
       val mentions = MentionsMapper.map(submission)
 

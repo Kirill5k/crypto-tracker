@@ -34,6 +34,38 @@ class MentionRepositorySpec extends AnyWordSpec with Matchers with EmbeddedMongo
       }
     }
 
+    "existsBy" should {
+      "return true when mention exists by ticker and url" in {
+        withEmbeddedMongoClient { client =>
+          val result = for {
+            repo    <- MentionRepository.make[IO](client)
+            mention = MentionBuilder.mention(Ticker("AMC"))
+            _       <- repo.save(mention)
+            exists <- repo.existsBy(mention.ticker, mention.url)
+          } yield exists
+
+          result.map { res =>
+            res mustBe true
+          }
+        }
+      }
+
+      "return false when mention is new" in {
+        withEmbeddedMongoClient { client =>
+          val result = for {
+            repo    <- MentionRepository.make[IO](client)
+            mention = MentionBuilder.mention(Ticker("AMC"))
+            _       <- repo.save(mention)
+            exists <- repo.existsBy(Ticker("BB"), mention.url)
+          } yield exists
+
+          result.map { res =>
+            res mustBe false
+          }
+        }
+      }
+    }
+
     "findBy" should {
       "find mention by ticker" in {
         withEmbeddedMongoClient { client =>

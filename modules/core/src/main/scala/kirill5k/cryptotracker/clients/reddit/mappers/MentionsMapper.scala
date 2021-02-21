@@ -11,14 +11,14 @@ private[reddit] object MentionsMapper {
   private val mostCommonTickers = List(
     "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC", "QCOM", "RIOT", "RKT", "NIO", "SPY",
     "AAPL", "CCIV", "SQ", "BA", "APHA", "CCL", "GE", "UAL", "SI", "MARA", "MVIS", "TDA", "BABA", "TD", "PLUG",
-    "EBON", "TLRY", "FSLY", "FUBO", "FUTU", "AMZN", "GSAT", "BIDU"
+    "EBON", "TLRY", "FSLY", "FUBO", "FUTU", "AMZN", "GSAT", "BIDU", "XRT", "MLLLF"
   )
 
   private val wordsFilter = List(
-    "USD", "WSB", "DD"
+    "USD", "WSB", "DD", "GAME"
   ).mkString("(?i).*(", "|", ").*").r
 
-  private val tickerRegex = ("^\\$[a-zA-Z]{2,4}" :: mostCommonTickers).mkString("(", "|", ")").r
+  private val tickerRegex = ("^\\$[a-zA-Z]{2,5}" :: mostCommonTickers).mkString("(", "|", ")").r
 
   private def withoutSpecialChars(text: String): String =
       text
