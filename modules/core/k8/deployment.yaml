@@ -31,6 +31,7 @@ spec:
       containers:
       - name: "core"
         image: "us.gcr.io/crypto-tracker-2020/core:latest"
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
         env:
