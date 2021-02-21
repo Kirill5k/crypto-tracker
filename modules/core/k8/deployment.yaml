@@ -1,0 +1,30 @@
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "crypto-tracker-core"
+  namespace: "default"
+  labels:
+    app: "crypto-tracker-core"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "crypto-tracker-core"
+  template:
+    metadata:
+      labels:
+        app: "crypto-tracker-core"
+    spec:
+      containers:
+      - name: "core-sha256-1"
+        image: "us.gcr.io/crypto-tracker-2020/core@sha256:581e80d6935f855efda02fea0db0b6d6bb4b1efa80368519a94153353f71df41"
+        envFrom:
+        - secretRef:
+            name: "crypto-tracker-secret"
+        resources:
+          requests:
+            memory: "512Mi"
+            cpu: "1"
+          limits:
+            memory: "512Mi"
+            cpu: "1"
