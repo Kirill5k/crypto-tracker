@@ -11,7 +11,7 @@ import sttp.client3._
 import sttp.client3.circe.asJson
 
 trait AlphaVantageClient[F[_]] {
-  def findCompany(ticker: Ticker): F[Company]
+  def findCompany(ticker: Ticker): F[Option[Company]]
 }
 
 final private class LiveAlphaVantageClient[F[_]](
