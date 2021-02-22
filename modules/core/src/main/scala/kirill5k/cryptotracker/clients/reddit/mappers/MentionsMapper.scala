@@ -9,9 +9,10 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "CRSR", "GME", "TSLA", "PLTR", "NOK", "NCLH", "AMC", "BB", "INTC", "QCOM", "RIOT", "RKT", "NIO", "SPY",
-    "AAPL", "CCIV", "SQ", "BA", "APHA", "CCL", "GE", "UAL", "SI", "MARA", "MVIS", "TDA", "BABA", "TD", "PLUG",
-    "EBON", "TLRY", "FSLY", "FUBO", "FUTU", "AMZN", "GSAT", "BIDU", "XRT", "MLLLF"
+    "AAPL", "APHA", "AMC", "AMZN", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "EBON",
+    "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC",
+    "MARA", "MVIS", "MLLLF", "NOK", "NCLH", "NIO", "PLUG", "PLTR",
+    "QCOM", "RIOT", "RKT", "SI", "SQ", "SNDL", "SPY", "TDA", "TD", "TSLA", "TLRY", "XRT", "UAL"
   )
 
   private val wordsFilter = List(
