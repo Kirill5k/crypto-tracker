@@ -25,6 +25,11 @@ object config {
       channelId: String
   )
 
+  final case class AlphaVantageConfig(
+      baseUri: String,
+      apiKey: String
+  )
+
   final case class RedditConfig(
       baseUri: String,
       searchPeriod: FiniteDuration,
@@ -35,6 +40,7 @@ object config {
       server: ServerConfig,
       mongo: MongoConfig,
       reddit: RedditConfig,
+      alphaVantage: AlphaVantageConfig,
       telegram: TelegramConfig
   )
 

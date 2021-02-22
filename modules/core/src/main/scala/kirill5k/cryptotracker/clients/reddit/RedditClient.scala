@@ -39,11 +39,11 @@ final private class LiveRedditClient[F[_]: Sync](
             case Right(response) =>
               response.data.flatMap(MentionsMapper.map).pure[F]
             case Left(DeserializationException(body, error)) =>
-              logger.error(s"error parsing json: ${error.getMessage}\n$body") *>
-                AppError.Json(s"error parsing json: ${error.getMessage}").raiseError[F, List[Mention]]
+              logger.error(s"error parsing reddit json: ${error.getMessage}\n$body") *>
+                AppError.Json(s"error parsing reddit json: ${error.getMessage}").raiseError[F, List[Mention]]
             case Left(error) =>
               logger.error(s"error getting submissions from reddit: ${r.code}\n$error") *>
-                timer.sleep(5.second) *> findMentions(subreddit, duration + 5.second)
+                timer.sleep(1.second) *> findMentions(subreddit, duration + 5.second)
           }
         }
     }

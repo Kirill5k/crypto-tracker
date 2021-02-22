@@ -5,5 +5,6 @@ final case class Ticker(value: String)   extends AnyVal
 final case class Company(
     ticker: Ticker,
     name: String,
-    industry: String
+    industry: String,
+    region: String
 )

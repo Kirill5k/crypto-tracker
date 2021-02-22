@@ -9,6 +9,7 @@ class AppConfigSpec extends CatsIOSpec {
   System.setProperty("MONGO_USER", "user")
   System.setProperty("MONGO_PASSWORD", "host")
   System.setProperty("MONGO_HOST", "mongodb-host")
+  System.setProperty("ALPHA_VANTAGE_API_KEY", "av-api-key")
 
   "An AppConfig" should {
     "should load itself without errors" in {
@@ -16,6 +17,7 @@ class AppConfigSpec extends CatsIOSpec {
         config.reddit.baseUri mustBe "https://api.pushshift.io"
         config.telegram.baseUri mustBe "https://api.telegram.org"
         config.mongo.connectionUri mustBe "mongodb+srv://user:host@mongodb-host/crypto-tracker"
+        config.alphaVantage.apiKey mustBe "av-api-key"
       }
     }
   }
