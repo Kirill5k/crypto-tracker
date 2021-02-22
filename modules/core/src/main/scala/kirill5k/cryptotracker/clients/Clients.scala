@@ -22,5 +22,5 @@ object Clients {
       RedditClient.make[F](config.reddit, backend),
       TelegramClient.make[F](config.telegram, backend),
       AlphaVantageClient.make[F](config.alphaVantage, backend)
-    ).parMapN((r, t, a) => new Clients[F](r, t, a))
+    ).parMapN(Clients[F])
 }
