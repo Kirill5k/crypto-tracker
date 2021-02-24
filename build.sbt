@@ -37,7 +37,7 @@ lazy val root = (project in file("."))
   )
   .aggregate(core)
 
-lazy val core = (project in file("modules/core"))
+lazy val core = (project in file("core"))
   .enablePlugins(JavaAppPackaging, JavaAgent, DockerPlugin)
   .settings(docker)
   .settings(
