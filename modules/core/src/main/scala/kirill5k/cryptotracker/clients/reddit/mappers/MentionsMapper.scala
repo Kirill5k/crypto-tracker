@@ -9,14 +9,16 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "AAPL", "APHA", "AMC", "AMZN", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "EBON",
-    "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC",
-    "MARA", "MVIS", "MLLLF", "NOK", "NCLH", "NIO", "PLUG", "PLTR",
-    "QCOM", "RIOT", "RKT", "SI", "SQ", "SNDL", "SPY", "TDA", "TD", "TSLA", "TLRY", "XRT", "UAL"
+    "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK", "EBON",
+    "DBX", "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC",
+    "KMPH",
+    "MARA", "MGA", "MGI", "MVIS", "MLLLF", "MSFT",
+    "NGAC", "NOK", "NCLH", "NIO", "NDL", "PLUG", "PLTR", "PSLV",
+    "QCOM", "RAIL", "RIOT", "RKT", "SI", "SQ", "SNDL", "SPY", "TDA", "TD", "TSLA", "TSNP", "TLRY", "XRT", "UAL", "ZMRK"
   )
 
   private val wordsFilter = List(
-    "USD", "WSB", "DD", "GAME"
+    "USD", "WSB", "DD", "GAME", "YOLO"
   ).mkString("(?i).*(", "|", ").*").r
 
   private val tickerRegex = ("^\\$[a-zA-Z]{2,5}" :: mostCommonTickers).mkString("(", "|", ")").r
@@ -38,7 +40,7 @@ private[reddit] object MentionsMapper {
       .distinct
       .map { t =>
         Mention(
-          Ticker(t.replaceAll("\\$", "")),
+          Ticker(t.replaceAll("\\$", "").toUpperCase),
           Instant.ofEpochSecond(submission.created_utc),
           submission.title,
           MentionSource.Reddit(submission.subreddit),
