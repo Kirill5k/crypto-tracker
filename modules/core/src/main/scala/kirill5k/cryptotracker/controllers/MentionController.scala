@@ -68,6 +68,7 @@ object MentionController {
         .groupBy(_.ticker)
         .map { case (t, ms) => MentionSummary(t, ms.size, ms.map(_.time)) }
         .toList
+        .sorted(Ordering.by((_: MentionSummary).total).reverse)
       MentionSummaries(dateRange, summaries)
     }
   }

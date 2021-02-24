@@ -51,8 +51,8 @@ class MentionControllerSpec extends ControllerSpec {
           s"""{
              |"dateRange": {"from":"2021-01-01T00:00:00Z","to":"2021-01-01T00:30:00Z"},
              |"summaries": [
-             |{"ticker":"AAPL","total":2,"times":["2021-01-01T00:12:00Z","2021-01-01T00:15:00Z"]},
-             |{"ticker":"BB","total":3,"times":["2021-01-01T00:03:00Z","2021-01-01T00:06:00Z","2021-01-01T00:09:00Z"]}
+             |{"ticker":"BB","total":3,"times":["2021-01-01T00:03:00Z","2021-01-01T00:06:00Z","2021-01-01T00:09:00Z"]},
+             |{"ticker":"AAPL","total":2,"times":["2021-01-01T00:12:00Z","2021-01-01T00:15:00Z"]}
              |]
              |}""".stripMargin
         verifyJsonResponse(response, Status.Ok, Some(expectedResponse))
