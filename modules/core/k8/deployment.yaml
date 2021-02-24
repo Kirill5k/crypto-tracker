@@ -44,7 +44,7 @@ spec:
             name: "crypto-tracker-secret"
         resources:
           requests:
-            memory: "384Mi"
+            memory: "256Mi"
             cpu: "0.1"
           limits:
             memory: "384Mi"
