@@ -30,7 +30,7 @@ final private class LiveMentionService[F[_]: Sync: Timer](
     Stream
       .repeatEval(redditClient.findMentions(subreddit, searchFrequency))
       .zipLeft(Streams.fixedRateImmediate[F](searchFrequency))
-      .evalTap(ms => logger.info(s"returned ${ms.size} new stock mentions from reddit"))
+      .evalTap(ms => logger.info(s"returned ${ms.size} new stock mentions from subreddit ${subreddit.value}"))
       .flatMap(Stream.emits)
 
   override def save(mention: Mention): F[Unit] =
