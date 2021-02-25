@@ -50,6 +50,28 @@ class RedditClientSpec extends SttpClientSpec {
         )
       }
     }
+
+    "return list of stock/crypto mentions in a given subreddit from gummysearch" in {
+      implicit val timer = mockTimer(timestamp.getEpochSecond)
+
+      val submissionsEndpoint = "api/v1/reddit/submissions"
+      val params              = Map("subreddits" -> "WallStreetBets", "type" -> "submissions", "backend" -> "praw", "keyword" -> "WallStreetBets")
+      val testingBackend: SttpBackend[IO, Any] = backendStub
+        .whenRequestMatchesPartial {
+          case r if r.isGet && r.isGoingTo(s"gummysearch.com/$submissionsEndpoint") && r.hasParams(params) =>
+            Response.ok(json("reddit/gummysearch-submissions-response.json"))
+          case r if r.isGet && r.hasHost("pushshift.com") =>
+            Response.ok("""{"data":[]}""")
+          case r => throw new RuntimeException(r.uri.toString())
+        }
+
+      val telegramClient = RedditClient.make[IO](config, testingBackend)
+      val result         = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
+
+      result.unsafeToFuture().map { mentions =>
+        mentions must have size 21
+      }
+    }
   }
 
   def mockTimer(timeSeconds: Long): Timer[IO] = new Timer[IO] {
