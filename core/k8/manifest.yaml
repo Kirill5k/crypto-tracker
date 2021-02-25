@@ -7,7 +7,7 @@ spec:
   ports:
     - targetPort: 8080
       port: 8080
-      nodePort: 30008
+      nodePort: 30000
   selector:
     app: "crypto-tracker-core"
 ---
