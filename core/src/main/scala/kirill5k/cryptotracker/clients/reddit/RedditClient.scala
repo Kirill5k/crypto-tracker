@@ -1,11 +1,12 @@
 package kirill5k.cryptotracker.clients.reddit
 
+import cats.NonEmptyParallel
 import cats.effect.{Sync, Timer}
 import cats.implicits._
 import io.chrisdavenport.log4cats.Logger
 import io.circe.generic.auto._
 import kirill5k.cryptotracker.clients.reddit.mappers.MentionsMapper
-import kirill5k.cryptotracker.clients.reddit.responses.PushshiftSubmissionsResponse
+import kirill5k.cryptotracker.clients.reddit.responses.{GummysearchSubmissionsResponse, PushshiftSubmissionsResponse}
 import kirill5k.cryptotracker.common.config.RedditConfig
 import kirill5k.cryptotracker.common.json._
 import kirill5k.cryptotracker.common.errors.AppError
@@ -19,7 +20,7 @@ trait RedditClient[F[_]] {
   def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]]
 }
 
-final private class LiveRedditClient[F[_]: Sync](
+final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
     private val config: RedditConfig,
     private val backend: SttpBackend[F, Any]
 )(implicit
@@ -28,7 +29,7 @@ final private class LiveRedditClient[F[_]: Sync](
 ) extends RedditClient[F] {
 
   override def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
-    queryPushshift(subreddit, duration)
+    (queryPushshift(subreddit, duration), queryGummysearch(subreddit)).parMapN(_ ::: _)
 
   private def queryPushshift(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
     timer.clock.realTime(SECONDS).flatMap { epocSeconds =>
@@ -53,24 +54,24 @@ final private class LiveRedditClient[F[_]: Sync](
 
   private def queryGummysearch(subreddit: Subreddit): F[List[Mention]] =
     basicRequest
-      .get(uri"${config.gummysearchUri}/reddit/submission/search?subreddit=${subreddit.value}&after=$dur")
-      .response(asJson[PushshiftSubmissionsResponse])
+      .get(uri"${config.gummysearchUri}/api/v1/reddit/submissions/?type=submissions&backend=praw&keyword=${subreddit.value}&subreddits=${subreddit.value}")
+      .response(asJson[GummysearchSubmissionsResponse])
       .send(backend)
       .flatMap { r =>
         r.body match {
           case Right(response) =>
-            response.data.flatMap(MentionsMapper.map).pure[F]
+            response.results.flatMap(MentionsMapper.map).pure[F]
           case Left(DeserializationException(body, error)) =>
-            logger.error(s"error parsing pushshift json: ${error.getMessage}\n$body") *>
-              AppError.Json(s"error parsing pushshift json: ${error.getMessage}").raiseError[F, List[Mention]]
+            logger.error(s"error parsing gummysearch json: ${error.getMessage}\n$body") *>
+              AppError.Json(s"error parsing gummysearch json: ${error.getMessage}").raiseError[F, List[Mention]]
           case Left(error) =>
-            logger.error(s"error getting submissions from pushshift: ${r.code}\n$error") *>
-              timer.sleep(1.second) *> queryPushshift(subreddit, duration + 5.second)
+            logger.error(s"error getting submissions from gummysearch: ${r.code}\n$error") *>
+              timer.sleep(1.second) *> queryGummysearch(subreddit)
         }
       }
 }
 
 object RedditClient {
-  def make[F[_]: Sync: Logger: Timer](config: RedditConfig, backend: SttpBackend[F, Any]): F[RedditClient[F]] =
+  def make[F[_]: Sync: Logger: Timer: NonEmptyParallel](config: RedditConfig, backend: SttpBackend[F, Any]): F[RedditClient[F]] =
     Sync[F].delay(new LiveRedditClient[F](config, backend))
 }
