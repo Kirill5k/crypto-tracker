@@ -18,7 +18,7 @@ private[reddit] object MentionsMapper {
   )
 
   private val wordsFilter = List(
-    "USD", "WSB", "DD", "GAME", "YOLO"
+    "USD", "WSB", "DD", "GAME", "YOLO", "CNBC"
   ).mkString("(?i).*(", "|", ").*").r
 
   private val tickerRegex = ("^\\$[a-zA-Z]{2,5}" :: mostCommonTickers).mkString("(", "|", ")").r
@@ -60,7 +60,7 @@ private[reddit] object MentionsMapper {
           Instant.ofEpochSecond(submission.timestamp_utc.toLong),
           submission.title,
           MentionSource.Reddit(Subreddit(submission.subreddit_name.substring(2))),
-          URI.create(submission.url)
+          URI.create(s"https://www.reddit.com${submission.link}")
         )
       }
 }

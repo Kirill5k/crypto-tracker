@@ -40,9 +40,10 @@ class MentionsMapperSpec extends AnyWordSpec with Matchers {
   def makeGummysearchSubmission(title: String): GummysearchSubmission =
     GummysearchSubmission(
       title,
-      "https://www.reddit.com/r/wallstreetbets/comments/foo/bar",
+      "https://www.reddit.com/r/wallstreetbets",
       1614284715.0,
-      "r/wallstreetbets"
+      "r/wallstreetbets",
+      "/r/wallstreetbets/comments/foo/bar/"
     )
 
   def makePushshiftSubmission(title: String): PushshiftSubmission =

@@ -22,7 +22,8 @@ private[reddit] object responses {
       title: String,
       url: String,
       timestamp_utc: Double,
-      subreddit_name: String
+      subreddit_name: String,
+      link: String
   )
 
   final case class GummysearchSubmissionsResponse(
