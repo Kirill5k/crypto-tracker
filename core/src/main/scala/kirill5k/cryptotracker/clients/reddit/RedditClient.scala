@@ -29,7 +29,9 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
 ) extends RedditClient[F] {
 
   override def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
-    (queryPushshift(subreddit, duration), queryGummysearch(subreddit)).parMapN(_ ::: _)
+    (queryPushshift(subreddit, duration), queryGummysearch(subreddit))
+      .parMapN(_ ::: _)
+      .map(_.distinctBy(m => (m.ticker, m.url)))
 
   private def queryPushshift(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
     timer.clock.realTime(SECONDS).flatMap { epocSeconds =>

@@ -13,7 +13,7 @@ import scala.concurrent.duration._
 class RedditClientSpec extends SttpClientSpec {
 
   val subreddit = Subreddit("WallStreetBets")
-  val config    = RedditConfig("http://pushshift.com", "http://gummysesarch.com", 5.minutes, List(subreddit))
+  val config    = RedditConfig("http://pushshift.com", "http://gummysearch.com", 5.minutes, List(subreddit))
   val timestamp = Instant.parse("2020-01-01T00:25:00Z")
 
   "A RedditClient" should {
