@@ -13,20 +13,22 @@ import scala.concurrent.duration._
 class RedditClientSpec extends SttpClientSpec {
 
   val subreddit = Subreddit("WallStreetBets")
-  val config    = RedditConfig("http://reddit.com", 5.minutes, List(subreddit))
+  val config    = RedditConfig("http://pushshift.com", "http://gummysesarch.com", 5.minutes, List(subreddit))
   val timestamp = Instant.parse("2020-01-01T00:25:00Z")
 
   "A RedditClient" should {
 
-    "return list of stock/crypto mentions from a given subreddit" in {
+    "return list of stock/crypto mentions in a given subreddit from pushshift" in {
       implicit val timer = mockTimer(timestamp.getEpochSecond)
 
       val submissionsEndpoint = "reddit/submission/search"
       val params              = Map("subreddit" -> "WallStreetBets", "after" -> "1577838000")
       val testingBackend: SttpBackend[IO, Any] = backendStub
         .whenRequestMatchesPartial {
-          case r if r.isGet && r.isGoingTo(s"reddit.com/$submissionsEndpoint") && r.hasParams(params) =>
+          case r if r.isGet && r.isGoingTo(s"pushshift.com/$submissionsEndpoint") && r.hasParams(params) =>
             Response.ok(json("reddit/pushshift-submissions-response.json"))
+          case r if r.isGet && r.hasHost("gummysearch.com") =>
+            Response.ok("""{"results":[]}""")
           case r => throw new RuntimeException(r.uri.toString())
         }
 
