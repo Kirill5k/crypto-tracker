@@ -14,7 +14,7 @@ class AppConfigSpec extends CatsIOSpec {
   "An AppConfig" should {
     "should load itself without errors" in {
       Blocker[IO].use(AppConfig.load[IO]).unsafeToFuture().map { config =>
-        config.reddit.baseUri mustBe "https://api.pushshift.io"
+        config.reddit.pushshiftUri mustBe "https://api.pushshift.io"
         config.telegram.baseUri mustBe "https://api.telegram.org"
         config.mongo.connectionUri mustBe "mongodb+srv://user:host@mongodb-host/crypto-tracker"
         config.alphaVantage.apiKey mustBe "av-api-key"

@@ -4,7 +4,7 @@ import kirill5k.cryptotracker.domain.Subreddit
 
 private[reddit] object responses {
 
-  final case class Submission(
+  final case class PushshiftSubmission(
       id: String,
       created_utc: Long,
       retrieved_on: Long,
@@ -14,7 +14,18 @@ private[reddit] object responses {
       title: String
   )
 
-  final case class RedditSubmissionsResponse(
-      data: List[Submission]
+  final case class PushshiftSubmissionsResponse(
+      data: List[PushshiftSubmission]
+  )
+
+  final case class GummysearchSubmission(
+      title: String,
+      url: String,
+      timestamp_utc: Double,
+      subreddit_name: String
+  )
+
+  final case class GummysearchSubmissionsResponse(
+      results: List[GummysearchSubmission]
   )
 }

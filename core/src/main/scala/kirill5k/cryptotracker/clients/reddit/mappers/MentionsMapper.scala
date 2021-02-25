@@ -1,7 +1,7 @@
 package kirill5k.cryptotracker.clients.reddit.mappers
 
-import kirill5k.cryptotracker.clients.reddit.responses.Submission
-import kirill5k.cryptotracker.domain.{Mention, MentionSource, Ticker}
+import kirill5k.cryptotracker.clients.reddit.responses.{GummysearchSubmission, PushshiftSubmission}
+import kirill5k.cryptotracker.domain.{Mention, MentionSource, Subreddit, Ticker}
 
 import java.net.URI
 import java.time.Instant
@@ -24,20 +24,24 @@ private[reddit] object MentionsMapper {
   private val tickerRegex = ("^\\$[a-zA-Z]{2,5}" :: mostCommonTickers).mkString("(", "|", ")").r
 
   private def withoutSpecialChars(text: String): String =
-      text
-        .replaceAll("[@~+%\"{}?_;`—–“”!•£&#’'*|.\\[\\]]", "")
-        .replaceAll("[\\\\()/,:-]", " ")
-        .replaceAll(" +", " ")
-        .trim
+    text
+      .replaceAll("[@~+%\"{}?_;`—–“”!•£&#’'*|.\\[\\]]", "")
+      .replaceAll("[\\\\()/,:-]", " ")
+      .replaceAll(" +", " ")
+      .trim
 
-  def map(submission: Submission): List[Mention] =
-    submission.title
+  private def parseTickers(title: String): List[String] =
+    title
       .split(" ")
       .filter(_.length > 1)
       .map(withoutSpecialChars)
       .filterNot(wordsFilter.matches)
       .filter(tickerRegex.matches)
       .distinct
+      .toList
+
+  def map(submission: PushshiftSubmission): List[Mention] =
+    parseTickers(submission.title)
       .map { t =>
         Mention(
           Ticker(t.replaceAll("\\$", "").toUpperCase),
@@ -47,5 +51,16 @@ private[reddit] object MentionsMapper {
           URI.create(submission.full_link)
         )
       }
-      .toList
+
+  def map(submission: GummysearchSubmission): List[Mention] =
+    parseTickers(submission.title)
+      .map { t =>
+        Mention(
+          Ticker(t.replaceAll("\\$", "").toUpperCase),
+          Instant.ofEpochSecond(submission.timestamp_utc.toLong),
+          submission.title,
+          MentionSource.Reddit(Subreddit(submission.subreddit_name.substring(2))),
+          URI.create(submission.url)
+        )
+      }
 }

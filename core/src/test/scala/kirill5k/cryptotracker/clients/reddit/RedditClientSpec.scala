@@ -26,7 +26,7 @@ class RedditClientSpec extends SttpClientSpec {
       val testingBackend: SttpBackend[IO, Any] = backendStub
         .whenRequestMatchesPartial {
           case r if r.isGet && r.isGoingTo(s"reddit.com/$submissionsEndpoint") && r.hasParams(params) =>
-            Response.ok(json("reddit/submissions-response.json"))
+            Response.ok(json("reddit/pushshift-submissions-response.json"))
           case r => throw new RuntimeException(r.uri.toString())
         }
 
