@@ -9,11 +9,12 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK", "EBON",
-    "DBX", "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC", "HCMC",
+    "ABNB", "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK",
+    "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK",
+    "DBX", "DKNG", "EBON", "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC", "HCMC",
     "KMPH",
     "MARA", "MGA", "MGI", "MVIS", "MLLLF", "MSFT",
-    "NGAC", "NOK", "NCLH", "NIO", "NDL", "PLUG", "PLTR", "PSLV",
+    "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "PLUG", "PLTR", "PSLV",
     "QQQ", "QCOM", "RAIL", "RIOT", "RKT", "SI", "SPCE", "SQ", "SNDL", "SPY",
     "TDA", "TD", "TSLA", "TSNP", "TLRY", "WKHS", "XRT", "UAL", "ZMRK"
   )
