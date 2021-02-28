@@ -9,14 +9,19 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "ABNB", "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK",
-    "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK",
-    "DBX", "DKNG", "EBON", "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC", "HCMC",
+    "AA", "ABNB", "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK",
+    "BOOM", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK", "CFO", "CRSP",
+    "DIS", "DBX", "DKNG", "EBON", "EXPI",
+    "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "GE", "GME", "GSAT",
+    "HCMC", "IQ", "INTC", "JNJ",
     "KMPH",
-    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT",
-    "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "PLUG", "PLTR", "PSLV",
-    "QQQ", "QCOM", "RAIL", "RIOT", "RKT", "SI", "SPCE", "SQ", "SNDL", "SPY",
-    "TDA", "TD", "TSLA", "TSNP", "TLRY", "WKHS", "XRT", "UAL", "ZMRK"
+    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD",
+    "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NET",
+    "PLUG", "PLTR", "PSLV", "PYPL",
+    "QQQ", "QCOM", "RAIL", "RIOT", "RIDE", "RKT", "RTX", "ROKU",
+    "SI", "SPCE", "SOS", "SE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX",
+    "TDA", "TD", "TSLA", "TSNP", "TLRY", "TLT", "TSM",
+    "WEN", "WMT", "WKHS", "XOM", "XRT", "UAL", "ZMRK", "ZNGA", "ZOM"
   )
 
   private val wordsFilter = List(
