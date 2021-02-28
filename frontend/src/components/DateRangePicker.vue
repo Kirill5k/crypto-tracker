@@ -13,6 +13,7 @@
       today-button
       reset-button
       v-model="dateFrom"
+      value-as-date
     />
     <label
       for="date-to"
@@ -27,6 +28,7 @@
       today-button
       reset-button
       v-model="dateTo"
+      value-as-date
     />
     <b-button
       variant="primary"
