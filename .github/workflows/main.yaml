@@ -37,5 +37,10 @@ jobs:
       - uses: olafurpg/setup-scala@v10
         with:
           java-version: adopt@1.15
-      - name: Build and Push Docker image
+      - name: Build and Push Core Docker image
         run: sbt docker:publish
+
+      - name: Build and Push Frontend Docker image
+        run: |-
+          docker build -t us.gcr.io/crypto-tracker-2020/frontend:latest-t us.gcr.io/crypto-tracker-2020/frontend:${{github.sha}} frontend/
+          docker push us.gcr.io/crypto-tracker-2020/frontend:latest
