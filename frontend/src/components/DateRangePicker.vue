@@ -56,15 +56,19 @@ export default {
   },
   computed: {
     isValidDateFrom () {
-      if (this.dateFrom == null || this.dateTo == null) {
-        return null
+      if (!this.dateFrom) {
+        return false
+      } else if (this.dateFrom && !this.dateTo) {
+        return true
       } else {
         return this.dateFrom <= this.dateTo
       }
     },
     isValidDateTo () {
-      if (this.dateFrom == null || this.dateTo == null) {
-        return null
+      if (!this.dateTo) {
+        return false
+      } else if (!this.dateFrom && this.dateTo) {
+        return true
       } else {
         return this.dateTo >= this.dateFrom
       }
