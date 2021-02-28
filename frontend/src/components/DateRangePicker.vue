@@ -43,7 +43,7 @@
 import { BFormDatepicker, BButton } from 'bootstrap-vue'
 
 export default {
-  name: 'DateRange',
+  name: 'DateRangePicker',
   components: { BFormDatepicker, BButton },
   props: {
     msg: String
