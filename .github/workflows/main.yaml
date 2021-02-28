@@ -44,5 +44,5 @@ jobs:
         run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: Build and push Frontend Docker image
         run: |-
-          docker build -t us.gcr.io/crypto-tracker-2020/frontend:latest -t us.gcr.io/crypto-tracker-2020/frontend:${SHORT_SHA} frontend/
-          docker push us.gcr.io/crypto-tracker-2020/frontend:latest
+          docker build -t us.gcr.io/crypto-tracker-2020/frontend:latest -t us.gcr.io/crypto-tracker-2020/frontend:${GITHUB_SHA::8} frontend/
+          docker push -a us.gcr.io/crypto-tracker-2020/frontend
