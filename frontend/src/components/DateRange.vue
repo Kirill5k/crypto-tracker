@@ -8,10 +8,11 @@
     </label>
     <b-form-datepicker
       id="date-from"
-      :state="false"
+      :state="isValidDateFrom"
       class="date-range__date-picker"
       today-button
       reset-button
+      v-model="dateFrom"
     />
     <label
       for="date-to"
@@ -21,14 +22,16 @@
     </label>
     <b-form-datepicker
       id="date-to"
-      :state="true"
+      :state="isValidDateTo"
       class="date-range__date-picker"
       today-button
       reset-button
+      v-model="dateTo"
     />
     <b-button
       variant="primary"
       class="ml-2"
+      :disabled="!isValidDateFrom || !isValidDateTo"
     >
       Show
     </b-button>
@@ -43,6 +46,28 @@ export default {
   components: { BFormDatepicker, BButton },
   props: {
     msg: String
+  },
+  data () {
+    return {
+      dateFrom: null,
+      dateTo: null
+    }
+  },
+  computed: {
+    isValidDateFrom () {
+      if (this.dateFrom == null || this.dateTo == null) {
+        return null
+      } else {
+        return this.dateFrom < this.dateTo
+      }
+    },
+    isValidDateTo () {
+      if (this.dateFrom == null || this.dateTo == null) {
+        return null
+      } else {
+        return this.dateTo > this.dateFrom
+      }
+    }
   }
 }
 </script>
