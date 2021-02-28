@@ -5,6 +5,7 @@
       @show="getMentions"
     />
     <mentions-chart
+      v-if="mentions.length"
       :mentions="mentions"
     />
   </b-container>

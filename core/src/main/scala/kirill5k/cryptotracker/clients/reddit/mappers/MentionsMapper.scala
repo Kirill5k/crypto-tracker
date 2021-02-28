@@ -13,7 +13,7 @@ private[reddit] object MentionsMapper {
     "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK",
     "DBX", "DKNG", "EBON", "FSLY", "FUBO", "FUTU", "GE", "GME", "GSAT", "INTC", "HCMC",
     "KMPH",
-    "MARA", "MGA", "MGI", "MVIS", "MLLLF", "MSFT",
+    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT",
     "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "PLUG", "PLTR", "PSLV",
     "QQQ", "QCOM", "RAIL", "RIOT", "RKT", "SI", "SPCE", "SQ", "SNDL", "SPY",
     "TDA", "TD", "TSLA", "TSNP", "TLRY", "WKHS", "XRT", "UAL", "ZMRK"
