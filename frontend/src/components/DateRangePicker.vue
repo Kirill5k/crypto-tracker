@@ -78,7 +78,6 @@ export default {
     show () {
       const from = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth(), this.dateFrom.getDate(), 0, 0, 0)
       const to = new Date(this.dateTo.getFullYear(), this.dateTo.getMonth(), this.dateTo.getDate(), 23, 59, 59)
-      console.log(from, to)
       this.$emit('show', { dateFrom: from, dateTo: to })
     }
   }
