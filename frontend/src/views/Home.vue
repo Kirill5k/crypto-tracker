@@ -1,17 +1,15 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <b-container>
+    <date-range/>
+  </b-container>
 </template>
 
 <script>
-import HelloWorld from '@/components/HelloWorld.vue'
+import { BContainer } from 'bootstrap-vue'
+import DateRange from '@/components/DateRange.vue'
 
 export default {
   name: 'Home',
-  components: {
-    HelloWorld
-  }
+  components: { BContainer, DateRange }
 }
 </script>

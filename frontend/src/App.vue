@@ -1,12 +1,10 @@
 <template>
   <div id="app">
-    <div>
-      <b-navbar type="dark" variant="dark">
+    <b-navbar type="dark" variant="dark">
         <b-navbar-nav>
-          <b-nav-item to="/>Home</b-nav-item>
+          <b-nav-item to="/">Home</b-nav-item>
         </b-navbar-nav>
       </b-navbar>
-    </div>
     <router-view/>
   </div>
 </template>
@@ -20,9 +18,7 @@ export default {
 }
 </script>
 
-
 <style lang="scss">
-@import 'assets/bootstrap-overrides.scss';
 @import '~bootstrap/scss/bootstrap.scss';
 @import '~bootstrap-vue/src/index.scss';
 
