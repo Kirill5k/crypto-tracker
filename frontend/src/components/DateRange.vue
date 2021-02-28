@@ -32,6 +32,7 @@
       variant="primary"
       class="ml-2"
       :disabled="!isValidDateFrom || !isValidDateTo"
+      @click="show"
     >
       Show
     </b-button>
@@ -49,8 +50,8 @@ export default {
   },
   data () {
     return {
-      dateFrom: null,
-      dateTo: null
+      dateFrom: new Date(),
+      dateTo: new Date()
     }
   },
   computed: {
@@ -58,15 +59,23 @@ export default {
       if (this.dateFrom == null || this.dateTo == null) {
         return null
       } else {
-        return this.dateFrom < this.dateTo
+        return this.dateFrom <= this.dateTo
       }
     },
     isValidDateTo () {
       if (this.dateFrom == null || this.dateTo == null) {
         return null
       } else {
-        return this.dateTo > this.dateFrom
+        return this.dateTo >= this.dateFrom
       }
+    }
+  },
+  methods: {
+    show () {
+      const from = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth(), this.dateFrom.getDate(), 0, 0, 0)
+      const to = new Date(this.dateTo.getFullYear(), this.dateTo.getMonth(), this.dateTo.getDate(), 23, 59, 59)
+      console.log(from, to)
+      this.$emit('show', { dateFrom: from, dateTo: to })
     }
   }
 }
