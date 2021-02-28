@@ -1,0 +1,50 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: "crypto-tracker-frontend"
+spec:
+  type: NodePort
+  ports:
+    - targetPort: 80
+      port: 80
+      nodePort: 30000
+  selector:
+    app: "crypto-tracker-frontend"
+---
+apiVersion: "apps/v1"
+kind: "Deployment"
+metadata:
+  name: "crypto-tracker-frontend"
+  namespace: "default"
+  labels:
+    app: "crypto-tracker-frontend"
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: "crypto-tracker-frontend"
+  template:
+    metadata:
+      labels:
+        app: "crypto-tracker-frontend"
+    spec:
+      containers:
+        - name: "frontend"
+          image: "us.gcr.io/crypto-tracker-2020/frontend:latest"
+          imagePullPolicy: Always
+          ports:
+            - containerPort: 80
+          resources:
+            requests:
+              memory: "256Mi"
+              cpu: "0.1"
+            limits:
+              memory: "384Mi"
+              cpu: "0.2"
+          readinessProbe:
+            httpGet:
+              scheme: HTTPS
+              path: /index.html
+              port: 80
+            initialDelaySeconds: 10
+            periodSeconds: 5
