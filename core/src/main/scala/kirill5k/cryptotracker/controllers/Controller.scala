@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.controllers
 import java.time.{Instant, LocalDate, ZoneOffset}
 import cats.effect._
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import io.circe.generic.auto._
 import kirill5k.cryptotracker.common.JsonCodecs
 import kirill5k.cryptotracker.common.errors.AppError.MissingQueryParam

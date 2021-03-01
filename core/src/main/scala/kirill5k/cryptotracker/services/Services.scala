@@ -2,7 +2,7 @@ package kirill5k.cryptotracker.services
 
 import cats.effect.{Sync, Timer}
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.clients.Clients
 import kirill5k.cryptotracker.repositories.Repositories
 

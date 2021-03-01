@@ -1,7 +1,7 @@
 package kirill5k.cryptotracker.controllers
 import cats.effect.{ContextShift, Sync}
 import io.circe.generic.auto._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.controllers.HealthController.AppStatus
 import org.http4s.HttpRoutes
 

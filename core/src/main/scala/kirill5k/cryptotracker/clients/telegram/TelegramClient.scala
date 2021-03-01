@@ -2,7 +2,7 @@ package kirill5k.cryptotracker.clients.telegram
 
 import cats.effect.Sync
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.common.config.TelegramConfig
 import kirill5k.cryptotracker.common.errors.AppError
 import sttp.client3._

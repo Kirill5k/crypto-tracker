@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.services
 import cats.effect.{Sync, Timer}
 import cats.implicits._
 import fs2.Stream
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.common.Streams
 import kirill5k.cryptotracker.domain.{Mention, Subreddit, Ticker}

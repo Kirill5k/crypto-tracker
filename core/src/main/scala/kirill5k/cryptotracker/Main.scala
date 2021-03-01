@@ -1,8 +1,8 @@
 package kirill5k.cryptotracker
 
 import cats.effect.{Blocker, ExitCode, IO, IOApp}
-import io.chrisdavenport.log4cats.Logger
-import io.chrisdavenport.log4cats.slf4j.Slf4jLogger
+import org.typelevel.log4cats.Logger
+import org.typelevel.log4cats.slf4j.Slf4jLogger
 import kirill5k.cryptotracker.clients.Clients
 import kirill5k.cryptotracker.common.Resources
 import kirill5k.cryptotracker.common.config.AppConfig

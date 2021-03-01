@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.clients
 import cats.Parallel
 import cats.effect.{Sync, Timer}
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.clients.alphavantage.AlphaVantageClient
 import kirill5k.cryptotracker.clients.reddit.RedditClient
 import kirill5k.cryptotracker.clients.telegram.TelegramClient

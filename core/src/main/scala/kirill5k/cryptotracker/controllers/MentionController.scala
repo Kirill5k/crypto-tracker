@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.controllers
 import cats.effect.{ContextShift, Sync}
 import cats.implicits._
 import io.circe.generic.auto._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.common.errors.AppError.MissingQueryParam
 import kirill5k.cryptotracker.controllers.MentionController.{DateRange, MentionSummaries}
 import kirill5k.cryptotracker.domain.{Mention, Ticker}

@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.clients.reddit
 import cats.NonEmptyParallel
 import cats.effect.{Sync, Timer}
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import io.circe.generic.auto._
 import kirill5k.cryptotracker.clients.reddit.mappers.MentionsMapper
 import kirill5k.cryptotracker.clients.reddit.responses.{GummysearchSubmissionsResponse, PushshiftSubmissionsResponse}

@@ -2,7 +2,7 @@ package kirill5k.cryptotracker.clients.alphavantage
 
 import cats.effect.Sync
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import io.circe.generic.auto._
 import kirill5k.cryptotracker.clients.alphavantage.responses.SymbolSearchResponse
 import kirill5k.cryptotracker.common.config.AlphaVantageConfig

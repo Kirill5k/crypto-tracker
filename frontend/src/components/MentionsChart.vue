@@ -27,7 +27,11 @@ export default {
   computed: {
     chartData () {
       const labels = this.mentions.map(m => m.ticker)
-      const datasets = [{ label: 'Mentions', backgroundColor: '#03c2fc', data: this.mentions.map(m => m.total) }]
+      const datasets = [{
+        label: 'Mentions',
+        backgroundColor: '#03c2fc',
+        data: this.mentions.map(m => m.total)
+      }]
       return { labels, datasets }
     }
   }

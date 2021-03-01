@@ -2,7 +2,7 @@ package kirill5k.cryptotracker.controllers
 
 import cats.effect.{ContextShift, Sync}
 import cats.implicits._
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.services.Services
 import org.http4s.HttpRoutes
 import org.http4s.server.Router

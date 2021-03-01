@@ -4,7 +4,7 @@ import cats.Parallel
 import cats.effect.{Concurrent, Timer}
 import cats.implicits._
 import fs2.Stream
-import io.chrisdavenport.log4cats.Logger
+import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.common.config.AppConfig
 import kirill5k.cryptotracker.services.Services
 
