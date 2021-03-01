@@ -21,7 +21,7 @@ class MentionServiceSpec extends CatsIOSpec {
       val (client, repository)  = mocks
 
       when(client.findMentions(any[Subreddit], any[FiniteDuration]))
-        .thenReturn(IO.pure(List(mention())))
+        .thenReturn(IO.pure(List(mention(Ticker("BB")))))
 
       val res = for {
         service <- MentionService.make[IO](client, repository)
@@ -39,7 +39,7 @@ class MentionServiceSpec extends CatsIOSpec {
     }
 
     "save mention in repository" in {
-      val ment = mention()
+      val ment = mention(Ticker("BB"))
       val (client, repository)  = mocks
 
       when(repository.save(any[Mention])).thenReturn(IO.unit)
@@ -59,7 +59,7 @@ class MentionServiceSpec extends CatsIOSpec {
       val (client, repository)  = mocks
 
       when(repository.findAll(any[Instant], any[Instant]))
-        .thenReturn(IO.pure(List(mention(), mention())))
+        .thenReturn(IO.pure(List(mention(Ticker("BB")), mention(Ticker("AMC")))))
 
       val res = for {
         service <- MentionService.make[IO](client, repository)
@@ -76,7 +76,7 @@ class MentionServiceSpec extends CatsIOSpec {
       val (client, repository)  = mocks
 
       when(repository.findBy(any[Ticker], any[Option[Instant]], any[Option[Instant]]))
-        .thenReturn(IO.pure(List(mention(), mention(), mention())))
+        .thenReturn(IO.pure(List(mention(Ticker("BB")), mention(Ticker("AMC")), mention(Ticker("TLRY")))))
 
       val res = for {
         service <- MentionService.make[IO](client, repository)
@@ -94,7 +94,7 @@ class MentionServiceSpec extends CatsIOSpec {
 
       when(repository.existsBy(any[Ticker], any[URI])).thenReturn(IO.pure(true))
 
-      val mention = MentionBuilder.mention()
+      val mention = MentionBuilder.mention(Ticker("BB"))
       val res = for {
         service <- MentionService.make[IO](client, repository)
         result <- service.isNew(mention)

@@ -28,7 +28,7 @@ export default new Vuex.Store({
           commit('loaded')
           return res.status === 200 ? res.json() : reject(res)
         })
-        .then(res => commit('setMentions', res.summaries))
+        .then(res => commit('setMentions', res.summaries.slice(0, 20)))
     }
   },
   modules: {

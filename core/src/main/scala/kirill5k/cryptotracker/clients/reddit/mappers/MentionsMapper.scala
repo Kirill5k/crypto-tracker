@@ -9,23 +9,24 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "AA", "ABNB", "AAPL", "APHA", "AMC", "AMD", "AMZN", "ASRT", "ATVK",
-    "BOOM", "BA", "BABA", "BB", "BIDU", "CCL", "CCIV", "CRSR", "CRON", "CUK", "CFO", "CRSP",
-    "DIS", "DBX", "DKNG", "EBON", "EXPI",
-    "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "GE", "GME", "GSAT",
-    "HCMC", "IQ", "INTC", "JNJ",
+    "AA", "ABNB", "AAPL", "APHA", "ACB", "AMC", "AMCX", "AMD", "AMZN", "ASRT", "ATVK", "ANF", "ATNX", "APTO", "AACG",
+    "BOOM", "BA", "BABA", "BB", "BIDU", "BNGO",
+    "CCL", "CCIV", "CRSR", "CRON", "CUK", "CFO", "CRSP", "CTRM", "CTXR", "CRM", "CRMD",
+    "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR",
+    "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "GPRO", "GE", "GME", "GSAT", "GRPN", "HCMC",
+    "IBKR", "ICLN", "IDEX", "IQ", "INTC", "JNJ", "JP",
     "KMPH",
-    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD",
-    "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NET",
-    "PLUG", "PLTR", "PSLV", "PYPL",
-    "QQQ", "QCOM", "RAIL", "RIOT", "RIDE", "RKT", "RTX", "ROKU",
-    "SI", "SPCE", "SOS", "SE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX",
-    "TDA", "TD", "TSLA", "TSNP", "TLRY", "TLT", "TSM",
-    "WEN", "WMT", "WKHS", "XOM", "XRT", "UAL", "ZMRK", "ZNGA", "ZOM"
+    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT",
+    "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NET", "NTB", "NNDM", "NXE",
+    "OCGN", "ONTX", "PENN", "PINS", "PLUG", "PLTR", "PLL", "PSLV", "PRPL", "PYPL", "PTON", "PFE",
+    "QQQ", "QCOM", "RAIL", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU",
+    "SCU", "SI", "SPCE", "SOS", "SE", "SEE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX", "SNAP", "SAVE", "SCKT",
+    "TEAM", "TDA", "TD", "TSLA", "TSNP", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "VACQ",
+    "WEN", "WWE", "WMT", "WKHS", "XOM", "XRT", "XXII", "XTNT", "UAL", "ZMRK", "ZNGA", "ZOM"
   )
 
   private val wordsFilter = List(
-    "USD", "WSB", "DD", "GAME", "YOLO", "CNBC", "SHIT"
+    "USD", "WSB", "DD", "GAME", "YOLO", "CNBC", "SHIT", "WAS"
   ).mkString("(?i).*(", "|", ").*").r
 
   private val tickerRegex = ("^\\$[a-zA-Z]{2,5}" :: mostCommonTickers).mkString("(", "|", ")").r
