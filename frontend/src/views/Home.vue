@@ -1,7 +1,6 @@
 <template>
   <b-container>
     <date-range-picker
-      ref="dateRangePicker"
       @show="getMentions"
     />
     <mentions-chart
@@ -19,9 +18,6 @@ import MentionsChart from '@/components/MentionsChart.vue'
 export default {
   name: 'Home',
   components: { BContainer, DateRangePicker, MentionsChart },
-  mounted () {
-    this.$refs.dateRangePicker.show()
-  },
   computed: {
     mentions () {
       return this.$store.state.mentions

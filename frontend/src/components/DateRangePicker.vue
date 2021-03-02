@@ -14,6 +14,7 @@
       reset-button
       v-model="dateFrom"
       value-as-date
+      @input="show"
     />
     <label
       for="date-to"
@@ -29,24 +30,17 @@
       reset-button
       v-model="dateTo"
       value-as-date
+      @input="show"
     />
-    <b-button
-      variant="primary"
-      class="ml-2"
-      :disabled="!isValidDateFrom || !isValidDateTo"
-      @click="show"
-    >
-      Show
-    </b-button>
   </div>
 </template>
 
 <script>
-import { BFormDatepicker, BButton } from 'bootstrap-vue'
+import { BFormDatepicker } from 'bootstrap-vue'
 
 export default {
   name: 'DateRangePicker',
-  components: { BFormDatepicker, BButton },
+  components: { BFormDatepicker },
   props: {
     msg: String
   },
@@ -55,6 +49,9 @@ export default {
       dateFrom: new Date(),
       dateTo: new Date()
     }
+  },
+  created () {
+    this.show()
   },
   computed: {
     isValidDateFrom () {
@@ -78,9 +75,11 @@ export default {
   },
   methods: {
     show () {
-      const from = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth(), this.dateFrom.getDate(), 0, 0, 0)
-      const to = new Date(this.dateTo.getFullYear(), this.dateTo.getMonth(), this.dateTo.getDate(), 23, 59, 59)
-      this.$emit('show', { dateFrom: from, dateTo: to })
+      if (this.isValidDateTo && this.isValidDateFrom) {
+        const from = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth(), this.dateFrom.getDate(), 0, 0, 0)
+        const to = new Date(this.dateTo.getFullYear(), this.dateTo.getMonth(), this.dateTo.getDate(), 23, 59, 59)
+        this.$emit('show', { dateFrom: from, dateTo: to })
+      }
     }
   }
 }
