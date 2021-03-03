@@ -12,6 +12,8 @@
       v-if="tickerMentionTimes && tickerMentionTimes.length"
       :ticker="selectedTicker"
       :mention-times="tickerMentionTimes"
+      :date-from="dateFrom"
+      :date-to="dateTo"
     />
   </b-container>
 </template>
@@ -32,6 +34,12 @@ export default {
   computed: {
     mentions () {
       return this.$store.state.mentions
+    },
+    dateFrom () {
+      return this.$store.state.dateFrom
+    },
+    dateTo () {
+      return this.$store.state.dateTo
     }
   },
   methods: {

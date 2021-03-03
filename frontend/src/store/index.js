@@ -8,11 +8,15 @@ const reject = (res) => res.json().then(e => Promise.reject(new Error(e.message)
 export default new Vuex.Store({
   state: {
     isLoading: false,
+    dateFrom: null,
+    dateTo: null,
     mentions: []
   },
   mutations: {
     setMentions (state, mentions) {
-      state.mentions = mentions
+      state.mentions = mentions.summaries.slice(0, 20)
+      state.dateFrom = new Date(mentions.dateRange.from)
+      state.dateTo = new Date(mentions.dateRange.to)
     },
     loading (state) {
       state.isLoading = true
@@ -28,7 +32,7 @@ export default new Vuex.Store({
           commit('loaded')
           return res.status === 200 ? res.json() : reject(res)
         })
-        .then(res => commit('setMentions', res.summaries.slice(0, 20)))
+        .then(res => commit('setMentions', res))
     }
   },
   modules: {

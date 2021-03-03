@@ -41,6 +41,14 @@ export default {
     mentionTimes: {
       type: Array,
       required: true
+    },
+    dateFrom: {
+      type: Date,
+      required: true
+    },
+    dateTo: {
+      type: Date,
+      required: true
     }
   },
   computed: {
@@ -50,13 +58,23 @@ export default {
       }
     },
     chartData () {
+      console.log(this.mentionsCountedByHour)
       const labels = []
       const datasets = [{
-        label: this.ticker,
+        label: `${this.ticker} mentions`,
         backgroundColor: '#03c2fc',
-        data: this.mentionTimes.map(t => Date.parse(t).getTime())
+        data: this.mentionsCountedByHour
       }]
       return { labels, datasets }
+    },
+    mentionsCountedByHour () {
+      return this.mentionTimes
+        .map(t => new Date(t))
+        .reduce((acc, el) => {
+          const key = el.toISOString().slice(0, 13)
+          acc[key] = !acc[key] ? 1 : acc[key] + 1
+          return acc
+        }, {})
     }
   }
 }
