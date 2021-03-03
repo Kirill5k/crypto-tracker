@@ -9,7 +9,7 @@
       @click="displayTickerMentionTimeseries"
     />
     <ticker-mentions-timeseries-chart
-      v-if="tickerMentionTimes.length"
+      v-if="tickerMentionTimes && tickerMentionTimes.length"
       :ticker="selectedTicker"
       :mention-times="tickerMentionTimes"
     />
