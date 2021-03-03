@@ -16,18 +16,7 @@ const DEFAULT_OPTIONS = {
   legend: {
     display: true
   },
-  maintainAspectRatio: false,
-  scales: {
-    x: {
-      type: 'time',
-      time: {
-        unit: 'hour',
-        displayFormats: {
-          quarter: 'HH, MM'
-        }
-      }
-    }
-  }
+  maintainAspectRatio: false
 }
 
 export default {
@@ -58,12 +47,12 @@ export default {
       }
     },
     chartData () {
-      console.log(this.mentionsCountedByHour)
-      const labels = []
+      const mentionsByHour = this.mentionsCountedByHour
+      const labels = this.labels
       const datasets = [{
         label: `${this.ticker} mentions`,
         backgroundColor: '#03c2fc',
-        data: this.mentionsCountedByHour
+        data: labels.map(d => mentionsByHour[d] || 0)
       }]
       return { labels, datasets }
     },
@@ -75,6 +64,13 @@ export default {
           acc[key] = !acc[key] ? 1 : acc[key] + 1
           return acc
         }, {})
+    },
+    labels () {
+      const dates = []
+      for (let d = this.dateFrom; d <= this.dateTo; d.setHours(d.getHours() + 1)) {
+        dates.push(new Date(d))
+      }
+      return dates.map(d => d.toISOString().slice(0, 13))
     }
   }
 }
