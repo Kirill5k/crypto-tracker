@@ -36,10 +36,16 @@ export default {
   },
   methods: {
     getMentions (dates) {
-      this.$store.dispatch('getMentions', dates)
+      this.$store.dispatch('getMentions', dates).then(() => this.clearSelectedTicker())
     },
     displayTickerMentionTimeseries (ticker) {
       console.log(ticker)
+      this.selectedTicker = ticker
+      this.tickerMentionTimes = this.mentions.find(m => m.ticker === ticker)?.times
+    },
+    clearSelectedTicker () {
+      this.selectedTicker = null
+      this.tickerMentionTimes = []
     }
   }
 }

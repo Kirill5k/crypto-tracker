@@ -54,7 +54,7 @@ export default {
       const datasets = [{
         label: this.ticker,
         backgroundColor: '#03c2fc',
-        data: this.mentionTimes.map(t => new Date(t).getTime())
+        data: this.mentionTimes.map(t => Date.parse(t).getTime())
       }]
       return { labels, datasets }
     }
