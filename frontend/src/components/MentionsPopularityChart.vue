@@ -10,8 +10,16 @@
 <script>
 import BarChart from './charts/BarChart.js'
 
+const DEFAULT_OPTIONS = {
+  responsive: true,
+  legend: {
+    display: false
+  },
+  maintainAspectRatio: false
+}
+
 export default {
-  name: 'MentionsChart',
+  name: 'MentionsPopularityChart',
   components: { BarChart },
   props: {
     mentions: {
@@ -19,12 +27,17 @@ export default {
       required: true
     }
   },
-  data () {
-    return {
-      options: { responsive: true, maintainAspectRatio: false }
-    }
-  },
   computed: {
+    options () {
+      return {
+        ...DEFAULT_OPTIONS,
+        onClick: (evt, item) => {
+          if (item && item.length) {
+            this.tickerClick(item[0]._view.label)
+          }
+        }
+      }
+    },
     chartData () {
       const labels = this.mentions.map(m => m.ticker)
       const datasets = [{
@@ -33,6 +46,11 @@ export default {
         data: this.mentions.map(m => m.total)
       }]
       return { labels, datasets }
+    }
+  },
+  methods: {
+    tickerClick (ticker) {
+      this.$emit('click', ticker)
     }
   }
 }

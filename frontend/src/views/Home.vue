@@ -3,7 +3,7 @@
     <date-range-picker
       @show="getMentions"
     />
-    <mentions-chart
+    <mentions-popularity-chart
       v-if="mentions.length"
       :mentions="mentions"
     />
@@ -13,11 +13,11 @@
 <script>
 import { BContainer } from 'bootstrap-vue'
 import DateRangePicker from '@/components/DateRangePicker.vue'
-import MentionsChart from '@/components/MentionsChart.vue'
+import MentionsPopularityChart from '@/components/MentionsPopularityChart.vue'
 
 export default {
   name: 'Home',
-  components: { BContainer, DateRangePicker, MentionsChart },
+  components: { BContainer, DateRangePicker, MentionsPopularityChart },
   computed: {
     mentions () {
       return this.$store.state.mentions
