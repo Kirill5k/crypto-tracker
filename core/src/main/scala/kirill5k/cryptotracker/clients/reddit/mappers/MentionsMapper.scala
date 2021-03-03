@@ -9,20 +9,24 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "AA", "ABNB", "AAPL", "APHA", "ACB", "AMC", "AMCX", "AMD", "AMZN", "ASRT", "ATVK", "ANF", "ATNX", "APTO", "AACG",
-    "BOOM", "BA", "BABA", "BB", "BIDU", "BNGO",
-    "CCL", "CCIV", "CRSR", "CRON", "CUK", "CFO", "CRSP", "CTRM", "CTXR", "CRM", "CRMD",
-    "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR",
-    "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "GPRO", "GE", "GME", "GSAT", "GRPN", "HCMC",
-    "IBKR", "ICLN", "IDEX", "IQ", "INTC", "JNJ", "JP",
-    "KMPH",
-    "MARA", "MGA", "MGI", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT",
+    "AA", "AAL", "ABNB", "AAPL", "APHA", "AESE", "ACB", "AMC", "AGTC", "AMCX", "AMD", "AMZN", "ASRT", "ASO", "ATVK", "ANF", "ATNX", "APTO", "AACG",
+    "BOOM", "BA", "BABA", "BB", "BIDU", "BNGO", "BAC", "BP", "BUD", "BIGC",
+    "CHWY", "CALM", "CCC", "CCL", "CCIV", "CRSR", "COTY", "COST", "CRON", "CPE", "CUK", "CNK", "CFO", "CRSP", "CTRM", "CTXR", "CRM", "CRMD", "COHN", "CLVS", "CVS",
+    "DASH", "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR",
+    "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "FBIO",
+    "GPRO", "GE", "GME", "GTE", "GSAT", "GRPN", "GTT", "GHIV", "GMBL", "GLD", "GL",
+    "HEAR", "HCMC", "IBM", "IBKR", "ICLN", "IDEX", "IQ", "IVR", "INTC", "JNJ", "JP", "JOE", "JPM", "JOB",
+    "KNSA", "KBAL", "KMI", "KMPH", "LUMN", "LEG", "LAZR", "LKCO", "LYFT",
+    "MRK", "MARA", "MGA", "MGI", "MRO", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT", "MIK", "MSM", "MREO",
     "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NET", "NTB", "NNDM", "NXE",
-    "OCGN", "ONTX", "PENN", "PINS", "PLUG", "PLTR", "PLL", "PSLV", "PRPL", "PYPL", "PTON", "PFE",
-    "QQQ", "QCOM", "RAIL", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU",
-    "SCU", "SI", "SPCE", "SOS", "SE", "SEE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX", "SNAP", "SAVE", "SCKT",
-    "TEAM", "TDA", "TD", "TSLA", "TSNP", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "VACQ",
-    "WEN", "WWE", "WMT", "WKHS", "XOM", "XRT", "XXII", "XTNT", "UAL", "ZMRK", "ZNGA", "ZOM"
+    "OCGN", "ONTX", "OVID", "OPTT", "OTRK",
+    "PENN", "PINS", "PLUG", "PLTR", "PLL", "PPT", "PSLV", "PRPL", "PYPL", "PTON", "PFE", "PDAC", "PSTH",
+    "QQQ", "QCOM", "RAIL", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU", "RBC", "RIG", "RING",
+    "SENS", "SLGG", "SKT", "SCU", "SI", "SPCE", "SWBI", "SHIP", "SOS", "SE", "SEE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX", "SNAP", "SAVE", "SCKT", "SNOW", "STK",
+    "TRXC", "TEAM", "TDA", "TD", "TGT", "TSLA", "TURN", "TSNP", "TECH", "TTD", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "TELL", "TRCH",
+    "VACQ", "VRTV", "VALE", "VIAC",
+    "WORK", "WEN", "WWE", "WMT", "WKHS", "WBAI", "XOM", "XRT", "XPEV", "XXII", "XTNT",
+    "UUUU", "UBER", "USMC", "UBS", "UMC", "UAL", "YGMZ", "ZMRK", "ZNGA", "ZOM"
   )
 
   private val wordsFilter = List(
