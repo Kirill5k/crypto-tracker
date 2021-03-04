@@ -40,8 +40,6 @@ jobs:
       - name: Build and push Core Docker image
         run: sbt docker:publish
 
-      - name: Add SHORT_SHA env property with commit short sha
-        run: echo "SHORT_SHA=`echo ${GITHUB_SHA} | cut -c1-8`" >> $GITHUB_ENV
       - name: Build and push Frontend Docker image
         run: |-
           docker build -t us.gcr.io/crypto-tracker-2020/frontend:latest -t us.gcr.io/crypto-tracker-2020/frontend:${GITHUB_SHA::8} frontend/
