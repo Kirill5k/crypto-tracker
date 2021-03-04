@@ -51,7 +51,6 @@ export default {
       const labels = this.dates.map(d => `${d.getHours()}, ${d.getDate()}`)
       const datasets = [{
         label: `${this.ticker} mentions`,
-        backgroundColor: '#03c2fc',
         borderColor: '#FC2525',
         pointBackgroundColor: 'white',
         borderWidth: 1,
