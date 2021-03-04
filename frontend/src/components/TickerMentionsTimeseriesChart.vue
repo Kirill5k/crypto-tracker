@@ -49,13 +49,14 @@ export default {
     chartData () {
       const mentionsByHour = this.mentionsCountedByHour
       const labels = this.dates.map(d => `${d.getHours()}, ${d.getDate()}`)
+      console.log(this.dateFrom, this.dateTo, this.dates.length)
       const datasets = [{
         label: `${this.ticker} mentions`,
-        borderColor: '#FC2525',
-        pointBackgroundColor: 'white',
         borderWidth: 1,
-        pointBorderColor: 'white',
-        backgroundColor: '#FC2525',
+        borderColor: '#3be38f',
+        pointBackgroundColor: '#49c989',
+        pointBorderColor: '#08361f',
+        backgroundColor: '#3be38f',
         data: this.dates.map(d => d.toISOString().slice(0, 13)).map(d => mentionsByHour[d] || 0)
       }]
       return { labels, datasets }
