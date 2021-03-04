@@ -52,6 +52,11 @@ export default {
       const datasets = [{
         label: `${this.ticker} mentions`,
         backgroundColor: '#03c2fc',
+        borderColor: ''#FC2525',
+        pointBackgroundColor: 'white',
+        borderWidth: 1,
+        pointBorderColor: 'white',
+        backgroundColor: '#FC2525',
         data: this.dates.map(d => d.toISOString().slice(0, 13)).map(d => mentionsByHour[d] || 0)
       }]
       return { labels, datasets }
