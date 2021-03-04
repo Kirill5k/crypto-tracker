@@ -52,7 +52,7 @@ export default {
       const datasets = [{
         label: `${this.ticker} mentions`,
         backgroundColor: '#03c2fc',
-        borderColor: ''#FC2525',
+        borderColor: '#FC2525',
         pointBackgroundColor: 'white',
         borderWidth: 1,
         pointBorderColor: 'white',
