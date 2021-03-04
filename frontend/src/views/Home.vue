@@ -47,13 +47,13 @@ export default {
       this.$store.dispatch('getMentions', dates).then(() => this.clearSelectedTicker())
     },
     displayTickerMentionTimeseries (ticker) {
-      console.log(ticker)
       this.selectedTicker = ticker
       this.tickerMentionTimes = this.mentions.find(m => m.ticker === ticker)?.times
+      console.log(ticker, this.tickerMentionTimes.length, this.dateFrom, this.dateTo)
     },
     clearSelectedTicker () {
-      this.selectedTicker = null
       this.tickerMentionTimes = []
+      this.selectedTicker = null
     }
   }
 }
