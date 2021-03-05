@@ -49,7 +49,6 @@ export default {
     displayTickerMentionTimeseries (ticker) {
       this.selectedTicker = ticker
       this.tickerMentionTimes = this.mentions.find(m => m.ticker === ticker)?.times
-      console.log(ticker, this.tickerMentionTimes.length, this.dateFrom, this.dateTo)
     },
     clearSelectedTicker () {
       this.tickerMentionTimes = []
