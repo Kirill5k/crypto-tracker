@@ -32,11 +32,11 @@ export default {
       required: true
     },
     dateFrom: {
-      type: Date,
+      type: String,
       required: true
     },
     dateTo: {
-      type: Date,
+      type: String,
       required: true
     }
   },
@@ -49,7 +49,6 @@ export default {
     chartData () {
       const mentionsByHour = this.mentionsCountedByHour
       const labels = this.dates.map(d => `${d.getHours()}, ${d.getDate()}/${d.getMonth() + 1}`)
-      console.log(this.dateFrom, this.dateTo, this.dates.length)
       const datasets = [{
         label: `${this.ticker} mentions`,
         borderWidth: 1,
@@ -72,7 +71,7 @@ export default {
     },
     dates () {
       const dates = []
-      for (let d = this.dateFrom; d <= this.dateTo; d.setHours(d.getHours() + 1)) {
+      for (let d = new Date(this.dateFrom); d <= new Date(this.dateTo); d.setHours(d.getHours() + 1)) {
         dates.push(new Date(d))
       }
       return dates

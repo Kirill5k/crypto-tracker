@@ -15,9 +15,8 @@ export default new Vuex.Store({
   mutations: {
     setMentions (state, mentions) {
       state.mentions = mentions.summaries.slice(0, 20)
-      state.dateFrom = new Date(mentions.dateRange.from)
-      state.dateTo = new Date(mentions.dateRange.to)
-      console.log('dateFrom', mentions.dateRange.from, state.dateFrom, 'dateTo', mentions.dateRange.to, state.dateTo)
+      state.dateFrom = mentions.dateRange.from
+      state.dateTo = mentions.dateRange.to
     },
     loading (state) {
       state.isLoading = true
