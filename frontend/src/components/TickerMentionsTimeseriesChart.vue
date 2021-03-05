@@ -48,7 +48,7 @@ export default {
     },
     chartData () {
       const mentionsByHour = this.mentionsCountedByHour
-      const labels = this.dates.map(d => `${d.getHours()}, ${d.getDate()}`)
+      const labels = this.dates.map(d => `${d.getHours()}:00, ${d.getDate()}/${d.getMonth()}`)
       console.log(this.dateFrom, this.dateTo, this.dates.length)
       const datasets = [{
         label: `${this.ticker} mentions`,
