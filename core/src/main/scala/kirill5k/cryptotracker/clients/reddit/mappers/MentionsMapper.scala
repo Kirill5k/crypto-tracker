@@ -10,23 +10,23 @@ private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
     "AA", "AAL", "ABNB", "AAPL", "APHA", "AESE", "ACB", "AMC", "AGTC", "AMCX", "AMD", "AMZN", "ASRT", "ASO", "ATVK", "ANF", "ATNX", "APTO", "AACG",
-    "BOOM", "BA", "BABA", "BB", "BIDU", "BNGO", "BAC", "BP", "BUD", "BIGC",
+    "BOOM", "BA", "BBC", "BABA", "BT", "BB", "BIDU", "BNGO", "BAC", "BP", "BUD", "BIGC",
     "CHWY", "CALM", "CCC", "CCL", "CCIV", "CRSR", "COTY", "COST", "CRON", "CPE", "CUK", "CNK", "CFO", "CRSP", "CTRM", "CTXR", "CRM", "CRMD", "COHN", "CLVS", "CVS",
-    "DASH", "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR",
-    "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "FBIO",
-    "GPRO", "GE", "GME", "GTE", "GSAT", "GRPN", "GTT", "GHIV", "GMBL", "GLD", "GL",
-    "HEAR", "HCMC", "IBM", "IBKR", "ICLN", "IDEX", "IQ", "IVR", "INTC", "JNJ", "JP", "JOE", "JPM", "JOB",
+    "DASH", "DDF", "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR", "EYES",
+    "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "FBIO", "F",
+    "GPRO", "GE", "GME", "GTE", "GSAT", "GRPN", "GTT", "GHIV", "GMBL", "GLD", "GL", "GMED", "GNUS",
+    "HYLN", "HEAR", "HCMC", "IBM", "IBKR", "ICLN", "IDEX", "IQ", "IVR", "INTC", "JNJ", "JP", "JOE", "JPM", "JOB",
     "KNSA", "KBAL", "KMI", "KMPH", "LUMN", "LEG", "LAZR", "LKCO", "LYFT",
-    "MRK", "MARA", "MGA", "MGI", "MRO", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT", "MIK", "MSM", "MREO",
-    "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NET", "NTB", "NNDM", "NXE",
-    "OCGN", "ONTX", "OVID", "OPTT", "OTRK",
+    "MA", "MRK", "MARA", "MGA", "MGI", "MRO", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT", "MIK", "MSM", "MREO",
+    "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NVAX", "NET", "NTB", "NNDM", "NXE",
+    "OCGN", "ONTX", "OVID", "OPTT", "OTRK", "ORCL", "OXY",
     "PENN", "PINS", "PLUG", "PLTR", "PLL", "PPT", "PSLV", "PRPL", "PYPL", "PTON", "PFE", "PDAC", "PSTH",
     "QQQ", "QCOM", "RAIL", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU", "RBC", "RIG", "RING",
     "SENS", "SLGG", "SKT", "SCU", "SI", "SPCE", "SWBI", "SHIP", "SOS", "SE", "SEE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX", "SNAP", "SAVE", "SCKT", "SNOW", "STK",
     "TRXC", "TEAM", "TDA", "TD", "TGT", "TSLA", "TURN", "TSNP", "TECH", "TTD", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "TELL", "TRCH",
     "VACQ", "VRTV", "VALE", "VIAC",
-    "WORK", "WEN", "WWE", "WMT", "WKHS", "WBAI", "XOM", "XRT", "XPEV", "XXII", "XTNT",
-    "UUUU", "UBER", "USMC", "UBS", "UMC", "UAL", "YGMZ", "ZMRK", "ZNGA", "ZOM"
+    "WORK", "WEN", "WWE", "WMT", "WKHS", "WTI", "WBAI", "XOM", "XRT", "XPEV", "XXII", "XTNT",
+    "UUUU", "UBER", "UNFI", "USMC", "UBS", "UMC", "UAL", "YGMZ", "ZMRK", "ZNGA", "ZOM"
   )
 
   private val wordsFilter = List(
