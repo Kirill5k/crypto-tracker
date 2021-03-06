@@ -27,7 +27,7 @@ export default new Vuex.Store({
   },
   actions: {
     getMentions ({ commit, state }, { dateFrom, dateTo }) {
-      return fetch(`/api/mentions/summary?from=${dateFrom.toISOString()}&to=${dateTo.toISOString()}`)
+      return fetch(`/api/mentions/summary?from=${dateFrom}&to=${dateTo}`)
         .then(res => {
           commit('loaded')
           return res.status === 200 ? res.json() : reject(res)

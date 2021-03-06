@@ -14,7 +14,7 @@
       reset-button
       v-model="dateFrom"
       value-as-date
-      @input="show"
+      @input="select"
     />
     <label
       for="date-to"
@@ -30,7 +30,7 @@
       reset-button
       v-model="dateTo"
       value-as-date
-      @input="show"
+      @input="select"
     />
   </div>
 </template>
@@ -51,7 +51,7 @@ export default {
     }
   },
   created () {
-    this.show()
+    this.select()
   },
   computed: {
     isValidDateFrom () {
@@ -60,7 +60,7 @@ export default {
       } else if (this.dateFrom && !this.dateTo) {
         return true
       } else {
-        return this.dateFrom <= this.dateTo
+        return this.dateFrom <= this.dateTo && this.daysBetweenDates() <= 90
       }
     },
     isValidDateTo () {
@@ -69,17 +69,21 @@ export default {
       } else if (!this.dateFrom && this.dateTo) {
         return true
       } else {
-        return this.dateTo >= this.dateFrom
+        return this.dateTo >= this.dateFrom && this.daysBetweenDates() <= 90
       }
     }
   },
   methods: {
-    show () {
+    select () {
       if (this.isValidDateTo && this.isValidDateFrom) {
         const from = new Date(this.dateFrom.getFullYear(), this.dateFrom.getMonth(), this.dateFrom.getDate(), 0, 0, 0)
         const to = new Date(this.dateTo.getFullYear(), this.dateTo.getMonth(), this.dateTo.getDate(), 23, 59, 59)
-        this.$emit('show', { dateFrom: from.toISOString(), dateTo: to.toISOString() })
+        this.$emit('select', { dateFrom: from.toISOString(), dateTo: to.toISOString() })
       }
+    },
+    daysBetweenDates () {
+      const oneDay = 24 * 60 * 60 * 1000
+      return Math.round(Math.abs((this.dateFrom - this.dateTo) / oneDay))
     }
   }
 }

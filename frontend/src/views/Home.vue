@@ -1,7 +1,7 @@
 <template>
   <b-container>
     <date-range-picker
-      @show="getMentions"
+      @select="displayAllMentions"
     />
     <mentions-popularity-chart
       v-if="mentions.length"
@@ -44,7 +44,7 @@ export default {
     }
   },
   methods: {
-    getMentions (dates) {
+    displayAllMentions (dates) {
       this.$store.dispatch('getMentions', dates).then(() => this.clearSelectedTicker())
     },
     displayTickerMentionTimeseries (ticker) {
