@@ -20,6 +20,7 @@
     />
     <mentions-sidebar
       :toggle="toggleSidebar"
+      :mentions="tickerMentions"
     />
   </b-container>
 </template>
@@ -42,6 +43,9 @@ export default {
   computed: {
     mentionsSummaries () {
       return this.$store.state.mentionsSummaries
+    },
+    tickerMentions () {
+      return this.$store.state.tickerMentions
     },
     dateFrom () {
       return this.$store.state.dateFrom
@@ -66,6 +70,7 @@ export default {
     },
     displayTickerMentions (tickerInfo) {
       console.log(tickerInfo)
+      this.toggleSidebar = false
       this.$store
         .dispatch('getTickerMentions', tickerInfo)
         .then(() => {

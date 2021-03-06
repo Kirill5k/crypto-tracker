@@ -12,6 +12,12 @@
           Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis
           in, egestas eget quam. Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
         </p>
+        <ul>
+          <li v-for="mention in mentions" :key="mention.time">
+            <p>{{ mention.message }}</p>
+            <p>{{ mention.url }}</p>
+          </li>
+        </ul>
       </div>
     </b-sidebar>
   </div>
@@ -26,6 +32,10 @@ export default {
   props: {
     toggle: {
       type: Boolean,
+      required: true
+    },
+    mentions: {
+      type: Array,
       required: true
     }
   }
