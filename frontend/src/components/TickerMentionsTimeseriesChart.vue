@@ -11,6 +11,8 @@
 <script>
 import LineChart from './charts/LineChart.js'
 
+const addZero = num => num.toString().length === 1 ? `0${num}` : num.toString()
+
 const DEFAULT_OPTIONS = {
   responsive: true,
   legend: {
@@ -43,12 +45,23 @@ export default {
   computed: {
     options () {
       return {
-        ...DEFAULT_OPTIONS
+        ...DEFAULT_OPTIONS,
+        onClick: (evt, item) => {
+          if (item && item.length) {
+            const x = this.chartData.labels[item[0]._index]
+            const hour = x.split(',')[0]
+            const day = x.split(' ')[1].split('/')[0]
+            const month = x.split('/')[1]
+            const clickedDateFrom = `${this.dateFrom.slice(0, 4)}-${month}-${day}T${hour}:00:00Z`
+            const clickedDateTo = `${clickedDateFrom.slice(0, 13)}:59:59Z`
+            this.$emit('click', { dateFrom: clickedDateFrom, dateTo: clickedDateTo, ticker: this.ticker })
+          }
+        }
       }
     },
     chartData () {
       const mentionsByHour = this.mentionsCountedByHour
-      const labels = this.dates.map(d => `${d.getHours()}, ${d.getDate()}/${d.getMonth() + 1}`)
+      const labels = this.dates.map(d => `${addZero(d.getHours())}, ${addZero(d.getDate())}/${addZero(d.getMonth() + 1)}`)
       const datasets = [{
         label: `${this.ticker} mentions`,
         borderWidth: 1,

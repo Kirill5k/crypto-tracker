@@ -14,6 +14,7 @@
       :mention-times="tickerMentionTimes"
       :date-from="dateFrom"
       :date-to="dateTo"
+      @click="displayTickerMentions"
     />
   </b-container>
 </template>
@@ -53,6 +54,9 @@ export default {
     clearSelectedTicker () {
       this.tickerMentionTimes = []
       this.selectedTicker = null
+    },
+    displayTickerMentions (ticker) {
+      console.log(ticker)
     }
   }
 }
