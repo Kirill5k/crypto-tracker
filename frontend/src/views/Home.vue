@@ -4,8 +4,8 @@
       @select="displayAllMentions"
     />
     <mentions-popularity-chart
-      v-if="mentions.length"
-      :mentions="mentions"
+      v-if="mentionsSummaries.length"
+      :mentions="mentionsSummaries"
       @click="displayTickerMentionTimeseries"
     />
     <ticker-mentions-timeseries-chart
@@ -33,8 +33,8 @@ export default {
     tickerMentionTimes: []
   }),
   computed: {
-    mentions () {
-      return this.$store.state.mentions
+    mentionsSummaries () {
+      return this.$store.state.mentionsSummaries
     },
     dateFrom () {
       return this.$store.state.dateFrom
@@ -45,11 +45,11 @@ export default {
   },
   methods: {
     displayAllMentions (dates) {
-      this.$store.dispatch('getMentions', dates).then(() => this.clearSelectedTicker())
+      this.$store.dispatch('getMentionsSummaries', dates).then(() => this.clearSelectedTicker())
     },
     displayTickerMentionTimeseries (ticker) {
       this.selectedTicker = ticker
-      this.tickerMentionTimes = this.mentions.find(m => m.ticker === ticker)?.times
+      this.tickerMentionTimes = this.mentionsSummaries.find(m => m.ticker === ticker)?.times
     },
     clearSelectedTicker () {
       this.tickerMentionTimes = []

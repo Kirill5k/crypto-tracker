@@ -10,11 +10,11 @@ export default new Vuex.Store({
     isLoading: false,
     dateFrom: null,
     dateTo: null,
-    mentions: []
+    mentionsSummaries: []
   },
   mutations: {
     setMentions (state, mentions) {
-      state.mentions = mentions.summaries.slice(0, 20)
+      state.mentionsSummaries = mentions.summaries.slice(0, 20)
       state.dateFrom = mentions.dateRange.from
       state.dateTo = mentions.dateRange.to
     },
@@ -26,7 +26,7 @@ export default new Vuex.Store({
     }
   },
   actions: {
-    getMentions ({ commit, state }, { dateFrom, dateTo }) {
+    getMentionsSummaries ({ commit, state }, { dateFrom, dateTo }) {
       return fetch(`/api/mentions/summary?from=${dateFrom}&to=${dateTo}`)
         .then(res => {
           commit('loaded')
