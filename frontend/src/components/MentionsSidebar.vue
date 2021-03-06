@@ -15,7 +15,7 @@
         <ul>
           <li v-for="mention in mentions" :key="mention.time">
             <p>{{ mention.message }}</p>
-            <p>{{ mention.url }}</p>
+            <a :href="mention.url">/r/{{ mention.source.subreddit }}</a>
           </li>
         </ul>
       </div>

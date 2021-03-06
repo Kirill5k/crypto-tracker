@@ -2,7 +2,8 @@ package kirill5k.cryptotracker.controllers
 
 import cats.effect.{ContextShift, Sync}
 import cats.implicits._
-import io.circe.generic.auto._
+import io.circe.generic.extras.auto._
+import io.circe.generic.extras.Configuration
 import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.common.errors.AppError.MissingQueryParam
 import kirill5k.cryptotracker.controllers.MentionController.{DateRange, MentionSummaries}
@@ -15,6 +16,8 @@ import java.time.Instant
 final private class MentionController[F[_]](
     private val service: MentionService[F]
 ) extends Controller[F] {
+
+  implicit val genDevConfig: Configuration = Configuration.default.withDiscriminator("type")
 
   override def routes(implicit F: Sync[F], logger: Logger[F], cs: ContextShift[F]): HttpRoutes[F] =
     HttpRoutes.of[F] {

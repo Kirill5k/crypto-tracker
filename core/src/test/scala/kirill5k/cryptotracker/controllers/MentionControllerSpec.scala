@@ -3,7 +3,7 @@ package kirill5k.cryptotracker.controllers
 import cats.effect.IO
 import kirill5k.cryptotracker.ControllerSpec
 import kirill5k.cryptotracker.domain.Ticker
-import kirill5k.cryptotracker.domain.MentionBuilder._
+import kirill5k.cryptotracker.domain.MentionBuilder.{mention}
 import kirill5k.cryptotracker.services.MentionService
 import org.http4s._
 import org.http4s.implicits._
@@ -63,14 +63,25 @@ class MentionControllerSpec extends ControllerSpec {
     "GET /mentions/:ticker" should {
 
       "parse ticker from path" in {
+        val mentions = List(mention(Ticker("BB"), time = Instant.parse("2021-01-01T00:00:00Z")))
         val service = mock[MentionService[IO]]
-        when(service.findBy(any[Ticker], any[Option[Instant]], any[Option[Instant]])).thenReturn(IO.pure(Nil))
+        when(service.findBy(any[Ticker], any[Option[Instant]], any[Option[Instant]])).thenReturn(IO.pure(mentions))
 
         val controller = new MentionController[IO](service)
         val request  = Request[IO](uri = uri"/mentions/BB", method = Method.GET)
         val response = controller.routes.orNotFound.run(request)
 
-        verifyJsonResponse(response, Status.Ok, Some("""[]"""))
+        val expectedResponse =
+          """[
+            |{
+            |"ticker":"BB",
+            |"time":"2021-01-01T00:00:00Z",
+            |"message":"Why BB is gonna blow its load SOON 15k YOLO",
+            |"source":{"subreddit":"WallStreetBets","type":"Reddit"},
+            |"url":"http://reddit.com/foo/bar"
+            |}
+            |]""".stripMargin
+        verifyJsonResponse(response, Status.Ok, Some(expectedResponse))
         verify(service).findBy(Ticker("BB"), None, None)
       }
     }
