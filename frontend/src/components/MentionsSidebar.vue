@@ -14,8 +14,10 @@
         </p>
         <ul>
           <li v-for="mention in mentions" :key="mention.time">
-            <p>{{ mention.message }}</p>
-            <a :href="mention.url">/r/{{ mention.source.subreddit }}</a>
+            <p class="mb-0">{{ mention.message }}</p>
+            <a :href="mention.url" target="_blank" class="mb-1">
+              /r/{{ mention.source.subreddit }}
+            </a>
           </li>
         </ul>
       </div>
