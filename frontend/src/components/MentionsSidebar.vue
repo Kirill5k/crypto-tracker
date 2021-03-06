@@ -1,6 +1,12 @@
 <template>
   <div class="mentions-sidebar">
-    <b-sidebar id="mentions-sidebar" title="Sidebar" right shadow>
+    <b-sidebar
+      :visible="toggle"
+      id="mentions-sidebar"
+      title="Stock mentions"
+      right
+      shadow
+    >
       <div class="px-3 py-2">
         <p>
           Cras mattis consectetur purus sit amet fermentum. Cras justo odio, dapibus ac facilisis

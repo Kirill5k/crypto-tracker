@@ -15,6 +15,11 @@
       :date-from="dateFrom"
       :date-to="dateTo"
       @click="displayTickerMentions"
+      aria-controls="mentions-sidebar"
+      :aria-expanded="toggleSidebar"
+    />
+    <mentions-sidebar
+      :toggle="toggleSidebar"
     />
   </b-container>
 </template>
@@ -23,14 +28,16 @@
 import { BContainer } from 'bootstrap-vue'
 import DateRangePicker from '@/components/DateRangePicker'
 import MentionsPopularityChart from '@/components/MentionsPopularityChart'
+import MentionsSidebar from '@/components/MentionsSidebar'
 import TickerMentionsTimeseriesChart from '@/components/TickerMentionsTimeseriesChart'
 
 export default {
   name: 'Home',
-  components: { BContainer, DateRangePicker, MentionsPopularityChart, TickerMentionsTimeseriesChart },
+  components: { BContainer, DateRangePicker, MentionsPopularityChart, TickerMentionsTimeseriesChart, MentionsSidebar },
   data: () => ({
     selectedTicker: null,
-    tickerMentionTimes: []
+    tickerMentionTimes: [],
+    toggleSidebar: false
   }),
   computed: {
     mentionsSummaries () {
@@ -49,14 +56,21 @@ export default {
     },
     displayTickerMentionTimeseries (ticker) {
       this.selectedTicker = ticker
+      this.toggleSidebar = false
       this.tickerMentionTimes = this.mentionsSummaries.find(m => m.ticker === ticker)?.times
     },
     clearSelectedTicker () {
       this.tickerMentionTimes = []
       this.selectedTicker = null
+      this.toggleSidebar = false
     },
-    displayTickerMentions (ticker) {
-      console.log(ticker)
+    displayTickerMentions (tickerInfo) {
+      console.log(tickerInfo)
+      this.$store
+        .dispatch('getTickerMentions', tickerInfo)
+        .then(() => {
+          this.toggleSidebar = true
+        })
     }
   }
 }
