@@ -52,8 +52,8 @@ export default {
             const hour = x.split(',')[0]
             const day = x.split(' ')[1].split('/')[0]
             const month = x.split('/')[1]
-            const clickedDateFrom = `${this.dateFrom.slice(0, 4)}-${month}-${day}T${hour}:00:00Z`
-            const clickedDateTo = `${clickedDateFrom.slice(0, 13)}:59:59Z`
+            const clickedDateFrom = `${this.dateFrom.slice(0, 4)}-${month}-${day}T${hour}:${this.dateFrom.slice(14)}`
+            const clickedDateTo = `${clickedDateFrom.slice(0, 13)}:${this.dateTo.slice(14)}`
             this.$emit('click', { dateFrom: clickedDateFrom, dateTo: clickedDateTo, ticker: this.ticker })
           }
         }
