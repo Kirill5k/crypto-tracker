@@ -9,7 +9,7 @@
     >
       <div class="px-3 py-2">
         <div v-for="mention in mentions" :key="mention.time" class="mb-1">
-          <hr class="border border-primary"/>
+          <hr/>
           <p class="mb-0">{{ mention.message }}</p>
           <a :href="mention.url" target="_blank" class="badge badge-primary text-wrap">
             /r/{{ mention.source.subreddit }}

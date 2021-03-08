@@ -29,7 +29,7 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
 ) extends RedditClient[F] {
 
   override def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
-    (queryPushshift(subreddit, duration, 5), queryGummysearch(subreddit, 5))
+    (queryPushshift(subreddit, duration, 3), queryGummysearch(subreddit, 3))
       .parMapN(_ ::: _)
       .map(_.distinctBy(m => (m.ticker, m.url)))
 
@@ -52,7 +52,7 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
                 List.empty[Mention].pure[F]
             case Left(error) =>
               logger.error(s"error getting submissions from pushshift: ${r.code}\n$error") *>
-                timer.sleep(1.second) *> queryPushshift(subreddit, duration + 5.second, attempt - 1)
+                timer.sleep(2.second) *> queryPushshift(subreddit, duration + 5.second, attempt - 1)
           }
         }
     }
@@ -74,7 +74,7 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
               List.empty[Mention].pure[F]
           case Left(error) =>
             logger.error(s"error getting submissions from gummysearch: ${r.code}\n$error") *>
-              timer.sleep(1.second) *> queryGummysearch(subreddit, attempt - 1)
+              timer.sleep(2.second) *> queryGummysearch(subreddit, attempt - 1)
         }
       }
 }
