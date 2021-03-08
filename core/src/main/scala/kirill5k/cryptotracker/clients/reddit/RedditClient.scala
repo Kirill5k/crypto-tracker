@@ -29,11 +29,11 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
 ) extends RedditClient[F] {
 
   override def findMentions(subreddit: Subreddit, duration: FiniteDuration): F[List[Mention]] =
-    (queryPushshift(subreddit, duration), queryGummysearch(subreddit))
+    (queryPushshift(subreddit, duration, 5), queryGummysearch(subreddit, 5))
       .parMapN(_ ::: _)
       .map(_.distinctBy(m => (m.ticker, m.url)))
 
-  private def queryPushshift(subreddit: Subreddit, duration: FiniteDuration, attempt: Int = 0): F[List[Mention]] =
+  private def queryPushshift(subreddit: Subreddit, duration: FiniteDuration, attempt: Int): F[List[Mention]] =
     timer.clock.realTime(SECONDS).flatMap { epocSeconds =>
       val dur = epocSeconds - duration.toSeconds
       basicRequest
@@ -47,17 +47,17 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
             case Left(DeserializationException(body, error)) =>
               logger.error(s"error parsing pushshift json: ${error.getMessage}\n$body") *>
                 AppError.Json(s"error parsing pushshift json: ${error.getMessage}").raiseError[F, List[Mention]]
-            case Left(_) if attempt == 5 =>
-              logger.error(s"attempted to get submissions from pushshift 5 times") *>
+            case Left(_) if attempt == 0 =>
+              logger.error(s"exceeded maximum amount of attempts getting submissions from pushshift") *>
                 List.empty[Mention].pure[F]
             case Left(error) =>
               logger.error(s"error getting submissions from pushshift: ${r.code}\n$error") *>
-                timer.sleep(1.second) *> queryPushshift(subreddit, duration + 5.second, attempt + 1)
+                timer.sleep(1.second) *> queryPushshift(subreddit, duration + 5.second, attempt - 1)
           }
         }
     }
 
-  private def queryGummysearch(subreddit: Subreddit, attempt: Int = 0): F[List[Mention]] =
+  private def queryGummysearch(subreddit: Subreddit, attempt: Int): F[List[Mention]] =
     basicRequest
       .get(uri"${config.gummysearchUri}/api/v1/reddit/submissions/?type=submissions&backend=praw&keyword=${subreddit.value}&subreddits=${subreddit.value}")
       .response(asJson[GummysearchSubmissionsResponse])
@@ -69,12 +69,12 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
           case Left(DeserializationException(body, error)) =>
             logger.error(s"error parsing gummysearch json: ${error.getMessage}\n$body") *>
               AppError.Json(s"error parsing gummysearch json: ${error.getMessage}").raiseError[F, List[Mention]]
-          case Left(_) if attempt == 5 =>
-            logger.error(s"attempted to get submissions from gummysearch 5 times") *>
+          case Left(_) if attempt == 0 =>
+            logger.error(s"exceeded maximum amount of attempts getting submissions from gummysearch") *>
               List.empty[Mention].pure[F]
           case Left(error) =>
             logger.error(s"error getting submissions from gummysearch: ${r.code}\n$error") *>
-              timer.sleep(1.second) *> queryGummysearch(subreddit)
+              timer.sleep(1.second) *> queryGummysearch(subreddit, attempt - 1)
         }
       }
 }
