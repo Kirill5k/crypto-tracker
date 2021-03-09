@@ -42,6 +42,7 @@ class RedditClientSpec extends SttpClientSpec {
           Ticker("CRSR"),
           Ticker("QCOM"),
           Ticker("ZOM"),
+          Ticker("GOEV"),
           Ticker("AMC"),
           Ticker("GME"),
           Ticker("GME"),
