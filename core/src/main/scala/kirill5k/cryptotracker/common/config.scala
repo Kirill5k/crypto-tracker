@@ -33,6 +33,7 @@ object config {
   final case class RedditConfig(
       pushshiftUri: String,
       gummysearchUri: String,
+      maxRetries: Int,
       searchPeriod: FiniteDuration,
       subreddits: List[Subreddit]
   )

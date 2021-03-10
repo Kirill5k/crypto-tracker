@@ -6,6 +6,7 @@ import kirill5k.cryptotracker.SttpClientSpec
 import kirill5k.cryptotracker.common.config.RedditConfig
 import kirill5k.cryptotracker.domain.{Subreddit, Ticker}
 import sttp.client3.{Response, SttpBackend}
+import sttp.model.StatusCode
 
 import java.time.Instant
 import scala.concurrent.duration._
@@ -13,7 +14,7 @@ import scala.concurrent.duration._
 class RedditClientSpec extends SttpClientSpec {
 
   val subreddit = Subreddit("WallStreetBets")
-  val config    = RedditConfig("http://pushshift.com", "http://gummysearch.com", 5.minutes, List(subreddit))
+  val config    = RedditConfig("http://pushshift.com", "http://gummysearch.com", 3, 5.minutes, List(subreddit))
   val timestamp = Instant.parse("2020-01-01T00:25:00Z")
 
   "A RedditClient" should {
@@ -63,6 +64,26 @@ class RedditClientSpec extends SttpClientSpec {
             Response.ok(json("reddit/gummysearch-submissions-response.json"))
           case r if r.isGet && r.hasHost("pushshift.com") =>
             Response.ok("""{"data":[]}""")
+          case r => throw new RuntimeException(r.uri.toString())
+        }
+
+      val telegramClient = RedditClient.make[IO](config, testingBackend)
+      val result         = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
+
+      result.unsafeToFuture().map { mentions =>
+        mentions must have size 22
+      }
+    }
+
+    "retry on errors and return empty response after attempts are exceeded" in {
+      implicit val timer = mockTimer(timestamp.getEpochSecond)
+
+      val testingBackend: SttpBackend[IO, Any] = backendStub
+        .whenRequestMatchesPartial {
+          case r if r.isGet && r.hasHost("gummysearch.com") =>
+            Response.ok(json("reddit/gummysearch-submissions-response.json"))
+          case r if r.isGet && r.hasHost("pushshift.com") =>
+            Response("""{"error": "uh-oh"}""", StatusCode.InternalServerError)
           case r => throw new RuntimeException(r.uri.toString())
         }
 
