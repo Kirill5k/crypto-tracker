@@ -59,7 +59,7 @@ final private class LiveRedditClient[F[_]: Sync: NonEmptyParallel](
 
   private def queryGummysearch(subreddit: Subreddit, attempt: Int): F[List[Mention]] =
     basicRequest
-      .get(uri"${config.gummysearchUri}/api/v1/reddit/submissions/?type=submissions&backend=praw&keyword=${subreddit.value}&subreddits=${subreddit.value}")
+      .get(uri"${config.gummysearchUri}/api/v1/reddit/submissions/?type=submissions&backend=psaw&keyword=${subreddit.value}&subreddits=${subreddit.value}")
       .response(asJson[GummysearchSubmissionsResponse])
       .send(backend)
       .flatMap { r =>

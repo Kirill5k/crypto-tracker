@@ -57,7 +57,7 @@ class RedditClientSpec extends SttpClientSpec {
       implicit val timer = mockTimer(timestamp.getEpochSecond)
 
       val submissionsEndpoint = "api/v1/reddit/submissions"
-      val params              = Map("subreddits" -> "WallStreetBets", "type" -> "submissions", "backend" -> "praw", "keyword" -> "WallStreetBets")
+      val params              = Map("subreddits" -> "WallStreetBets", "type" -> "submissions", "backend" -> "psaw", "keyword" -> "WallStreetBets")
       val testingBackend: SttpBackend[IO, Any] = backendStub
         .whenRequestMatchesPartial {
           case r if r.isGet && r.isGoingTo(s"gummysearch.com/$submissionsEndpoint") && r.hasParams(params) =>
