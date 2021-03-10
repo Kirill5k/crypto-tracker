@@ -21,7 +21,7 @@ private[reddit] object MentionsMapper {
     "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NVAX", "NET", "NTB", "NNDM", "NXE", "NVTA",
     "OCGN", "ONTX", "OVID", "OPTT", "OTRK", "ORCL", "OXY", "OLD", "OPEN",
     "PCG", "PTR", "PLAY", "PENN", "CRPINS", "PLUG", "PLTR", "PLL", "PPT", "PSLV", "PRPL", "PYPL", "PTON", "PFE", "PDAC", "PSTH",
-    "QQQ", "QCOM", "RAIL", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU", "RBC", "RIG", "RING", "RC",
+    "QQQ", "QCOM", "RAIL", "RBLX", "RCL", "RIOT", "RIDE", "RKT", "RTX", "ROKU", "RBC", "RIG", "RING", "RC",
     "SAVA", "SENS", "SLGG", "SKT", "SCU", "SI", "SPCE", "SWBI", "SHIP", "SOS", "SE", "SEE", "SQ", "SNDL", "SPY", "SQQQ", "SKYW", "SLV", "SDC", "SBUX", "SNAP", "SAVE", "SCKT", "SNOW", "STK",
     "TRXC", "TEAM", "TDA", "TD", "TGT", "TSLA", "TURN", "TSNP", "TECH", "TTD", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "TELL", "TRCH", "THO", "TRVG",
     "VACQ", "VRTV", "VALE", "VIAC",
