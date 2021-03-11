@@ -4,17 +4,17 @@ object Dependencies {
 
   object Versions {
     val mongo4cats = "0.1.5"
-    val http4s     = "0.21.18"
-    val sttp       = "3.0.0"
+    val http4s     = "0.21.20"
+    val sttp       = "3.1.7"
     val circe      = "0.13.0"
-    val pureConfig = "0.12.3"
+    val pureConfig = "0.14.1"
     val squants    = "1.6.0"
 
     val log4cats = "1.2.0"
     val logback  = "1.2.3"
 
-    val scalaTest     = "3.2.3"
-    val mockito       = "1.14.0"
+    val scalaTest     = "3.2.6"
+    val mockito       = "1.16.29"
     val embeddedMongo = "3.0.0"
   }
 
