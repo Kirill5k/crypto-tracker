@@ -1,6 +1,6 @@
 package kirill5k.cryptotracker.repositories
 
-import kirill5k.cryptotracker.domain.{Mention, MentionSource, Subreddit, Ticker}
+import kirill5k.cryptotracker.domain.{Company, Mention, MentionSource, Subreddit, Ticker}
 import org.bson.{BsonReader, BsonWriter}
 import org.bson.codecs.{Codec, DecoderContext, EncoderContext}
 import org.bson.codecs.configuration.{CodecProvider, CodecRegistry}
@@ -65,5 +65,29 @@ private[repositories] object entities {
 
     def from(m: Mention): MentionEntity =
       MentionEntity(new ObjectId(), m.ticker, m.time, m.message, m.source, m.url.toString)
+  }
+
+  final case class CompanyEntity(
+      _id: ObjectId,
+      ticker: Ticker,
+      name: String,
+      industry: String,
+      region: String
+  ) {
+    def toDomain: Company =
+      Company(ticker, name, industry, region)
+  }
+
+  object CompanyEntity {
+    val codec = fromRegistries(
+      fromProviders(
+        classOf[CompanyEntity],
+        tickerCodecProvider
+      ),
+      DEFAULT_CODEC_REGISTRY
+    )
+
+    def from(c: Company): CompanyEntity =
+      CompanyEntity(new ObjectId(), c.ticker, c.name, c.industry, c.region)
   }
 }
