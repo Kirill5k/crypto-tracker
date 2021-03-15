@@ -9,10 +9,10 @@ import java.time.Instant
 private[reddit] object MentionsMapper {
 
   private val mostCommonTickers = List(
-    "ANPC", "AA", "AAL", "ABNB", "AAPL", "APHA", "AESE", "ACB", "AMC", "AGTC", "AMCX", "AMD", "API", "AMZN", "ASRT", "ASO", "ATVK", "ANF", "ATNX", "APTO", "AACG",
+    "ANPC", "AA", "AI", "AAL", "ABNB", "AAPL", "APHA", "AESE", "ACB", "AMC", "AGTC", "AMCX", "AMD", "API", "AMZN", "ASRT", "ASO", "ATVK", "ANF", "ATNX", "APTO", "AACG",
     "BOOM", "BA", "BBC", "BABA", "BT", "BB", "BIDU", "BNGO", "BAC", "BP", "BUD", "BIGC",
     "CO", "CC", "CR", "CCIV", "CLF", "COST", "CHWY", "CALM", "CCC", "CCL", "CCIV", "CRSR", "COTY", "COST", "CRON", "CPE", "CUK", "CNK", "CFO", "CRSP", "CTRM", "CTXR", "CRM", "CRMD", "COHN", "CLVS", "CVS",
-    "DASH", "DDF", "DIS", "DBX", "DKNG", "DNN", "DOW", "EBON", "EXPI", "ETSY", "ECOR", "EYES", "EAT",
+    "DASH", "DDF", "DIS", "DBX", "DKNG", "DNN", "DOW", "DISH", "EBON", "EXPI", "ETSY", "ECOR", "EYES", "EAT",
     "FUN", "FCEL", "FLY", "FB", "FSLY", "FUBO", "FUTU", "FSR", "FBIO", "F",
     "GOEV", "GOGO", "GEVO", "GPRO", "GE", "GME", "GTE", "GSAT", "GRPN", "GTT", "GHIV", "GMBL", "GLD", "GL", "GMED", "GNUS",
     "HYLN", "HEAR", "HCMC", "IBM", "IRS", "IBKR", "ICLN", "IDEX", "IQ", "IVR", "INTC", "JNJ", "JP", "JOE", "JPM", "JOB",
@@ -26,7 +26,7 @@ private[reddit] object MentionsMapper {
     "TRXC", "TEAM", "TDA", "TD", "TGT", "TSLA", "TURN", "TSNP", "TECH", "TTD", "TLRY", "TLT", "TSM", "TNXP", "TXMD", "TQQQ", "TELL", "TRCH", "THO", "TRVG",
     "VACQ", "VRTV", "VALE", "VIAC",
     "WFG", "WORK", "WEN", "WWE", "WMT", "WKHS", "WTI", "WBAI", "XOM", "XRT", "XPEV", "XXII", "XTNT",
-    "UUUU", "UBER", "UNFI", "USMC", "UBS", "UMC", "UAL", "UWMC", "YGMZ", "ZMRK", "ZNGA", "ZOM"
+    "UUUU", "UBER", "UI", "UNFI", "USMC", "UBS", "UMC", "UAL", "UWMC", "YGMZ", "ZMRK", "ZNGA", "ZOM"
   )
 
   private val wordsFilter = List(
