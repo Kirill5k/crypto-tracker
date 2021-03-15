@@ -11,7 +11,6 @@ import java.time.Instant
 import scala.concurrent.ExecutionContext
 
 class MentionRepositorySpec extends AnyWordSpec with Matchers with EmbeddedMongo {
-
   implicit val cs: ContextShift[IO] = IO.contextShift(ExecutionContext.global)
 
   "MentionRepository" when {
@@ -110,4 +109,5 @@ class MentionRepositorySpec extends AnyWordSpec with Matchers with EmbeddedMongo
         .use(test)
         .unsafeRunSync()
     }
+
 }
