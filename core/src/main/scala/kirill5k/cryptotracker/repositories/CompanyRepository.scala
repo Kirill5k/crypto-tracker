@@ -10,7 +10,7 @@ import org.mongodb.scala.model.Filters
 
 trait CompanyRepository[F[_]] {
   def save(company: Company): F[Unit]
-  def findBy(ticker: Ticker): F[Company]
+  def findBy(ticker: Ticker): F[Option[Company]]
   def existsBy(ticker: Ticker): F[Boolean]
 }
 
@@ -21,11 +21,11 @@ final private class LiveCompanyRepository[F[_]: Concurrent](
   override def save(company: Company): F[Unit] =
     collection.insertOne(CompanyEntity.from(company)).void
 
-  override def findBy(ticker: Ticker): F[Company] =
+  override def findBy(ticker: Ticker): F[Option[Company]] =
     collection.find
       .filter(Filters.equal("ticker", ticker.value))
       .first[F]
-      .map(_.toDomain)
+      .map(r => Option(r).map(_.toDomain))
 
   override def existsBy(ticker: Ticker): F[Boolean] =
     collection

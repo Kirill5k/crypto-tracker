@@ -27,7 +27,22 @@ class CompanyRepositorySpec extends AnyWordSpec with Matchers with EmbeddedMongo
           } yield cmp
 
           result.map { res =>
-            res mustBe company
+            res mustBe Some(company)
+          }
+        }
+      }
+    }
+
+    "findBy" should {
+      "return None when item does not exist" in {
+        withEmbeddedMongoClient { client =>
+          val result = for {
+            repo    <- CompanyRepository.make[IO](client)
+            res <- repo.findBy(Ticker("FOO"))
+          } yield res
+
+          result.map { res =>
+            res mustBe None
           }
         }
       }
@@ -67,9 +82,9 @@ class CompanyRepositorySpec extends AnyWordSpec with Matchers with EmbeddedMongo
   }
 
   def withEmbeddedMongoClient[A](test: MongoClientF[IO] => IO[A]): A =
-    withRunningEmbeddedMongo(port = 12346) {
+    withRunningEmbeddedMongo(port = 12347) {
       MongoClientF
-        .fromConnectionString[IO]("mongodb://localhost:12346")
+        .fromConnectionString[IO]("mongodb://localhost:12347")
         .use(test)
         .unsafeRunSync()
     }
