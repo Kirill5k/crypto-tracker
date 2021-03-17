@@ -17,7 +17,7 @@ private[reddit] object MentionsMapper {
     "GOEV", "GOGO", "GEVO", "GPRO", "GE", "GME", "GTE", "GSAT", "GRPN", "GTT", "GHIV", "GMBL", "GLD", "GL", "GMED", "GNUS",
     "HOME", "HYLN", "HEAR", "HCMC", "IBM", "IRS", "IBKR", "ICLN", "IDEX", "IQ", "IVR", "INTC", "JNJ", "JP", "JOE", "JPM", "JOB",
     "KEY", "KNSA", "KBAL", "KMI", "KMPH", "LUMN", "LEG", "LAZR", "LKCO", "LYFT", "LULU",
-    "MA", "MRK", "MARA", "MGA", "MGI", "MRO", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT", "MIK", "MSM", "MREO",
+    "MA", "MAXR", "MRK", "MARA", "MGA", "MGI", "MRO", "MRNA", "MVIS", "MLLLF", "MSFT", "MCD", "MU", "MGNI", "MT", "MIK", "MSM", "MREO",
     "NAK", "NAKD", "NGAC", "NOK", "NCLH", "NIO", "NDL", "NVDA", "NVAX", "NET", "NTB", "NNDM", "NXE", "NVTA",
     "OCGN", "ONTX", "OVID", "OPTT", "OTRK", "ORCL", "OXY", "OLD", "OPEN", "OLB",
     "PCG", "PTR", "PLAY", "PENN", "CRPINS", "PLUG", "PLTR", "PLL", "PPT", "PSLV", "PRPL", "PYPL", "PTON", "PFE", "PDAC", "PSTH",
