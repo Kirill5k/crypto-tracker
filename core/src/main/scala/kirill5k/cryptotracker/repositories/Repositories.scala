@@ -6,7 +6,7 @@ import mongo4cats.client.MongoClientF
 
 final case class Repositories[F[_]](
     mention: MentionRepository[F],
-    companyRepository: CompanyRepository[F]
+    company: CompanyRepository[F]
 )
 
 object Repositories {

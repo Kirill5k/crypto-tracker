@@ -42,7 +42,7 @@ trait Controller[F[_]] extends Http4sDsl[F] with JsonCodecs {
         None
   }
 
-  def routes(implicit F: Sync[F], logger: Logger[F], cs: ContextShift[F]): HttpRoutes[F]
+  def routes(implicit F: Sync[F], logger: Logger[F]): HttpRoutes[F]
 
   protected def withErrorHandling(
       response: => F[Response[F]]

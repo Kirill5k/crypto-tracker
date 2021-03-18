@@ -1,13 +1,13 @@
 package kirill5k.cryptotracker.controllers
-import cats.effect.{ContextShift, Sync}
+import cats.effect.Sync
 import io.circe.generic.auto._
-import org.typelevel.log4cats.Logger
 import kirill5k.cryptotracker.controllers.HealthController.AppStatus
 import org.http4s.HttpRoutes
+import org.typelevel.log4cats.Logger
 
 class HealthController[F[_]] extends Controller[F] {
 
-  override def routes(implicit F: Sync[F], logger: Logger[F], cs: ContextShift[F]): HttpRoutes[F] =
+  override def routes(implicit F: Sync[F], logger: Logger[F]): HttpRoutes[F] =
     HttpRoutes.of[F] {
       case GET -> Root / "health" / "status" =>
         Ok(AppStatus(true))

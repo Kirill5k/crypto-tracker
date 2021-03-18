@@ -1,6 +1,6 @@
 package kirill5k.cryptotracker.controllers
 
-import cats.effect.{ContextShift, Sync}
+import cats.effect.Sync
 import cats.implicits._
 import io.circe.generic.extras.auto._
 import kirill5k.cryptotracker.services.CompanyService
@@ -11,7 +11,7 @@ final private class CompanyController[F[_]](
     private val service: CompanyService[F]
 ) extends Controller[F] {
 
-  override def routes(implicit F: Sync[F], logger: Logger[F], cs: ContextShift[F]): HttpRoutes[F] =
+  override def routes(implicit F: Sync[F], logger: Logger[F]): HttpRoutes[F] =
     HttpRoutes.of[F] {
       case GET -> Root / "companies" / TickerVar(ticker) =>
         withErrorHandling {
