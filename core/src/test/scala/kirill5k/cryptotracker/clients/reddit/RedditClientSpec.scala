@@ -71,7 +71,7 @@ class RedditClientSpec extends SttpClientSpec {
       val result         = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
 
       result.unsafeToFuture().map { mentions =>
-        mentions must have size 23
+        mentions must have size 24
       }
     }
 
@@ -91,7 +91,7 @@ class RedditClientSpec extends SttpClientSpec {
       val result         = telegramClient.flatMap(_.findMentions(subreddit, 5.minutes))
 
       result.unsafeToFuture().map { mentions =>
-        mentions must have size 23
+        mentions must have size 24
       }
     }
   }
