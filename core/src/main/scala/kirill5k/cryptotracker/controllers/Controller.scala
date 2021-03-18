@@ -7,7 +7,7 @@ import org.typelevel.log4cats.Logger
 import io.circe.generic.auto._
 import io.circe.generic.extras.Configuration
 import kirill5k.cryptotracker.common.JsonCodecs
-import kirill5k.cryptotracker.common.errors.AppError.MissingQueryParam
+import kirill5k.cryptotracker.common.errors.AppError.{CompanyNotFound, MissingQueryParam}
 import kirill5k.cryptotracker.domain.Ticker
 import org.http4s.dsl.Http4sDsl
 import org.http4s.{HttpRoutes, MessageFailure, ParseFailure, QueryParamDecoder, Response}
@@ -51,6 +51,8 @@ trait Controller[F[_]] extends Http4sDsl[F] with JsonCodecs {
       logger: Logger[F]
   ): F[Response[F]] =
     response.handleErrorWith {
+      case error: CompanyNotFound =>
+        NotFound(ErrorResponse(error.getMessage()))
       case error: MissingQueryParam =>
         BadRequest(ErrorResponse(error.getMessage()))
       case error: MessageFailure =>
