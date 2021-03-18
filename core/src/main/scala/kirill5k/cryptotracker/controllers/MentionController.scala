@@ -17,8 +17,6 @@ final private class MentionController[F[_]](
     private val service: MentionService[F]
 ) extends Controller[F] {
 
-  implicit val genDevConfig: Configuration = Configuration.default.withDiscriminator("type")
-
   override def routes(implicit F: Sync[F], logger: Logger[F], cs: ContextShift[F]): HttpRoutes[F] =
     HttpRoutes.of[F] {
       case GET -> Root / "mentions" :? OptionalDateFromQueryParam(from) +& OptionalDateToQueryParam(to) =>

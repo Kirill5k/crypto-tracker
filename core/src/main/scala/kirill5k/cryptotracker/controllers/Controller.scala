@@ -5,6 +5,7 @@ import cats.effect._
 import cats.implicits._
 import org.typelevel.log4cats.Logger
 import io.circe.generic.auto._
+import io.circe.generic.extras.Configuration
 import kirill5k.cryptotracker.common.JsonCodecs
 import kirill5k.cryptotracker.common.errors.AppError.MissingQueryParam
 import kirill5k.cryptotracker.domain.Ticker
@@ -16,6 +17,8 @@ import scala.util.Try
 final case class ErrorResponse(message: String)
 
 trait Controller[F[_]] extends Http4sDsl[F] with JsonCodecs {
+
+  implicit val genDevConfig: Configuration = Configuration.default.withDiscriminator("type")
 
   implicit val instantQueryParamDecoder: QueryParamDecoder[Instant] =
     QueryParamDecoder[String].emap { dateString =>
