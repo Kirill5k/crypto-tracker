@@ -4,6 +4,7 @@ import cats.effect.IO
 import kirill5k.cryptotracker.RequestOps._
 import kirill5k.cryptotracker.SttpClientSpec
 import kirill5k.cryptotracker.common.config.AlphaVantageConfig
+import kirill5k.cryptotracker.common.errors.AppError
 import kirill5k.cryptotracker.domain.{Company, Ticker, TimeSeries}
 import sttp.client3.{Response, SttpBackend}
 import sttp.model.StatusCode
@@ -72,7 +73,7 @@ class AlphaVantageClientSpec extends SttpClientSpec {
 
     "getWeeklyPrices" should {
 
-      "should return weekly prices for a given ticker" in {
+      "return weekly prices for a given ticker" in {
         val searchEndpoint = "query"
         val params         = Map("function" -> "TIME_SERIES_WEEKLY", "symbol" -> "PLTR", "apikey" -> "av-api-key")
         val testingBackend: SttpBackend[IO, Any] = backendStub
@@ -88,6 +89,24 @@ class AlphaVantageClientSpec extends SttpClientSpec {
         result.unsafeToFuture().map { price =>
           price.ticker mustBe Ticker("PLTR")
           price.timeSeries mustBe TimeSeries.Weekly
+        }
+      }
+
+      "return http error in case of failure" in {
+        val searchEndpoint = "query"
+        val params         = Map("function" -> "TIME_SERIES_WEEKLY", "symbol" -> "PLTR", "apikey" -> "av-api-key")
+        val testingBackend: SttpBackend[IO, Any] = backendStub
+          .whenRequestMatchesPartial {
+            case r if r.isGet && r.isGoingTo(s"alphavantage.com/$searchEndpoint") && r.hasParams(params) =>
+              Response.ok("""{"Error Message": "Invalid API call. Please retry or visit the documentation"}""")
+            case r => throw new RuntimeException(r.uri.toString())
+          }
+
+        val telegramClient = AlphaVantageClient.make[IO](config, testingBackend)
+        val result         = telegramClient.flatMap(_.getWeeklyPrices(Ticker("PLTR")))
+
+        result.attempt.unsafeToFuture().map { error =>
+          error mustBe Left(AppError.Http(200, "error obtaining stock price from alpha-vantage: Attempt to decode value on failed cursor: DownField(Weekly Time Series)"))
         }
       }
     }
