@@ -10,4 +10,16 @@ private[alphavantage] object responses {
   )
 
   final case class SymbolSearchResponse(bestMatches: List[SymbolMatch])
+
+  final case class TimeSeriesData(
+      `1. open`: BigDecimal,
+      `2. high`: BigDecimal,
+      `3. low`: BigDecimal,
+      `4. close`: BigDecimal,
+      `5. volume`: BigDecimal
+  )
+
+  final case class WeeklyTimeSeriesResponse(
+      `Weekly Time Series`: Map[String, TimeSeriesData]
+  )
 }
