@@ -54,7 +54,7 @@ final private class LiveAlphaVantageClient[F[_]](
         }
       }
 
-  override def getWeeklyPrices(ticker: Ticker, timeSeries: TimeSeries): F[StockPrice] =
+  override def getWeeklyPrices(ticker: Ticker): F[StockPrice] =
     basicRequest
       .get(uri"${config.baseUri}/query?function=TIME_SERIES_WEEKLY&symbol=${ticker.value}&apikey=${config.apiKey}")
       .response(asJson[WeeklyTimeSeriesResponse])
